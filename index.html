@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Product Store</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .product {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px;
+            text-align: center;
+            width: 250px;
+        }
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .product h3 {
+            margin: 10px 0;
+            color: #555;
+        }
+        .buy-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        .buy-button:hover {
+            background-color: #45a049;
+        }
+        @media (max-width: 600px) {
+            .gallery {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Dýchaj Slovo</h1>
+    <p style="text-align: center;">Od oltára k rodinnému stolu, od otče k Tata! 
+
+Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu,  v hlase Ducha – Rúach – ktorý vanie kam chce. 
+
+Nie som učiteľ. Som pútnik, ktorý sa učí načúvať Dychu.
+      
+      Click "Buy Now" to send me an email order!</p>
+    
+    <div class="gallery">
+        <!-- Product 1 -->
+        <div class="product">
+            <img src="product1.jpg" alt="Product 1">
+            <h3>Rodinné zamyslenia na Advent</h3>
+            <button class="buy-button" onclick="sendEmail('Product Name 1', 'Brief description or price, e.g., $20')">Objednať</button>
+        </div>
+        
+        <!-- Product 2 - Copy this block to add more -->
+        <div class="product">
+            <img src="product2.jpg" alt="Product 2">
+            <h3>Product Name 2</h3>
+            <button class="buy-button" onclick="sendEmail('Product Name 2', 'Brief description or price, e.g., $35')">Buy Now</button>
+        </div>
+        
+        <!-- Add more products here by copying the above div -->
+    </div>
+
+    <script>
+        function sendEmail(productName, details) {
+            const subject = `Order Inquiry: ${productName}`;
+            const body = `Hi! I'd like to order the ${productName}.\nDetails: ${details}\n\nMy info:\nName: \nShipping Address: \nPayment Method: \n\nThanks!`;
+            const mailtoLink = `mailto:dychajslovo@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+        }
+    </script>
+</body>
+</html>
