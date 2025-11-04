@@ -7,91 +7,128 @@
     <style>
         body {font-family: Arial, sans-serif; margin:0; padding:20px; background:#f4f4f4; color:#333;}
         h1 {text-align:center; color:#333;}
-        .intro {text-align:center; max-width:800px; margin:0 auto 30px;}
-        .gallery {display:flex; flex-wrap:wrap; justify-content:center; gap:20px; max-width:1200px; margin:auto;}
 
-/* BANNER IMAGE AT TOP */
+        /* HEADER: BANNER + OVERLAPPING PROFILE */
+        .header {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            text-align: center;
+        }
         .banner {
             width: 100%;
-            max-width: 1200px;
-            height: auto;
             max-height: 300px;
-            object-fit: cover;  /* Keeps proportions, crops if needed */
-            display: block;
-            margin: 0 auto 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }        
-
-/* INTRO WITH IMAGE ON LEFT */
-        .intro-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 25px;
-            max-width: 900px;
-            margin: 0 auto 40px;
-            flex-wrap: wrap;
-        }
-        .intro-image {
-            width: 180px;
-            height: 180px;
             object-fit: cover;
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: block;
         }
-        .intro-text {
-            flex: 1;
-            min-width: 300px;
-            text-align: left;
+        .profile-overlap {
+            position: absolute;
+            bottom: -70px;           /* Overlaps banner */
+            left: 25%;               /* Off-center left */
+            transform: translateX(-50%);
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid white;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        /* INTRO TEXT BELOW */
+        .intro-container {
+            max-width: 900px;
+            margin: 80px auto 40px;
+            text-align: center;
             font-size: 16px;
             line-height: 1.6;
         }
-        .intro-text p {margin: 8px 0;}
+        .intro-container p {margin: 10px 0;}
+        .intro-container b {font-weight: bold;}
+        .intro-container i {font-style: italic;}
 
         /* PRODUCT GALLERY */
-        .gallery {display:flex; flex-wrap:wrap; justify-content:center; gap:20px; max-width:1200px; margin:auto;}
-        .product {
-            background:white; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,.1);
-            padding:15px; text-align:center; width:250px; height:380px;
-            display:flex; flex-direction:column; justify-content:space-between;
-            overflow:hidden;
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1200px;
+            margin: auto;
         }
-        
-        /* FIXED CARD + TINY IMAGE */
         .product {
-            background:white; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,.1);
-            padding:15px; text-align:center; width:250px; height:380px;
-            display:flex; flex-direction:column; justify-content:space-between;
-            overflow:hidden;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,.1);
+            padding: 15px;
+            text-align: center;
+            width: 250px;
+            height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
         }
         .product img {
-            max-width:100%; max-height:200px; height:auto;
-            object-fit:contain; display:block; margin:0 auto;
-            border-radius:4px; flex-shrink:0;
+            max-width: 100%;
+            max-height: 200px;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+            border-radius: 4px;
+            flex-shrink: 0;
         }
-        .product h3 {margin:10px 0; color:#555; flex-grow:1;}
+        .product h3 {
+            margin: 10px 0;
+            color: #555;
+            flex-grow: 1;
+            font-size: 15px;
+        }
         .buy-button {
-            background:#4CAF50; color:white; padding:10px; border:none;
-            border-radius:4px; cursor:pointer; width:100%; font-size:16px;
+            background: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
         }
-        .buy-button:hover {background:#45a049;}
-        @media (max-width:600px){.gallery{flex-direction:column; align-items:center;}}
+        .buy-button:hover {background: #45a049;}
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .profile-overlap {
+                left: 50%;
+                width: 140px;
+                height: 140px;
+                bottom: -60px;
+            }
+            .intro-container {margin-top: 70px;}
+        }
+        @media (max-width: 600px) {
+            .banner {max-height: 200px;}
+            .profile-overlap {width: 120px; height: 120px; bottom: -50px;}
+            .intro-container {margin-top: 60px; padding: 0 15px;}
+            .gallery {flex-direction: column; align-items: center;}
+        }
     </style>
 </head>
 <body>
-    <!--  <h1>Dýchaj Slovo</h1>  -->
 
-<!-- YOUR BANNER IMAGE -->
-    <img src="banner.png" alt="Dýchaj Slovo Banner" class="banner">
-    
-    <!-- INTRO: IMAGE (LEFT) + TEXT (RIGHT) -->
+    <!-- HEADER: BANNER + OVERLAPPING PROFILE -->
+    <div class="header">
+        <img src="banner.png" alt="Dýchaj Slovo Banner" class="banner">
+        <img src="profile.jpg" alt="Mathias" class="profile-overlap">
+    </div>
+
+    <!-- INTRO TEXT -->
     <div class="intro-container">
-        <img src="profile.jpg" alt="Profile" class="intro-image">
-    
-    <div class="intro">
         <p><b>Od oltára k rodinnému stolu, od otče k Tata!</b></p>
-        <p>Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu,</p> 
+        <p>Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu,</p>
         <p>v hlase Ducha –<i> Rûach </i>– ktorý vanie kam chce.</p>
         <p>Nie som učiteľ. Som pútnik, ktorý sa učí načúvať Dychu.</p>
         <p>* * *</p>
@@ -102,22 +139,21 @@
         <p>* * *</p>
     </div>
 
+    <!-- PRODUCT GALLERY -->
     <div class="gallery">
-        <!-- YOUR PRODUCT -->
         <div class="product">
             <img src="ADVENTcover.jpeg" alt="Advent Cover">
             <h3>Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor</h3>
             <button class="buy-button" onclick="sendEmail('Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor', '€10')">Objednať</button>
         </div>
-
-        <!-- Add more products by copying the block above -->
+        <!-- Add more products here -->
     </div>
 
     <script>
         function sendEmail(product, details){
             const subject = `Order: ${product}`;
             const body = `Hi!\nI want to buy: ${product}\nDetails: ${details}\n\nName:\nAddress:\nPayment:\n\nThanks!`;
-            location.href = `mailto:YOUR-EMAIL@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            location.href = `mailto:dychajslovo@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         }
     </script>
 </body>
