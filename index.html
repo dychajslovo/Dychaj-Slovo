@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Product Store</title>
+    <title>Dychaj Slovo</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,6 +36,8 @@
             max-width: 100%;
             height: auto;
             border-radius: 4px;
+            bject-fit: contain;      /* NEW – keeps aspect ratio, no stretching */
+            max-height: 300px;        /* NEW – limits height inside the card */
         }
         .product h3 {
             margin: 10px 0;
@@ -64,18 +66,18 @@
 </head>
 <body>
     <h1>Dýchaj Slovo</h1>
-    <p style="text-align: center;">Od oltára k rodinnému stolu, od otče k Tata! 
+    <p style="text-align: center;">Od oltára k rodinnému stolu, od otče k Tata!</p> 
 
-Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu,  v hlase Ducha – Rúach – ktorý vanie kam chce. 
+<p style="text-align: center;">Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu, v hlase Ducha – <i>Rúach</i> – ktorý vanie kam chce.</p> 
 
-Nie som učiteľ. Som pútnik, ktorý sa učí načúvať Dychu.
+<p style="text-align: center;">Nie som učiteľ. Som pútnik, ktorý sa učí načúvať Dychu.</p>
       
-      Click "Buy Now" to send me an email order!</p>
+      <p style="text-align: center;">Click "Buy Now" to send me an email order!</p>
     
     <div class="gallery">
         <!-- Product 1 -->
-        <div class="product">
-            <img src="product1.jpg" alt="Product 1">
+        <div class="Advent">
+            <img src="ADVENTcover.jpeg" alt="ADVENTcover">
             <h3>Rodinné zamyslenia na Advent</h3>
             <button class="buy-button" onclick="sendEmail('Product Name 1', 'Brief description or price, e.g., $20')">Objednať</button>
         </div>
