@@ -3,110 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dychaj Slovo</title>
+    <title>Dýchaj Slovo</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-            color: #333;
+        body {font-family: Arial, sans-serif; margin:0; padding:20px; background:#f4f4f4; color:#333;}
+        h1 {text-align:center; color:#333;}
+        .intro {text-align:center; max-width:800px; margin:0 auto 30px;}
+        .gallery {display:flex; flex-wrap:wrap; justify-content:center; gap:20px; max-width:1200px; margin:auto;}
+        
+        /* FIXED CARD + TINY IMAGE */
+        .product {
+            background:white; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,.1);
+            padding:15px; text-align:center; width:250px; height:380px;
+            display:flex; flex-direction:column; justify-content:space-between;
+            overflow:hidden;
         }
-        h1 {
-            text-align: center;
-            color: #333;
+        .product img {
+            max-width:100%; max-height:200px; height:auto;
+            object-fit:contain; display:block; margin:0 auto;
+            border-radius:4px; flex-shrink:0;
         }
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-.product {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,.1);
-    padding: 15px;
-    text-align: center;
-    width: 250px;
-    height: 380px;           /* ← NEW: Fixed height */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;        /* ← Prevents image overflow */
-}
-
-.product img {
-    max-width: 100%;
-    max-height: 200px;       /* ← Max image height */
-    height: auto;
-    object-fit: contain;     /* ← Keeps A4 ratio */
-    display: block;
-    margin: 0 auto;
-    border-radius: 4px;
-    flex-shrink: 0;
-}
-        .product h3 {
-            margin: 10px 0;
-            color: #555;
-        }
+        .product h3 {margin:10px 0; color:#555; flex-grow:1;}
         .buy-button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
+            background:#4CAF50; color:white; padding:10px; border:none;
+            border-radius:4px; cursor:pointer; width:100%; font-size:16px;
         }
-        .buy-button:hover {
-            background-color: #45a049;
-        }
-        @media (max-width: 600px) {
-            .gallery {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
+        .buy-button:hover {background:#45a049;}
+        @media (max-width:600px){.gallery{flex-direction:column; align-items:center;}}
     </style>
 </head>
 <body>
     <h1>Dýchaj Slovo</h1>
-    <p style="text-align: center;">Od oltára k rodinnému stolu, od otče k Tata!</p> 
+    <div class="intro">
+        <p>Od oltára k rodinnému stolu, od otče k Tata!</p>
+        <p>Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu, v hlase Ducha –<i> Rûach </i>– ktorý vanie kam chce.</p>
+        <p>Nie som učiteľ. Som pútnik, ktorý sa učí načúvať Dychu.</p>
+        <p>Click “Buy Now” to send me an email order!</p>
+    </div>
 
-<p style="text-align: center;">Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu, v hlase Ducha – <i>Rúach</i> – ktorý vanie kam chce.</p> 
-
-<p style="text-align: center;">Nie som učiteľ. Som pútnik, ktorý sa učí načúvať Dychu.</p>
-      
-      <p style="text-align: center;">Click "Buy Now" to send me an email order!</p>
-    
     <div class="gallery">
-        <!-- Product 1 -->
-        <div class="Advent">
-            <img src="ADVENTcover.jpeg" alt="ADVENTcover">
-            <h3>Rodinné zamyslenia na Advent</h3>
-            <button class="buy-button" onclick="sendEmail('Product Name 1', 'Brief description or price, e.g., $20')">Objednať</button>
-        </div>
-        
-        <!-- Product 2 - Copy this block to add more -->
+        <!-- YOUR PRODUCT -->
         <div class="product">
-            <img src="product2.jpg" alt="Product 2">
-            <h3>Product Name 2</h3>
-            <button class="buy-button" onclick="sendEmail('Product Name 2', 'Brief description or price, e.g., $35')">Buy Now</button>
+            <img src="ADVENTcover.jpeg" alt="Advent Cover">
+            <h3>Advent Cover</h3>
+            <button class="buy-button" onclick="sendEmail('Advent Cover', '€15')">Buy Now</button>
         </div>
-        
-        <!-- Add more products here by copying the above div -->
+
+        <!-- Add more products by copying the block above -->
     </div>
 
     <script>
-        function sendEmail(productName, details) {
-            const subject = `Order Inquiry: ${productName}`;
-            const body = `Hi! I'd like to order the ${productName}.\nDetails: ${details}\n\nMy info:\nName: \nShipping Address: \nPayment Method: \n\nThanks!`;
-            const mailtoLink = `mailto:dychajslovo@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.location.href = mailtoLink;
+        function sendEmail(product, details){
+            const subject = `Order: ${product}`;
+            const body = `Hi!\nI want to buy: ${product}\nDetails: ${details}\n\nName:\nAddress:\nPayment:\n\nThanks!`;
+            location.href = `mailto:YOUR-EMAIL@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         }
     </script>
 </body>
