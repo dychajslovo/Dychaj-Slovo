@@ -35,9 +35,11 @@
         .product img {
             max-width: 100%;
             height: auto;
+            max-height: 200px;      /* ← NEW – forces small size */
+            object-fit: contain;    /* ← keeps A4 proportions, no stretching */
+            display: block;
+            margin: 0 auto;
             border-radius: 4px;
-            bject-fit: contain;      /* NEW – keeps aspect ratio, no stretching */
-            max-height: 300px;        /* NEW – limits height inside the card */
         }
         .product h3 {
             margin: 10px 0;
