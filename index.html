@@ -173,6 +173,7 @@
             margin: 20px auto;
             max-width: 350px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            text-align: center;
         }
         .section-product img {
             width: 100%;
@@ -184,7 +185,14 @@
         .section-product h3 {
             font-size: 16px;
             color: #444;
-            margin: 8px 0;
+            margin: 8px 0 4px;
+            font-weight: 600;
+        }
+        .product-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c495e;
+            margin: 0 0 10px;
         }
         .detail-btn {
             background: #2c495e;
@@ -201,7 +209,7 @@
         .detail-btn:hover {
             background: #3fcfd5;
         }
-        /* DETAIL MODAL */
+        /* DETAIL MODAL - TWO COLUMN LAYOUT */
         .detail-modal {
             display: none;
             position: fixed;
@@ -220,11 +228,13 @@
             background: #fff;
             padding: 25px;
             border-radius: 12px;
-            max-width: 500px;
+            max-width: 900px;
             width: 100%;
-            text-align: center;
             position: relative;
             box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
         }
         .detail-modal .close {
             position: absolute;
@@ -235,72 +245,84 @@
             color: #aaa;
             background: none;
             border: none;
+            z-index: 10;
         }
         .detail-modal .close:hover { color: #000; }
-        .detail-modal img {
-            max-height: 280px;
+
+        .modal-left {
+            flex: 1;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .modal-left img {
+            max-height: 320px;
             width: 100%;
             object-fit: contain;
-            margin: 15px 0;
             border-radius: 8px;
-        }
-        /* CENTERED TITLE - LIKE INTRO */
-        .detail-modal h3 {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 22px;
-            font-weight: 600;
-            color: #333;
-            margin: 12px auto;
-            max-width: 90%;
-            text-align: center;
-            line-height: 1.4;
-        }
-        .detail-modal .price {
-            font-size: 20px;
-            font-weight: 600;
-            color: #2c495e;
-            margin: 8px 0;
-        }
-        .detail-modal .desc {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #555;
-            margin: 12px 0 20px;
-            max-width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .modal-btns {
-            display: flex;
-            gap: 12px;
-            margin-top: 15px;
-            margin-bottom: 30px;
-            justify-content: center;
-        }
-        .modal-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 30px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            max-width: 180px;
+            margin-bottom: 15px;
         }
         .preview-btn {
             background: #2c495e;
             color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            max-width: 200px;
         }
         .preview-btn:hover {
             background: #3fcfd5;
         }
+
+        .modal-right {
+            flex: 1;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .modal-right h3 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+            margin: 0 0 12px;
+            text-align: left;
+        }
+        .modal-right .desc {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #555;
+            margin: 0 0 12px;
+            flex-grow: 1;
+        }
+        .modal-right .price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c495e;
+            margin: 0 0 15px;
+        }
         .add-to-cart-btn {
-            background: #4CAF50;
+            background: #2c495e;
             color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            max-width: 200px;
+            align-self: flex-start;
         }
         .add-to-cart-btn:hover {
-            background: #45a049;
+            background: #3fcfd5;
         }
+
         /* GALLERY MODAL */
         .gallery-modal {
             display: none;
@@ -428,16 +450,17 @@
             .section { padding: 15px; }
             .contact-section h2 { font-size: 22px; }
             .contact-section p { font-size: 14px; }
-            .modal-btns { flex-direction: column; }
+            .detail-modal .box { flex-direction: column; padding: 20px; }
+            .modal-left, .modal-right { min-width: 100%; }
+            .preview-btn, .add-to-cart-btn { max-width: 100%; }
             .cart-btn { padding: 7px 12px; font-size: 13px; top: 10px; right: 10px; }
             .cart-count { width: 16px; height: 16px; font-size: 10px; }
-            .detail-modal h3 { font-size: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- FIXED CART BUTTON - SMALLER -->
+    <!-- FIXED CART BUTTON -->
     <button class="cart-btn" onclick="window.location.href='kosik.html'">
         Košík
         <span class="cart-count" id="cartCount">0</span>
@@ -482,6 +505,7 @@
         <div class="section-product">
             <img src="ADVENTcover.jpeg" alt="Advent Cover">
             <h3>Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor</h3>
+            <div class="product-price">€10</div>
             <button class="detail-btn" onclick="openProductDetail(
                 'Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor',
                 '€10',
@@ -499,6 +523,7 @@
         <div class="section-product">
             <img src="ADVENT-UVAHYcover.jpeg" alt="Advent Úvahy">
             <h3>Advent, Denné úvahy z Božieho Slova</h3>
+            <div class="product-price">€10</div>
             <button class="detail-btn" onclick="openProductDetail(
                 'Advent, Denné úvahy z Božieho Slova',
                 '€10',
@@ -516,6 +541,7 @@
         <div class="section-product">
             <img src="ADAMcover.png" alt="Adam, kde si?">
             <h3>Adam, kde si?</h3>
+            <div class="product-price">€9</div>
             <button class="detail-btn" onclick="openProductDetail(
                 'Adam, kde si?',
                 '€9',
@@ -543,13 +569,15 @@
     <div id="detailModal" class="detail-modal">
         <div class="box">
             <button class="close" onclick="closeDetail()">x</button>
-            <img id="modalImg" src="" alt="">
-            <h3 id="modalTitle"></h3>
-            <div class="price" id="modalPrice"></div>
-            <p class="desc" id="modalDesc"></p>
-            <div class="modal-btns">
-                <button class="modal-btn preview-btn" id="previewBtn">Ukážka</button>
-                <button class="modal-btn add-to-cart-btn" id="addToCartBtn">Do košíka</button>
+            <div class="modal-left">
+                <img id="modalImg" src="" alt="">
+                <button class="preview-btn" id="previewBtn">Ukážka</button>
+            </div>
+            <div class="modal-right">
+                <h3 id="modalTitle"></h3>
+                <p class="desc" id="modalDesc"></p>
+                <div class="price" id="modalPrice"></div>
+                <button class="add-to-cart-btn" id="addToCartBtn">Do košíka</button>
             </div>
         </div>
     </div>
@@ -557,9 +585,9 @@
     <!-- GALLERY MODAL -->
     <div id="galleryModal" class="gallery-modal">
         <button class="gallery-close" onclick="closeGallery()">x</button>
-        <button class="gallery-nav gallery-prev" onclick="changeImage(-1)">&lt;</button>
+        <button class="gallery-nav gallery-prev" onclick="changeImage(-1)"><</button>
         <img id="galleryImg" class="gallery-img" src="" alt="">
-        <button class="gallery-nav gallery-next" onclick="changeImage(1)">&gt;</button>
+        <button class="gallery-nav gallery-next" onclick="changeImage(1)">></button>
         <div class="gallery-dots" id="galleryDots"></div>
     </div>
 
