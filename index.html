@@ -31,16 +31,16 @@
             display: block;
         }
 
-        /* PROFILE + TITLE + SOCIAL ROW — ALIGNED TO BOTTOM OF PIC */
+        /* PROFILE + TITLE + SOCIAL ROW — ALIGNED TO BOTTOM */
         .profile-row {
             display: flex;
-            align-items: flex-end; /* Aligns everything to bottom */
+            align-items: flex-end;
             justify-content: space-between;
             max-width: 1100px;
             margin: 0 auto;
             padding: 0 20px;
             position: relative;
-            top: -100px; /* Deeper into banner for bigger pic */
+            top: -85px;
             z-index: 10;
         }
 
@@ -50,31 +50,27 @@
             gap: 20px;
         }
         .profile-overlap {
-            width: 220px;  /* BIGGER: 190 → 220px */
+            width: 220px;
             height: 220px;
             border-radius: 50%;
             object-fit: cover;
             border: 6px solid white;
             box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-            position: relative;
-            top: 0;
         }
 
-        /* CENTER TITLE — ALIGNED TO BOTTOM */
         .profile-name {
             font-family: 'Fredoka', sans-serif;
             font-weight: 600;
-            font-size: 44px; /* Slightly larger to match */
+            font-size: 44px;
             color: #222;
             text-shadow: 0 2px 4px rgba(0,0,0,0.1);
             flex: 1;
             text-align: center;
             margin: 0 30px;
             line-height: 1;
-            padding-bottom: 8px; /* Fine-tune alignment */
+            padding-bottom: 8px;
         }
 
-        /* SOCIAL ICONS — ALIGNED TO BOTTOM */
         .social-links {
             display: flex;
             gap: 14px;
@@ -101,21 +97,69 @@
         .social-links .ig:hover {background: #E4405F;}
         .social-links .x:hover  {background: #000000;}
 
-        /* INTRO TEXT — STARTS RIGHT AFTER PROFILE ROW */
+        /* NAVIGATION BUTTONS — BEFORE INTRO */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: -50px auto 20px;
+            max-width: 900px;
+            z-index: 10;
+            position: relative;
+        }
+        .nav-btn {
+            background: #4a7c59;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+        .nav-btn:hover {
+            background: #3a6b49;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        /* INTRO TEXT */
         .intro-container {
             max-width: 900px;
-            margin: -65px auto 30px; /* Adjusted for bigger pic */
+            margin: 10px auto 40px;
             text-align: center;
             font-size: 16px;
             line-height: 1.6;
-            position: relative;
-            z-index: 5;
         }
         .intro-container p {
             margin: 6px 0;
         }
         .intro-container b {font-weight: 600;}
         .intro-container i {font-style: italic;}
+
+        /* SECTION STYLES */
+        .section {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .section h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 32px;
+            color: #4a7c59;
+            margin-bottom: 20px;
+        }
+        .section p {
+            font-size: 16px;
+            line-height: 1.7;
+            margin: 12px 0;
+        }
 
         /* PRODUCT GALLERY */
         .gallery {
@@ -124,7 +168,7 @@
             justify-content: center;
             gap: 20px;
             max-width: 1200px;
-            margin: auto;
+            margin: 60px auto;
         }
         .product {
             background: white;
@@ -167,6 +211,11 @@
         }
         .buy-button:hover {background: #45a049;}
 
+        /* SMOOTH SCROLL */
+        html {
+            scroll-behavior: smooth;
+        }
+
         /* RESPONSIVE */
         @media (max-width: 900px) {
             .header {margin-bottom: 20px;}
@@ -185,29 +234,30 @@
                 margin: 0;
                 padding-bottom: 0;
             }
-            .social-links {
+            .nav-buttons {
+                margin: -40px auto 15px;
                 gap: 12px;
+                flex-wrap: wrap;
             }
-            .intro-container {
-                margin: -45px auto 20px;
+            .nav-btn {
+                padding: 10px 18px;
+                font-size: 15px;
             }
+            .intro-container {margin: 10px auto 30px;}
+            .section {margin: 40px auto; padding: 20px;}
+            .section h2 {font-size: 28px;}
         }
         @media (max-width: 600px) {
             .banner {max-height: 200px;}
             .header {margin-bottom: 10px;}
             .profile-row {top: -55px;}
-            .profile-overlap {
-                width: 140px;
-                height: 140px;
-            }
+            .profile-overlap {width: 140px; height: 140px;}
             .profile-name {font-size: 30px;}
-            .social-links {gap: 10px;}
             .social-links a {width: 40px; height: 40px; line-height: 40px; font-size: 19px;}
-            .intro-container {
-                margin: -35px auto 20px;
-                padding: 0 15px;
-            }
-            .intro-container p {margin: 5px 0;}
+            .nav-buttons {gap: 8px;}
+            .nav-btn {padding: 8px 14px; font-size: 14px;}
+            .intro-container {padding: 0 15px;}
+            .section {padding: 15px;}
             .gallery {flex-direction: column; align-items: center;}
         }
     </style>
@@ -249,7 +299,14 @@
         </div>
     </div>
 
-    <!-- INTRO TEXT — STARTS RIGHT AFTER PROFILE ROW -->
+    <!-- NAVIGATION BUTTONS -->
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="document.getElementById('zamyslenia').scrollIntoView({behavior: 'smooth'})">Zamyslenia</button>
+        <button class="nav-btn" onclick="document.getElementById('cvicenia').scrollIntoView({behavior: 'smooth'})">Cvičenia</button>
+        <button class="nav-btn" onclick="document.getElementById('deti').scrollIntoView({behavior: 'smooth'})">Deti</button>
+    </div>
+
+    <!-- INTRO TEXT -->
     <div class="intro-container">
         <p><b>Od oltára k rodinnému stolu, od otče k Tata!</b></p>
         <p>Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu, v hlase Ducha –<i> Rûach </i>– ktorý vanie kam chce.</p>
@@ -260,6 +317,27 @@
         <p>Zdieľam s vami duchovné slová, ktoré vyrástli z ticha, z bolesti, z hľadania… </p>
         <p>Hovorím o viere, ktorá sa nebojí otázok, o láske, ktorá nesúdi, a o slobode, ktorá prichádza, keď dýchame Božím Duchom - keď dýchame jeho Slovo.</p>
         <p>* * *</p>
+    </div>
+
+    <!-- SECTION 1: ZAMYSLENIA -->
+    <div id="zamyslenia" class="section">
+        <h2>Zamyslenia</h2>
+        <p>Tu nájdeš hlboké zamyslenia nad Božím Slovom, ktoré ťa pozývajú zastaviť sa, počúvať a nechať sa viesť Duchom.</p>
+        <p>Každý text je ako dych – krátky, no plný života.</p>
+    </div>
+
+    <!-- SECTION 2: DUCHOVNÉ CVIČENIA -->
+    <div id="cvicenia" class="section">
+        <h2>Duchovné Cvičenia</h2>
+        <p>Ponúkame jednoduché duchovné cvičenia, ktoré ti pomôžu prežívať prítomnosť Boha v každodennom živote.</p>
+        <p>Dýchanie, ticho, slovo – to všetko môže byť modlitbou.</p>
+    </div>
+
+    <!-- SECTION 3: PRE DETI -->
+    <div id="deti" class="section">
+        <h2>Pre Deti</h2>
+        <p>Deti sú najbližšie k Božiemu kráľovstvu. Tu nájdeš príbehy, aktivity a modlitby, ktoré hovoria ich jazykom.</p>
+        <p>Spoločne objavujeme, že Boh je Tata, ktorý sa raduje z detskej viery.</p>
     </div>
 
     <!-- PRODUCT GALLERY -->
