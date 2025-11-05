@@ -15,11 +15,11 @@
             color: #333;
         }
 
-        /* HEADER: BANNER + PROFILE + CENTER TITLE + SOCIAL */
+        /* HEADER: BANNER + PROFILE + TITLE + SOCIAL */
         .header {
             position: relative;
             max-width: 1200px;
-            margin: 0 auto 40px; /* Reduced */
+            margin: 0 auto 30px; /* Minimal space after */
             text-align: center;
         }
         .banner {
@@ -96,16 +96,19 @@
         .social-links .ig:hover {background: #E4405F;}
         .social-links .x:hover  {background: #000000;}
 
-        /* INTRO TEXT — ALMOST NO GAP */
+        /* INTRO TEXT — STARTS IMMEDIATELY BELOW PROFILE ROW */
         .intro-container {
             max-width: 900px;
-            margin: 10px auto 20px; /* Reduced to 10px top */
+            margin: -40px auto 30px; /* Negative margin pulls it up */
+            padding-top: 0;
             text-align: center;
             font-size: 16px;
             line-height: 1.6;
+            position: relative;
+            z-index: 5;
         }
         .intro-container p {
-            margin: 8px 0; /* Tight line spacing */
+            margin: 6px 0;
         }
         .intro-container b {font-weight: 600;}
         .intro-container i {font-style: italic;}
@@ -162,7 +165,7 @@
 
         /* RESPONSIVE */
         @media (max-width: 900px) {
-            .header {margin-bottom: 30px;}
+            .header {margin-bottom: 20px;}
             .profile-row {
                 flex-direction: column;
                 top: -40px;
@@ -177,25 +180,30 @@
                 margin: 0;
             }
             .social-links {gap: 12px;}
-            .intro-container {margin-top: 15px;}
+            .intro-container {
+                margin: -30px auto 20px;
+            }
         }
         @media (max-width: 600px) {
             .banner {max-height: 200px;}
-            .header {margin-bottom: 20px;}
+            .header {margin-bottom: 10px;}
             .profile-row {top: -30px;}
             .profile-overlap {width: 120px; height: 120px;}
             .profile-name {font-size: 28px;}
             .social-links {gap: 10px;}
             .social-links a {width: 40px; height: 40px; line-height: 40px; font-size: 19px;}
-            .intro-container {margin-top: 10px; padding: 0 15px;}
-            .intro-container p {margin: 6px 0;}
+            .intro-container {
+                margin: -20px auto 20px;
+                padding: 0 15px;
+            }
+            .intro-container p {margin: 5px 0;}
             .gallery {flex-direction: column; align-items: center;}
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER: BANNER + PROFILE + CENTER TITLE + SOCIAL -->
+    <!-- HEADER: BANNER + PROFILE + TITLE + SOCIAL -->
     <div class="header">
         <img src="banner.png" alt="Dýchaj Slovo Banner" class="banner">
 
@@ -230,7 +238,7 @@
         </div>
     </div>
 
-    <!-- INTRO TEXT — ALMOST NO GAP */
+    <!-- INTRO TEXT — STARTS DIRECTLY BELOW PROFILE ROW -->
     <div class="intro-container">
         <p><b>Od oltára k rodinnému stolu, od otče k Tata!</b></p>
         <p>Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu, v hlase Ducha –<i> Rûach </i>– ktorý vanie kam chce.</p>
