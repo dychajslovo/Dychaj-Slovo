@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dýchaj Slovo</title>
-    <!-- Fredoka + Open Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -30,6 +29,37 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             display: block;
         }
+        .cart-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #2c495e;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+        .cart-btn:hover {
+            background: #3fcfd5;
+        }
+        .cart-count {
+            background: #ff4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
         .profile-row {
             display: flex;
@@ -42,7 +72,6 @@
             top: -140px;
             z-index: 10;
         }
-
         .profile-left {
             display: flex;
             align-items: flex-end;
@@ -56,7 +85,6 @@
             border: 6px solid white;
             box-shadow: 0 6px 16px rgba(0,0,0,0.2);
         }
-
         .profile-name {
             font-family: 'Fredoka', sans-serif;
             font-weight: 600;
@@ -70,7 +98,7 @@
             padding-bottom: 8px;
         }
 
-        /* INTRO TEXT — RIGHT AFTER TITLE */
+        /* INTRO TEXT */
         .intro-top {
             max-width: 900px;
             margin: -90px auto 15px;
@@ -80,13 +108,11 @@
             position: relative;
             z-index: 5;
         }
-        .intro-top p {
-            margin: 8px 0;
-        }
-        .intro-top b {font-weight: 600;}
-        .intro-top i {font-style: italic;}
+        .intro-top p { margin: 8px 0; }
+        .intro-top b { font-weight: 600; }
+        .intro-top i { font-style: italic; }
 
-        /* NAVIGATION BUTTONS — SAME WIDTH, EVENLY SPACED */
+        /* NAVIGATION BUTTONS */
         .nav-buttons {
             display: flex;
             justify-content: center;
@@ -113,10 +139,8 @@
         .nav-btn:hover {
             background: #3fcfd5;
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
 
-        /* CLOSING INTRO TEXT — AFTER BUTTONS */
         .intro-bottom {
             max-width: 900px;
             margin: 0 auto 50px;
@@ -124,9 +148,7 @@
             font-size: 16px;
             line-height: 1.6;
         }
-        .intro-bottom p {
-            margin: 6px 0;
-        }
+        .intro-bottom p { margin: 6px 0; }
 
         /* SECTIONS */
         .section {
@@ -150,7 +172,7 @@
             margin: 12px 0;
         }
 
-        /* PRODUCT IN SECTION */
+        /* PRODUCT */
         .section-product {
             background: #f9f9f9;
             border-radius: 8px;
@@ -171,7 +193,7 @@
             color: #444;
             margin: 8px 0;
         }
-        .detail-btn {
+        .add-to-cart {
             background: #6b9b78;
             color: white;
             border: none;
@@ -182,60 +204,9 @@
             font-size: 15px;
             font-weight: 600;
         }
-        .detail-btn:hover {background: #5a8a66;}
+        .add-to-cart:hover { background: #5a8a66; }
 
-        /* POPUP MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            text-align: center;
-            position: relative;
-        }
-        .close-modal {
-            position: absolute;
-            top: 10px; right: 15px;
-            font-size: 28px;
-            cursor: pointer;
-            color: #aaa;
-        }
-        .close-modal:hover {color: #000;}
-        .modal img {
-            width: 100%;
-            max-height: 250px;
-            object-fit: contain;
-            border-radius: 8px;
-            margin: 15px 0;
-        }
-        .modal h3 {font-size: 20px; margin: 10px 0;}
-        .modal p {font-size: 15px; color: #555; margin: 8px 0;}
-        .order-btn {
-            background: #4CAF50;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-            margin-top: 15px;
-        }
-        .order-btn:hover {background: #45a049;}
-
-        /* CONTACT SECTION */
+        /* CONTACT */
         .contact-section {
             max-width: 900px;
             margin: 40px auto 60px;
@@ -253,10 +224,7 @@
             border-top: 2px solid #ddd;
             margin: 0 auto 20px;
         }
-        .contact-section p {
-            font-size: 16px;
-            margin: 8px 0;
-        }
+        .contact-section p { font-size: 16px; margin: 8px 0; }
         .contact-section .social-links {
             display: flex;
             gap: 14px;
@@ -264,40 +232,27 @@
             margin-top: 20px;
         }
 
-        /* SMOOTH SCROLL */
-        html {scroll-behavior: smooth;}
-
         /* RESPONSIVE */
         @media (max-width: 900px) {
-            .header {margin-bottom: 20px;}
-            .profile-row {top: -65px; flex-direction: column; align-items: center; gap: 15px;}
-            .profile-overlap {width: 160px; height: 160px;}
-            .profile-name {font-size: 36px; margin: 0; padding-bottom: 0;}
-            .intro-top {margin: -50px auto 15px;}
-            .nav-buttons {gap: 12px; margin: 0 auto 20px;}
-            .nav-btn {min-width: 180px; font-size: 15px; padding: 12px 0;}
-            .intro-bottom {margin: 0 auto 40px;}
-            .section {margin: 40px auto; padding: 20px;}
-            .section h2 {font-size: 28px;}
-            .section-product {max-width: 300px;}
-            .contact-section {margin: 30px auto;}
-            .contact-section h2 {font-size: 24px;}
+            .profile-row { top: -65px; flex-direction: column; gap: 15px; }
+            .profile-overlap { width: 160px; height: 160px; }
+            .profile-name { font-size: 36px; }
+            .intro-top { margin: -50px auto 15px; }
+            .nav-buttons { gap: 12px; }
+            .nav-btn { min-width: 180px; font-size: 15px; }
+            .section { margin: 40px auto; padding: 20px; }
+            .section h2 { font-size: 28px; }
+            .contact-section h2 { font-size: 24px; }
         }
         @media (max-width: 600px) {
-            .banner {max-height: 200px;}
-            .header {margin-bottom: 10px;}
-            .profile-row {top: -55px;}
-            .profile-overlap {width: 140px; height: 140px;}
-            .profile-name {font-size: 30px;}
-            .social-links a {width: 40px; height: 40px; line-height: 40px; font-size: 19px;}
-            .intro-top {margin: -40px auto 12px; padding: 0 15px;}
-            .nav-buttons {gap: 8px;}
-            .nav-btn {min-width: 140px; font-size: 14px; padding: 10px 0;}
-            .intro-bottom {padding: 0 15px;}
-            .section {padding: 15px;}
-            .modal-content {padding: 20px;}
-            .contact-section h2 {font-size: 22px;}
-            .contact-section p {font-size: 14px;}
+            .banner { max-height: 200px; }
+            .profile-row { top: -55px; }
+            .profile-overlap { width: 140px; height: 140px; }
+            .profile-name { font-size: 30px; }
+            .nav-btn { min-width: 140px; font-size: 14px; }
+            .section { padding: 15px; }
+            .contact-section h2 { font-size: 22px; }
+            .contact-section p { font-size: 14px; }
         }
     </style>
 </head>
@@ -306,6 +261,12 @@
     <!-- HEADER -->
     <div class="header">
         <img src="banner.png" alt="Dýchaj Slovo Banner" class="banner">
+        <button class="cart-btn" onclick="window.location.href='kosik.html'">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                <path d="M17 18c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7-3h-4.8c-.4 0-.8-.3-.9-.7l-1.3-4.3H7c-.6 0-1-.4-1-1V6c0-.6.4-1 1-1h12c.6 0 1 .4 1 1v2c0 .6-.4 1-1 1H9l.6 2h7.4c.4 0 .8.3.9.7l1.5 5c.1.4-.1.8-.5.9-.1 0-.2 0-.3 0H8c-.6 0-1-.4-1-1v-1h2v1c0 .6.4 1 1 1h8c.6 0 1-.4 1-1v-1h-2v1z"/>
+            </svg>
+            <span id="cartCount">0</span>
+        </button>
 
         <div class="profile-row">
             <div class="profile-left">
@@ -315,7 +276,7 @@
         </div>
     </div>
 
-    <!-- INTRO TEXT: PART 1 — RIGHT AFTER TITLE -->
+    <!-- INTRO -->
     <div class="intro-top">
         <p><b>Od oltára k rodinnému stolu, od otče k Tata!</b></p>
         <p>Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu, v hlase Ducha – <i>Rûach</i> – ktorý vanie kam chce.</p>
@@ -326,131 +287,78 @@
         <p>Preto zdieľam s vami duchovné slová, ktoré vyrástli z ticha, z bolesti, z hľadania:</p>
     </div>
 
-    <!-- NAVIGATION BUTTONS — SAME WIDTH -->
     <div class="nav-buttons">
-        <button class="nav-btn" onclick="document.getElementById('uvahy').scrollIntoView({behavior: 'smooth'})">Denné úvahy z Božieho Slova</button>
-        <button class="nav-btn" onclick="document.getElementById('cvicenia').scrollIntoView({behavior: 'smooth'})">Duchovné Cvičenia</button>
-        <button class="nav-btn" onclick="document.getElementById('deti').scrollIntoView({behavior: 'smooth'})">Všetko pre Deti</button>
+        <button class="nav-btn" onclick="document.getElementById('deti').scrollIntoView()">Všetko pre Deti</button>
+        <button class="nav-btn" onclick="document.getElementById('uvahy').scrollIntoView()">Denné úvahy</button>
+        <button class="nav-btn" onclick="document.getElementById('cvicenia').scrollIntoView()">Duchovné Cvičenia</button>
     </div>
 
-    <!-- INTRO TEXT: PART 2 — AFTER BUTTONS -->
     <div class="intro-bottom">
         <p>Hovorím o viere, ktorá sa nebojí otázok, o láske, ktorá nesúdi, a o slobode, ktorá prichádza, keď dýchame Božím Duchom - keď dýchame jeho Slovo.</p>
         <p>* * *</p>
     </div>
 
-    <!-- SECTION 1: Denné úvahy z Božieho Slova -->
-    <div id="uvahy" class="section">
-        <h2>Denné úvahy z Božieho Slova</h2>
-        <p>Tu nájdeš hlboké zamyslenia nad Božím Slovom, ktoré ťa pozývajú zastaviť sa, počúvať a nechať sa viesť Duchom.</p>
-        <p>Každý text je ako dych – krátky, no plný života.</p>
-
-        <!-- Product 1 -->
-        <div class="section-product">
-            <img src="zamyslenia_cover.jpg" alt="Každý deň s Duchom">
-            <h3>Každý deň s Duchom</h3>
-            <button class="detail-btn" onclick="openModal('Každý deň s Duchom', '€12', '30 strán denného čítania a modlitby', 'zamyslenia_cover.jpg')">Detaily</button>
-        </div>
-
-        <!-- Product 2 -->
-        <div class="section-product">
-            <img src="ADVENT-UVAHYcover.jpeg" alt="Advent Úvahy">
-            <h3>Advent, Denné úvahy z Božieho Slova</h3>
-            <button class="detail-btn" onclick="openModal('Advent, Denné úvahy z Božieho Slova', '€10', 'Adventný zošit s každodennými úvahami', 'ADVENT-UVAHYcover.jpeg')">Detaily</button>
-        </div>
-    </div>
-
-    <!-- SECTION 2: DUCHOVNÉ CVIČENIA -->
-    <div id="cvicenia" class="section">
-        <h2>Duchovné Cvičenia</h2>
-        <p>Ponúkame jednoduché duchovné cvičenia, ktoré ti pomôžu prežívať prítomnosť Boha v každodennom živote.</p>
-        <p>Dýchanie, ticho, slovo – to všetko môže byť modlitbou.</p>
-
-        <!-- Product 1 -->
-        <div class="section-product">
-            <img src="cvicenia_cover.jpg" alt="Dýchaj a Modli sa">
-            <h3>Dýchaj a Modli sa</h3>
-            <button class="detail-btn" onclick="openModal('Dýchaj a Modli sa', '€8', '10 jednoduchých cvičení pre pokoj mysle', 'cvicenia_cover.jpg')">Detaily</button>
-        </div>
-
-        <!-- Product 2 -->
-        <div class="section-product">
-            <img src="ADAMcover.png" alt="Adam, kde si?">
-            <h3>Adam, kde si?</h3>
-            <button class="detail-btn" onclick="openModal('Adam, kde si?', '€9', 'Duchovné cvičenie na hľadanie seba v Božej prítomnosti', 'ADAMcover.png')">Detaily</button>
-        </div>
-    </div>
-
-    <!-- SECTION 3: VŠETKO PRE DETI -->
+    <!-- SECTION 1: VŠETKO PRE DETI -->
     <div id="deti" class="section">
         <h2>Všetko Pre Deti</h2>
         <p>Deti sú najbližšie k Božiemu kráľovstvu. Tu nájdeš príbehy, aktivity a modlitby, ktoré hovoria ich jazykom.</p>
         <p>Spoločne objavujeme, že Boh je Tata, ktorý sa raduje z detskej viery.</p>
         <div class="section-product">
             <img src="ADVENTcover.jpeg" alt="Advent Cover">
-            <h3>Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, TAU</h3>
-            <button class="detail-btn" onclick="openModal('Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor', '€10', 'Adventný zošit pre deti a rodiny', 'ADVENTcover.jpeg')">Detaily</button>
+            <h3>Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor</h3>
+            <button class="add-to-cart" onclick="addToCart('Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor', '€10', 'ADVENTcover.jpeg')">Do košíka</button>
         </div>
     </div>
 
-    <!-- CONTACT SECTION -->
+    <!-- SECTION 2: DENNÉ ÚVAHY -->
+    <div id="uvahy" class="section">
+        <h2>Denné úvahy z Božieho Slova</h2>
+        <p>Tu nájdeš hlboké zamyslenia nad Božím Slovom, ktoré ťa pozývajú zastaviť sa, počúvať a nechať sa viesť Duchom.</p>
+        <div class="section-product">
+            <img src="ADVENT-UVAHYcover.jpeg" alt="Advent Úvahy">
+            <h3>Advent, Denné úvahy z Božieho Slova</h3>
+            <button class="add-to-cart" onclick="addToCart('Advent, Denné úvahy z Božieho Slova', '€10', 'ADVENT-UVAHYcover.jpeg')">Do košíka</button>
+        </div>
+    </div>
+
+    <!-- SECTION 3: DUCHOVNÉ CVIČENIA -->
+    <div id="cvicenia" class="section">
+        <h2>Duchovné Cvičenia</h2>
+        <p>Ponúkame jednoduché duchovné cvičenia, ktoré ti pomôžu prežívať prítomnosť Boha v každodennom živote.</p>
+        <div class="section-product">
+            <img src="ADAMcover.png" alt="Adam, kde si?">
+            <h3>Adam, kde si?</h3>
+            <button class="add-to-cart" onclick="addToCart('Adam, kde si?', '€9', 'ADAMcover.png')">Do košíka</button>
+        </div>
+    </div>
+
+    <!-- CONTACT -->
     <div class="contact-section">
         <h2>Kontakt</h2>
         <hr>
         <p>dychajslovo@gmail.com</p>
         <p>+421944338237</p>
         <div class="social-links">
-            <a href="https://facebook.com/profile.php?id=61581374472536" target="_blank" class="fb" title="Facebook">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                    <path d="M22.676 0H1.324C.593 0 0 .593 0 1.324v21.352C0 23.407.593 24 1.324 24h11.494v-9.294H9.689v-3.622h3.129V8.412c0-3.1 1.893-4.788 4.657-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.324V1.324C24 .593 23.407 0 22.676 0z"/>
-                </svg>
-            </a>
-            <a href="https://instagram.com/dychajslovo" target="_blank" class="ig" title="Instagram">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.697.272 1.052 1.936 1.052 6.292c0 1.28-.014 1.688-.072 2.968C.88 13.616.272 15.26.272 19.616c0 4.357.608 5.997 2.34 5.997.73.058 1.138.072 3.332.072 3.259 0 3.667-.014 4.947.072 4.357-.2 5.997-.808 5.997-2.34 0-1.28.014-1.688.072-2.968.1-4.357.708-5.997 2.34-5.997.73-.058 1.138-.072 3.332-.072z"/>
-                    <path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/>
-                </svg>
-            </a>
-            <a href="https://x.com/DychajSlovo" target="_blank" class="x" title="X (Twitter)">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-            </a>
-        </div>
-    </div>
-
-    <!-- MODAL POPUP -->
-    <div id="productModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">x</span>
-            <img id="modalImg" src="" alt="">
-            <h3 id="modalTitle"></h3>
-            <p id="modalPrice"></p>
-            <p id="modalDesc"></p>
-            <button id="orderBtn" class="order-btn">Objednať</button>
+            <a href="https://facebook.com/profile.php?id=61581374472536" target="_blank" class="fb"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M22.676 0H1.324C.593 0 0 .593 0 1.324v21.352C0 23.407.593 24 1.324 24h11.494v-9.294H9.689v-3.622h3.129V8.412c0-3.1 1.893-4.788 4.657-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.324V1.324C24 .593 23.407 0 22.676 0z"/></svg></a>
+            <a href="https://instagram.com/dychajslovo" target="_blank" class="ig"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.697.272 1.052 1.936 1.052 6.292c0 1.28-.014 1.688-.072 2.968C.88 13.616.272 15.26.272 19.616c0 4.357.608 5.997 2.34 5.997.73.058 1.138.072 3.332.072 3.259 0 3.667-.014 4.947.072 4.357-.2 5.997-.808 5.997-2.34 0-1.28.014-1.688.072-2.968.1-4.357. brought708-5.997 2.34-5.997.73-.058 1.138-.072 3.332-.072z"/><path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/></svg></a>
+            <a href="https://x.com/DychajSlovo" target="_blank" class="x"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
         </div>
     </div>
 
     <script>
-        function openModal(title, price, desc, img) {
-            const modal = document.getElementById('productModal');
-            document.getElementById('modalTitle').textContent = title;
-            document.getElementById('modalPrice').textContent = price;
-            document.getElementById('modalDesc').textContent = desc;
-            document.getElementById('modalImg').src = img;
-            document.getElementById('orderBtn').onclick = function() {
-                const subject = `Order: ${title}`;
-                const body = `Hi!\nI want to buy: ${title}\nDetails: ${price}\n\nName:\nAddress:\nPayment:\n\nThanks!`;
-                location.href = `mailto:dychajslovo@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            };
-            modal.style.display = 'flex';
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        updateCartCount();
+
+        function addToCart(title, price, img) {
+            const item = { title, price, img };
+            cart.push(item);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            alert(`${title} bol pridaný do košíka!`);
         }
-        function closeModal() {
-            document.getElementById('productModal').style.display = 'none';
-        }
-        window.onclick = function(e) {
-            const modal = document.getElementById('productModal');
-            if (e.target == modal) closeModal();
+
+        function updateCartCount() {
+            document.getElementById('cartCount').textContent = cart.length;
         }
     </script>
 </body>
