@@ -23,7 +23,7 @@
 <div class="c">
     <div class="icon">Checkmark</div>
     <h1>Ďakujeme za vašu objednávku!</h1>
-    <p>Vaša objednávka bola <strong>úspešne odoslaná</strong>.</p>
+    <p>Vaša objednávka bola <strong>úspešne prijatá</strong>.</p>
     <p>Čoskoro vás budeme kontaktovať s detailmi o platbe a doručení.</p>
 
     <div class="order-details" id="summary">
@@ -53,10 +53,10 @@
             ${orderData.address}<br>
             ${orderData.email}
         `;
-    }
 
-    // Optional: Clear after 5 seconds
-    setTimeout(() => localStorage.removeItem('lastOrder'), 5000);
+        // Optional: Clear after 5 seconds
+        setTimeout(() => localStorage.removeItem('lastOrder'), 5000);
+    }
 </script>
 </body>
 </html>
