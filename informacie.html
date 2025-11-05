@@ -40,7 +40,7 @@
 </div>
 
 <script>
-    // === YOUR IDs (100% CORRECT) ===
+    // === YOUR IDs ===
     const SERVICE_ID = 'service_6kg0otj';
     const TEMPLATE_ID = 'template_v4pzx2s';
     const USER_ID = 'user_N9nGtzWyuXyl8vF8L';
@@ -79,16 +79,14 @@
         let shipPrice = shipping.includes('€') ? parseFloat(shipping.split('€')[1]) : 0;
         let total = subtotal + shipPrice;
 
-        const templateParams = {
-            to_name: 'Dýchaj Slovo',
-            from_name: name,
-            from_email: email,
-            address: `${street}, ${city}, ${zip}`,
-            shipping: shipping,
-            items: items,
-            total: `€${total.toFixed(2)}`,
-            note: note || 'Žiadna'
-        };
+        const body = `NOVÁ OBJEDNÁVKA\n\n` +
+            `Meno: ${name}\n` +
+            `Adresa: ${street}, ${city}, ${zip}\n` +
+            `E-mail: ${email}\n` +
+            `Doprava: ${shipping}\n` +
+            `Poznámka: ${note || 'Žiadna'}\n\n` +
+            `Položky:\n${items}\n\n` +
+            `SPOLU: €${total.toFixed(2)}`;
 
         // === SAVE ORDER FOR CONFIRMATION ===
         localStorage.setItem('lastOrder', JSON.stringify({
@@ -97,25 +95,38 @@
             total: total.toFixed(2)
         }));
 
-        // === TRY EMAIL (but don't block redirect) ===
-        emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
-            .then(() => {
-                console.log('Email sent!');
-                status.textContent = 'Objednávka odoslaná!';
-                status.className = 'status success';
-            })
-            .catch((err) => {
-                console.error('Email failed:', err);
-                status.textContent = 'Email zlyhal, ale objednávka uložená.';
-                status.className = 'status error';
-            });
+        // === TRY EMAILJS ===
+        emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+            from_name: name,
+            from_email: email,
+            address: `${street}, ${city}, ${zip}`,
+            shipping: shipping,
+            items: items,
+            total: `€${total.toFixed(2)}`,
+            note: note || 'Žiadna'
+        })
+        .then(() => {
+            status.textContent = 'Objednávka odoslaná!';
+            status.className = 'status success';
+            redirectNow();
+        })
+        .catch((err) => {
+            console.error('EmailJS failed:', err);
+            // === FALLBACK: Open mailto (user sends manually) ===
+            const mailto = `mailto:dychajslovo@gmail.com?subject=Objednávka&body=${encodeURIComponent(body)}`;
+            window.location.href = mailto;
+            status.textContent = 'Otvorí sa e-mail...';
+            status.className = 'status';
+            setTimeout(redirectNow, 2000);
+        });
 
-        // === GUARANTEED REDIRECT AFTER 2 SECONDS ===
-        setTimeout(() => {
+        function redirectNow() {
             localStorage.removeItem('cart');
             localStorage.removeItem('shipping');
-            window.location.replace('potvrdenie.html');  // Force redirect
-        }, 2000);
+            setTimeout(() => {
+                window.location.replace('potvrdenie.html');
+            }, 1500);
+        }
     }
 </script>
 </body>
