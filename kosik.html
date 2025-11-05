@@ -9,13 +9,33 @@
         body{font-family:'Open Sans',sans-serif;margin:40px;background:#f4f4f4;color:#333}
         .c{max-width:800px;margin:auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
         h1{font-family:'Fredoka',sans-serif;color:#2c495e;text-align:center;margin-bottom:20px}
-        .i{display:flex;gap:15px;padding:15px;border-bottom:1px solid #eee;align-items:center}
+        .i{
+            display:flex;gap:15px;padding:15px;border-bottom:1px solid #eee;align-items:center;
+            position:relative;
+        }
         .i img{width:80px;height:80px;object-fit:contain;border-radius:6px}
+        .remove{
+            position:absolute;right:15px;top:50%;transform:translateY(-50%);
+            background:#ff4444;color:#fff;width:28px;height:28px;border-radius:50%;
+            border:none;font-weight:bold;cursor:pointer;font-size:14px;
+        }
+        .remove:hover{background:#cc0000}
         .t{font-weight:600;font-size:18px;text-align:right;margin:20px 0}
-        .b{background:#2c495e;color:#fff;padding:12px 20px;border:none;border-radius:30px;cursor:pointer;font-weight:600}
+        .btn-container{
+            display:flex;gap:15px;justify-content:space-between;align-items:center;
+            margin-top:30px;
+        }
+        .b{
+            background:#2c495e;color:#fff;padding:12px 20px;border:none;border-radius:30px;
+            cursor:pointer;font-weight:600;flex:1;max-width:200px;text-align:center;
+        }
         .b:hover{background:#3fcfd5}
         .back{background:#aaa}
         .back:hover{background:#999}
+        @media (max-width:600px){
+            .btn-container{flex-direction:column}
+            .b{max-width:none}
+        }
     </style>
 </head>
 <body>
@@ -23,31 +43,64 @@
     <h1>Váš košík</h1>
     <div id="items"></div>
     <div class="t">Spolu: <span id="total">€0</span></div>
-    <button class="b" onclick="location.href='doprava.html'">Pokračovať</button>
-    <button class="b back" onclick="location.href='index.html'">Späť na hlavnú</button>
+
+    <div class="btn-container">
+        <button class="b back" onclick="location.href='index.html'">Späť na hlavnú</button>
+        <button class="b" onclick="location.href='doprava.html'" id="continueBtn" style="display:none;">Pokračovať</button>
+    </div>
 </div>
 
 <script>
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
     const container = document.getElementById('items');
-    let total = 0;
+    const continueBtn = document.getElementById('continueBtn');
 
-    if (!cart.length) {
-        container.innerHTML = '<p>Košík je prázdny.</p>';
-    } else {
-        cart.forEach(p => {
-            const price = parseFloat(p.price.replace('€',''));
-            total += price;
-            container.innerHTML += `
-                <div class="i">
-                    <img src="${p.img}" alt="${p.title}">
-                    <div>
-                        <strong>${p.title}</strong><br>${p.price}
+    function renderCart() {
+        container.innerHTML = '';
+        let total = 0;
+
+        if (cart.length === 0) {
+            container.innerHTML = '<p>Košík je prázdny.</p>';
+            continueBtn.style.display = 'none';
+            document.querySelector('.t').style.display = 'none';
+        } else {
+            document.querySelector('.t').style.display = 'block';
+            continueBtn.style.display = 'block';
+
+            cart.forEach((item, index) => {
+                const price = parseFloat(item.price.replace('€',''));
+                total += price;
+
+                const div = document.createElement('div');
+                div.className = 'i';
+                div.innerHTML = `
+                    <img src="${item.img}" alt="${item.title}">
+                    <div style="flex:1">
+                        <strong>${item.title}</strong><br>${item.price}
                     </div>
-                </div>`;
-        });
+                    <button class="remove" onclick="removeItem(${index})">X</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+        document.getElementById('total').textContent = `€${total.toFixed(2)}`;
     }
-    document.getElementById('total').textContent = `€${total.toFixed(2)}`;
+
+    function removeItem(index) {
+        cart.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+        updateCartCount();
+    }
+
+    function updateCartCount() {
+        const count = cart.length;
+        const cartBtn = document.querySelector('#cartCount');
+        if (cartBtn) cartBtn.textContent = count;
+    }
+
+    // Initial render
+    renderCart();
 </script>
 </body>
 </html>
