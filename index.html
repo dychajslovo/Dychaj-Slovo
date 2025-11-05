@@ -13,7 +13,6 @@
             background: #f4f4f4;
             color: #333;
         }
-
         /* HEADER */
         .header {
             position: relative;
@@ -58,7 +57,6 @@
             align-items: center;
             justify-content: center;
         }
-
         .profile-row {
             display: flex;
             align-items: flex-end;
@@ -95,7 +93,6 @@
             line-height: 1;
             padding-bottom: 8px;
         }
-
         /* INTRO */
         .intro-top {
             max-width: 900px;
@@ -109,7 +106,6 @@
         .intro-top p { margin: 8px 0; }
         .intro-top b { font-weight: 600; }
         .intro-top i { font-style: italic; }
-
         .nav-buttons {
             display: flex;
             justify-content: center;
@@ -137,7 +133,6 @@
             background: #3fcfd5;
             transform: translateY(-2px);
         }
-
         .intro-bottom {
             max-width: 900px;
             margin: 0 auto 50px;
@@ -146,7 +141,6 @@
             line-height: 1.6;
         }
         .intro-bottom p { margin: 6px 0; }
-
         /* SECTIONS */
         .section {
             max-width: 900px;
@@ -168,7 +162,6 @@
             line-height: 1.7;
             margin: 12px 0;
         }
-
         /* PRODUCT */
         .section-product {
             background: #f9f9f9;
@@ -190,10 +183,9 @@
             color: #444;
             margin: 8px 0;
         }
-
         /* BUTTONS */
-        .detail-btn, .preview-btn, .add-to-cart {
-            background: #6b9b78;
+        .detail-btn {
+            background: #2c495e;
             color: white;
             border: none;
             padding: 10px;
@@ -204,11 +196,10 @@
             font-weight: 600;
             margin: 6px 0;
         }
-        .detail-btn:hover, .preview-btn:hover, .add-to-cart:hover {
-            background: #5a8a66;
+        .detail-btn:hover {
+            background: #3fcfd5;
         }
-
-        /* DETAIL POPUP */
+        /* DETAIL MODAL */
         .detail-modal {
             display: none;
             position: fixed;
@@ -218,69 +209,83 @@
             z-index: 2000;
             justify-content: center;
             align-items: center;
+            padding: 20px;
+        }
+        .detail-modal.active {
+            display: flex;
         }
         .detail-modal .box {
             background: #fff;
-            padding: 30px;
+            padding: 25px;
             border-radius: 12px;
             max-width: 500px;
-            width: 90%;
+            width: 100%;
             text-align: center;
             position: relative;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
         }
         .detail-modal .close {
             position: absolute;
-            top: 10px; right: 15px;
+            top: 12px; right: 15px;
             font-size: 28px;
             cursor: pointer;
             color: #aaa;
+            background: none;
+            border: none;
         }
         .detail-modal .close:hover { color: #000; }
         .detail-modal img {
-            max-height: 250px;
+            max-height: 280px;
+            width: 100%;
             object-fit: contain;
             margin: 15px 0;
             border-radius: 8px;
         }
-
-        /* FULL-SCREEN GALLERY */
-        .gallery-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #000;
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
+        .detail-modal h3 {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #333;
         }
-        .gallery-modal img {
-            max-width: 90%;
-            max-height: 90vh;
-            object-fit: contain;
+        .detail-modal .price {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c495e;
+            margin: 8px 0;
         }
-        .gallery-modal .nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 40px;
-            cursor: pointer;
-            user-select: none;
-            color: #fff;
-            opacity: 0.7;
+        .detail-modal .desc {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #555;
+            margin: 12px 0;
         }
-        .gallery-modal .nav:hover { opacity: 1; }
-        .gallery-modal .prev { left: 20px; }
-        .gallery-modal .next { right: 20px; }
-        .gallery-modal .close-g {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 36px;
+        .modal-btns {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
         }
-
+        .preview-btn {
+            background: #2c495e;
+            color: white;
+        }
+        .preview-btn:hover {
+            background: #3fcfd5;
+        }
+        .add-to-cart-btn {
+            background: #4CAF50;
+            color: white;
+        }
+        .add-to-cart-btn:hover {
+            background: #45a049;
+        }
         /* CONTACT */
         .contact-section {
             max-width: 900px;
@@ -306,7 +311,6 @@
             justify-content: center;
             margin-top: 20px;
         }
-
         /* RESPONSIVE */
         @media (max-width: 900px) {
             .profile-row { top: -65px; flex-direction: column; gap: 15px; }
@@ -328,6 +332,7 @@
             .section { padding: 15px; }
             .contact-section h2 { font-size: 22px; }
             .contact-section p { font-size: 14px; }
+            .modal-btns { flex-direction: column; }
         }
     </style>
 </head>
@@ -342,7 +347,6 @@
             </svg>
             <span id="cartCount">0</span>
         </button>
-
         <div class="profile-row">
             <div class="profile-left">
                 <img src="profile.jpg" alt="Mathias" class="profile-overlap">
@@ -361,13 +365,11 @@
         <p><b><i>"Dýchaj Slovo – dýchaj moje Slovo – dýchaj Život, ktorý som Ja sám, a poď za mnou – taký, aký si, s tými, ktorých som ti dal."</i></b></p>
         <p>Preto zdieľam s vami duchovné slová, ktoré vyrástli z ticha, z bolesti, z hľadania:</p>
     </div>
-
     <div class="nav-buttons">
         <button class="nav-btn" onclick="document.getElementById('deti').scrollIntoView()">Všetko pre Deti</button>
         <button class="nav-btn" onclick="document.getElementById('uvahy').scrollIntoView()">Denné úvahy</button>
         <button class="nav-btn" onclick="document.getElementById('cvicenia').scrollIntoView()">Duchovné Cvičenia</button>
     </div>
-
     <div class="intro-bottom">
         <p>Hovorím o viere, ktorá sa nebojí otázok, o láske, ktorá nesúdi, a o slobode, ktorá prichádza, keď dýchame Božím Duchom - keď dýchame jeho Slovo.</p>
         <p>* * *</p>
@@ -378,25 +380,16 @@
         <h2>Všetko Pre Deti</h2>
         <p>Deti sú najbližšie k Božiemu kráľovstvu. Tu nájdeš príbehy, aktivity a modlitby, ktoré hovoria ich jazykom.</p>
         <p>Spoločne objavujeme, že Boh je Tata, ktorý sa raduje z detskej viery.</p>
-
         <div class="section-product">
             <img src="ADVENTcover.jpeg" alt="Advent Cover">
             <h3>Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor</h3>
-            <button class="detail-btn" onclick="openDetail(
+            <button class="detail-btn" onclick="openProductDetail(
                 'Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor',
                 '€10',
                 'Adventný zošit pre deti a rodiny s čítaním, modlitbami, maľovankami a tvorivými úlohami.',
                 'ADVENTcover.jpeg',
                 ['ADVENTcover.jpeg', 'ADVENT-UVAHYcover.jpeg']
             )">Detaily</button>
-
-            <button class="preview-btn" onclick="openGallery(['ADVENTcover.jpeg', 'ADVENT-UVAHYcover.jpeg'])">Ukážka</button>
-
-            <button class="add-to-cart" onclick="addToCart(
-                'Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor',
-                '€10',
-                'ADVENTcover.jpeg'
-            )">Do košíka</button>
         </div>
     </div>
 
@@ -404,25 +397,16 @@
     <div id="uvahy" class="section">
         <h2>Denné úvahy z Božieho Slova</h2>
         <p>Tu nájdeš hlboké zamyslenia nad Božím Slovom, ktoré ťa pozývajú zastaviť sa, počúvať a nechať sa viesť Duchom.</p>
-
         <div class="section-product">
             <img src="ADVENT-UVAHYcover.jpeg" alt="Advent Úvahy">
             <h3>Advent, Denné úvahy z Božieho Slova</h3>
-            <button class="detail-btn" onclick="openDetail(
+            <button class="detail-btn" onclick="openProductDetail(
                 'Advent, Denné úvahy z Božieho Slova',
                 '€10',
                 'Každodenné zamyslenia na Advent, ktoré ťa pozývajú k hlbšiemu stíšeniu a načúvaniu Božiemu slovu.',
                 'ADVENT-UVAHYcover.jpeg',
                 ['ADVENT-UVAHYcover.jpeg', 'ADVENTcover.jpeg']
             )">Detaily</button>
-
-            <button class="preview-btn" onclick="openGallery(['ADVENT-UVAHYcover.jpeg', 'ADVENTcover.jpeg'])">Ukážka</button>
-
-            <button class="add-to-cart" onclick="addToCart(
-                'Advent, Denné úvahy z Božieho Slova',
-                '€10',
-                'ADVENT-UVAHYcover.jpeg'
-            )">Do košíka</button>
         </div>
     </div>
 
@@ -430,25 +414,16 @@
     <div id="cvicenia" class="section">
         <h2>Duchovné Cvičenia</h2>
         <p>Ponúkame jednoduché duchovné cvičenia, ktoré ti pomôžu prežívať prítomnosť Boha v každodennom živote.</p>
-
         <div class="section-product">
             <img src="ADAMcover.png" alt="Adam, kde si?">
             <h3>Adam, kde si?</h3>
-            <button class="detail-btn" onclick="openDetail(
+            <button class="detail-btn" onclick="openProductDetail(
                 'Adam, kde si?',
                 '€9',
                 'Duchovné cvičenie na hľadanie seba v Božej prítomnosti – jednoduché kroky k vnútornému pokoju.',
                 'ADAMcover.png',
                 ['ADAMcover.png', 'ADVENTcover.jpeg']
             )">Detaily</button>
-
-            <button class="preview-btn" onclick="openGallery(['ADAMcover.png', 'ADVENTcover.jpeg'])">Ukážka</button>
-
-            <button class="add-to-cart" onclick="addToCart(
-                'Adam, kde si?',
-                '€9',
-                'ADAMcover.png'
-            )">Do košíka</button>
         </div>
     </div>
 
@@ -465,9 +440,23 @@
         </div>
     </div>
 
+    <!-- DETAIL MODAL -->
+    <div id="detailModal" class="detail-modal">
+        <div class="box">
+            <button class="close" onclick="closeDetail()">x</button>
+            <img id="modalImg" src="" alt="">
+            <h3 id="modalTitle"></h3>
+            <div class="price" id="modalPrice"></div>
+            <p class="desc" id="modalDesc"></p>
+            <div class="modal-btns">
+                <button class="modal-btn preview-btn" id="previewBtn">Ukážka</button>
+                <button class="modal-btn add-to-cart-btn" id="addToCartBtn">Do košíka</button>
+            </div>
+        </div>
+    </div>
+
     <!-- SCRIPTS -->
     <script>
-        /* CART */
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         updateCartCount();
 
@@ -476,40 +465,43 @@
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartCount();
             alert(`${title} bol pridaný do košíka!`);
+            closeDetail();
         }
 
         function updateCartCount() {
             document.getElementById('cartCount').textContent = cart.length;
         }
 
-        /* DETAIL POPUP */
-        function openDetail(title, price, desc, img, previewList) {
-            const modal = document.createElement('div');
-            modal.className = 'detail-modal';
-            modal.innerHTML = `
-                <div class="box">
-                    <span class="close" onclick="this.parentNode.parentNode.remove()">x</span>
-                    <img src="${img}" alt="${title}">
-                    <h3>${title}</h3>
-                    <p><strong>${price}</strong></p>
-                    <p>${desc}</p>
-                    <button class="add-to-cart" style="margin-top:15px;" onclick="addToCart('${title}','${price}','${img}');this.parentNode.parentNode.remove();">
-                        Do košíka
-                    </button>
-                </div>`;
-            document.body.appendChild(modal);
-            modal.style.display = 'flex';
+        let currentProduct = {};
+        function openProductDetail(title, price, desc, img, previewList) {
+            currentProduct = { title, price, img, previewList };
+            document.getElementById('modalImg').src = img;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalPrice').textContent = price;
+            document.getElementById('modalDesc').textContent = desc;
+
+            document.getElementById('previewBtn').onclick = () => openGallery(previewList);
+            document.getElementById('addToCartBtn').onclick = () => addToCart(title, price, img);
+
+            document.getElementById('detailModal').classList.add('active');
         }
 
-        /* FULL-SCREEN GALLERY */
+        function closeDetail() {
+            document.getElementById('detailModal').classList.remove('active');
+        }
+
+        // Close on outside click
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target === this) closeDetail();
+        });
+
+        // Gallery (reused from your original)
         let galleryIndex = 0;
         let galleryImages = [];
-
         function openGallery(imgArray) {
             galleryImages = imgArray;
             galleryIndex = 0;
             showGalleryImage();
-
             const modal = document.createElement('div');
             modal.className = 'gallery-modal';
             modal.innerHTML = `
