@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dýchaj Slovo</title>
-    <!-- Elegant Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Fredoka + Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Open Sans', Arial, sans-serif;
@@ -14,13 +14,12 @@
             background: #f4f4f4;
             color: #333;
         }
-        h1 {text-align:center; color:#333;}
 
-        /* HEADER: BANNER + OVERLAPPING PROFILE + NAME */
+        /* HEADER: BANNER + PROFILE + CENTER TITLE + SOCIAL */
         .header {
             position: relative;
             max-width: 1200px;
-            margin: 0 auto 80px;
+            margin: 0 auto 100px;
             text-align: center;
         }
         .banner {
@@ -31,53 +30,53 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             display: block;
         }
+
+        /* PROFILE + TITLE + SOCIAL ROW */
+        .profile-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            top: -60px;
+            z-index: 10;
+        }
+
+        .profile-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
         .profile-overlap {
-            position: absolute;
-            bottom: -70px;
-            left: 18%;
-            transform: translateX(-50%);
             width: 190px;
             height: 190px;
             border-radius: 50%;
             object-fit: cover;
             border: 6px solid white;
             box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-            z-index: 10;
         }
+
+        /* CENTER TITLE */
         .profile-name {
-            position: absolute;
-            bottom: -40px;
-            left: 22%;
-            transform: translateX(-50%);
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            font-size: 36px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 42px;
             color: #222;
             text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            white-space: nowrap;
-            z-index: 11;
-        }
-
-        /* INTRO TEXT BELOW */
-        .intro-container {
-            max-width: 900px;
-            margin: 100px auto 20px;
+            flex: 1;
             text-align: center;
-            font-size: 16px;
-            line-height: 1.6;
+            margin: 0 30px;
         }
-        .intro-container p {margin: 10px 0;}
-        .intro-container b {font-weight: 600;}
-        .intro-container i {font-style: italic;}
 
-        /* SOCIAL MEDIA ICONS */
+        /* SOCIAL ICONS ON RIGHT */
         .social-links {
-            text-align: center;
-            margin: 20px 0 40px;
+            display: flex;
+            gap: 14px;
         }
         .social-links a {
             display: inline-block;
-            margin: 0 14px;
             width: 46px;
             height: 46px;
             background: #555;
@@ -96,6 +95,18 @@
         .social-links .fb:hover {background: #1877F2;}
         .social-links .ig:hover {background: #E4405F;}
         .social-links .x:hover  {background: #000000;}
+
+        /* INTRO TEXT BELOW */
+        .intro-container {
+            max-width: 900px;
+            margin: 40px auto 20px;
+            text-align: center;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .intro-container p {margin: 10px 0;}
+        .intro-container b {font-weight: 600;}
+        .intro-container i {font-style: italic;}
 
         /* PRODUCT GALLERY */
         .gallery {
@@ -149,59 +160,69 @@
 
         /* RESPONSIVE */
         @media (max-width: 900px) {
+            .profile-row {
+                flex-direction: column;
+                top: -40px;
+                gap: 15px;
+            }
             .profile-overlap {
-                left: 50%;
                 width: 140px;
                 height: 140px;
-                bottom: -60px;
             }
             .profile-name {
-                left: 50%;
-                bottom: -35px;
-                font-size: 28px;
+                font-size: 34px;
+                margin: 0;
             }
-            .intro-container {margin-top: 90px;}
+            .social-links {gap: 12px;}
+            .intro-container {margin-top: 60px;}
         }
         @media (max-width: 600px) {
             .banner {max-height: 200px;}
-            .profile-overlap {width: 120px; height: 120px; bottom: -50px;}
-            .profile-name {
-                font-size: 24px;
-                bottom: -30px;
-            }
-            .intro-container {margin-top: 80px; padding: 0 15px;}
+            .profile-row {top: -30px;}
+            .profile-overlap {width: 120px; height: 120px;}
+            .profile-name {font-size: 28px;}
+            .social-links {gap: 10px;}
+            .social-links a {width: 40px; height: 40px; line-height: 40px; font-size: 19px;}
+            .intro-container {margin-top: 50px; padding: 0 15px;}
             .gallery {flex-direction: column; align-items: center;}
-            .social-links a {width: 40px; height: 40px; line-height: 40px; font-size: 19px; margin: 0 10px;}
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER: BANNER + OVERLAPPING PROFILE + NAME -->
+    <!-- HEADER: BANNER + PROFILE + CENTER TITLE + SOCIAL -->
     <div class="header">
         <img src="banner.png" alt="Dýchaj Slovo Banner" class="banner">
-        <img src="profile.jpg" alt="Mathias" class="profile-overlap">
-        <div class="profile-name">Dýchaj Slovo</div>
-    </div>
 
-    <!-- SOCIAL MEDIA ICONS -->
-    <div class="social-links">
-        <a href="https://facebook.com/profile.php?id=61581374472536" target="_blank" class="fb" title="Facebook">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                <path d="M22.676 0H1.324C.593 0 0 .593 0 1.324v21.352C0 23.407.593 24 1.324 24h11.494v-9.294H9.689v-3.622h3.129V8.412c0-3.1 1.893-4.788 4.657-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.324V1.324C24 .593 23.407 0 22.676 0z"/>
-            </svg>
-        </a>
-        <a href="https://instagram.com/dychajslovo" target="_blank" class="ig" title="Instagram">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.697.272 1.052 1.936 1.052 6.292c0 1.28-.014 1.688-.072 2.968C.88 13.616.272 15.26.272 19.616c0 4.357.608 5.997 2.34 5.997.73.058 1.138.072 3.332.072 3.259 0 3.667-.014 4.947.072 4.357-.2 5.997-.808 5.997-2.34 0-1.28.014-1.688.072-2.968.1-4.357.708-5.997 2.34-5.997.73-.058 1.138-.072 3.332-.072z"/>
-                <path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/>
-            </svg>
-        </a>
-        <a href="https://x.com/DychajSlovo" target="_blank" class="x" title="X (Twitter)">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-        </a>
+        <div class="profile-row">
+            <!-- LEFT: Profile -->
+            <div class="profile-left">
+                <img src="profile.jpg" alt="Mathias" class="profile-overlap">
+            </div>
+
+            <!-- CENTER: Title -->
+            <div class="profile-name">Dýchaj Slovo</div>
+
+            <!-- RIGHT: Social Icons -->
+            <div class="social-links">
+                <a href="https://facebook.com/profile.php?id=61581374472536" target="_blank" class="fb" title="Facebook">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path d="M22.676 0H1.324C.593 0 0 .593 0 1.324v21.352C0 23.407.593 24 1.324 24h11.494v-9.294H9.689v-3.622h3.129V8.412c0-3.1 1.893-4.788 4.657-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.324V1.324C24 .593 23.407 0 22.676 0z"/>
+                    </svg>
+                </a>
+                <a href="https://instagram.com/dychajslovo" target="_blank" class="ig" title="Instagram">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.697.272 1.052 1.936 1.052 6.292c0 1.28-.014 1.688-.072 2.968C.88 13.616.272 15.26.272 19.616c0 4.357.608 5.997 2.34 5.997.73.058 1.138.072 3.332.072 3.259 0 3.667-.014 4.947.072 4.357-.2 5.997-.808 5.997-2.34 0-1.28.014-1.688.072-2.968.1-4.357.708-5.997 2.34-5.997.73-.058 1.138-.072 3.332-.072z"/>
+                        <path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/>
+                    </svg>
+                </a>
+                <a href="https://x.com/DychajSlovo" target="_blank" class="x" title="X (Twitter)">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
     </div>
 
     <!-- INTRO TEXT -->
