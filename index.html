@@ -15,7 +15,7 @@
             color: #333;
         }
 
-        /* HEADER: BANNER + PROFILE + TITLE + SOCIAL */
+        /* HEADER */
         .header {
             position: relative;
             max-width: 1200px;
@@ -31,7 +31,6 @@
             display: block;
         }
 
-        /* PROFILE + TITLE + SOCIAL ROW — ALIGNED TO BOTTOM */
         .profile-row {
             display: flex;
             align-items: flex-end;
@@ -40,7 +39,7 @@
             margin: 0 auto;
             padding: 0 20px;
             position: relative;
-            top: -140px;
+            top: -85px;
             z-index: 10;
         }
 
@@ -97,18 +96,18 @@
         .social-links .ig:hover {background: #E4405F;}
         .social-links .x:hover  {background: #000000;}
 
-        /* NAVIGATION BUTTONS — BEFORE INTRO */
+        /* NAVIGATION BUTTONS — SMALLER GAP */
         .nav-buttons {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: -50px auto 20px;
+            gap: 18px;
+            margin: -30px auto 20px; /* Reduced from -50px */
             max-width: 900px;
             z-index: 10;
             position: relative;
         }
         .nav-btn {
-            background: #2c495e;
+            background: #4a7c59;
             color: white;
             border: none;
             padding: 12px 24px;
@@ -120,7 +119,7 @@
             box-shadow: 0 3px 8px rgba(0,0,0,0.15);
         }
         .nav-btn:hover {
-            background: #2c495e;
+            background: #3a6b49;
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
@@ -139,7 +138,7 @@
         .intro-container b {font-weight: 600;}
         .intro-container i {font-style: italic;}
 
-        /* SECTION STYLES */
+        /* SECTIONS */
         .section {
             max-width: 900px;
             margin: 60px auto;
@@ -152,7 +151,7 @@
         .section h2 {
             font-family: 'Fredoka', sans-serif;
             font-size: 32px;
-            color: #2c495e;
+            color: #4a7c59;
             margin-bottom: 20px;
         }
         .section p {
@@ -161,91 +160,106 @@
             margin: 12px 0;
         }
 
-        /* PRODUCT GALLERY */
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            max-width: 1200px;
-            margin: 60px auto;
-        }
-        .product {
-            background: white;
+        /* PRODUCT IN SECTION */
+        .section-product {
+            background: #f9f9f9;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,.1);
             padding: 15px;
-            text-align: center;
-            width: 250px;
-            height: 380px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
+            margin: 20px auto;
+            max-width: 350px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
-        .product img {
-            max-width: 100%;
-            max-height: 200px;
-            height: auto;
+        .section-product img {
+            width: 100%;
+            height: 180px;
             object-fit: contain;
-            display: block;
-            margin: 0 auto;
-            border-radius: 4px;
-            flex-shrink: 0;
+            border-radius: 6px;
+            margin-bottom: 12px;
         }
-        .product h3 {
-            margin: 10px 0;
-            color: #555;
-            flex-grow: 1;
+        .section-product h3 {
+            font-size: 16px;
+            color: #444;
+            margin: 8px 0;
+        }
+        .detail-btn {
+            background: #6b9b78;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
             font-size: 15px;
+            font-weight: 600;
         }
-        .buy-button {
+        .detail-btn:hover {background: #5a8a66;}
+
+        /* POPUP MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+        }
+        .close-modal {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #aaa;
+        }
+        .close-modal:hover {color: #000;}
+        .modal img {
+            width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .modal h3 {font-size: 20px; margin: 10px 0;}
+        .modal p {font-size: 15px; color: #555; margin: 8px 0;}
+        .order-btn {
             background: #4CAF50;
             color: white;
-            padding: 10px;
+            padding: 12px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             width: 100%;
             font-size: 16px;
+            margin-top: 15px;
         }
-        .buy-button:hover {background: #45a049;}
+        .order-btn:hover {background: #45a049;}
 
         /* SMOOTH SCROLL */
-        html {
-            scroll-behavior: smooth;
-        }
+        html {scroll-behavior: smooth;}
 
         /* RESPONSIVE */
         @media (max-width: 900px) {
             .header {margin-bottom: 20px;}
-            .profile-row {
-                top: -65px;
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
-            .profile-overlap {
-                width: 160px;
-                height: 160px;
-            }
-            .profile-name {
-                font-size: 36px;
-                margin: 0;
-                padding-bottom: 0;
-            }
-            .nav-buttons {
-                margin: -40px auto 15px;
-                gap: 12px;
-                flex-wrap: wrap;
-            }
-            .nav-btn {
-                padding: 10px 18px;
-                font-size: 15px;
-            }
+            .profile-row {top: -65px; flex-direction: column; align-items: center; gap: 15px;}
+            .profile-overlap {width: 160px; height: 160px;}
+            .profile-name {font-size: 36px; margin: 0; padding-bottom: 0;}
+            .nav-buttons {margin: -25px auto 15px; gap: 12px; flex-wrap: wrap;}
+            .nav-btn {padding: 10px 18px; font-size: 15px;}
             .intro-container {margin: 10px auto 30px;}
             .section {margin: 40px auto; padding: 20px;}
             .section h2 {font-size: 28px;}
+            .section-product {max-width: 300px;}
         }
         @media (max-width: 600px) {
             .banner {max-height: 200px;}
@@ -258,26 +272,21 @@
             .nav-btn {padding: 8px 14px; font-size: 14px;}
             .intro-container {padding: 0 15px;}
             .section {padding: 15px;}
-            .gallery {flex-direction: column; align-items: center;}
+            .modal-content {padding: 20px;}
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER: BANNER + PROFILE + TITLE + SOCIAL -->
+    <!-- HEADER -->
     <div class="header">
         <img src="banner.png" alt="Dýchaj Slovo Banner" class="banner">
 
         <div class="profile-row">
-            <!-- LEFT: Profile -->
             <div class="profile-left">
                 <img src="profile.jpg" alt="Mathias" class="profile-overlap">
             </div>
-
-            <!-- CENTER: Title -->
             <div class="profile-name">Dýchaj Slovo</div>
-
-            <!-- RIGHT: Social Icons -->
             <div class="social-links">
                 <a href="https://facebook.com/profile.php?id=61581374472536" target="_blank" class="fb" title="Facebook">
                     <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
@@ -301,9 +310,9 @@
 
     <!-- NAVIGATION BUTTONS -->
     <div class="nav-buttons">
-        <button class="nav-btn" onclick="document.getElementById('zamyslenia').scrollIntoView({behavior: 'smooth'})">Denné úvahy z Božieho Slova</button>
-        <button class="nav-btn" onclick="document.getElementById('cvicenia').scrollIntoView({behavior: 'smooth'})">Duchovné Cvičenia</button>
-        <button class="nav-btn" onclick="document.getElementById('deti').scrollIntoView({behavior: 'smooth'})">Všetko pre Deti</button>
+        <button class="nav-btn" onclick="document.getElementById('zamyslenia').scrollIntoView({behavior: 'smooth'})">Zamyslenia</button>
+        <button class="nav-btn" onclick="document.getElementById('cvicenia').scrollIntoView({behavior: 'smooth'})">Cvičenia</button>
+        <button class="nav-btn" onclick="document.getElementById('deti').scrollIntoView({behavior: 'smooth'})">Deti</button>
     </div>
 
     <!-- INTRO TEXT -->
@@ -321,40 +330,74 @@
 
     <!-- SECTION 1: ZAMYSLENIA -->
     <div id="zamyslenia" class="section">
-        <h2>Denné úvahy z Božieho Slova</h2>
+        <h2>Zamyslenia</h2>
         <p>Tu nájdeš hlboké zamyslenia nad Božím Slovom, ktoré ťa pozývajú zastaviť sa, počúvať a nechať sa viesť Duchom.</p>
-        <p>Každý text je ako dych – krátky, no plný života.</p>
+        <div class="section-product">
+            <img src="zamyslenia_cover.jpg" alt="Zamyslenia Cover">
+            <h3>Každý deň s Duchom</h3>
+            <button class="detail-btn" onclick="openModal('Každý deň s Duchom', '€12', '30 strán denného čítania a modlitby', 'zamyslenia_cover.jpg')">Detaily</button>
+        </div>
     </div>
 
     <!-- SECTION 2: DUCHOVNÉ CVIČENIA -->
     <div id="cvicenia" class="section">
         <h2>Duchovné Cvičenia</h2>
         <p>Ponúkame jednoduché duchovné cvičenia, ktoré ti pomôžu prežívať prítomnosť Boha v každodennom živote.</p>
-        <p>Dýchanie, ticho, slovo – to všetko môže byť modlitbou.</p>
+        <div class="section-product">
+            <img src="cvicenia_cover.jpg" alt="Cvičenia Cover">
+            <h3>Dýchaj a Modli sa</h3>
+            <button class="detail-btn" onclick="openModal('Dýchaj a Modli sa', '€8', '10 jednoduchých cvičení pre pokoj mysle', 'cvicenia_cover.jpg')">Detaily</button>
+        </div>
     </div>
 
-    <!-- SECTION 3: VŠETKO PRE DETI -->
+    <!-- SECTION 3: PRE DETI -->
     <div id="deti" class="section">
-        <h2>Všetko Pre Deti</h2>
+        <h2>Pre Deti</h2>
         <p>Deti sú najbližšie k Božiemu kráľovstvu. Tu nájdeš príbehy, aktivity a modlitby, ktoré hovoria ich jazykom.</p>
-        <p>Spoločne objavujeme, že Boh je Tata, ktorý sa raduje z detskej viery.</p>
-    </div>
-
-    <!-- PRODUCT GALLERY -->
-    <div class="gallery">
-        <div class="product">
+        <div class="section-product">
             <img src="ADVENTcover.jpeg" alt="Advent Cover">
             <h3>Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor</h3>
-            <button class="buy-button" onclick="sendEmail('Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor', '€10')">Objednať</button>
+            <button class="detail-btn" onclick="openModal('Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor', '€10', 'Adventný zošit pre deti a rodiny', 'ADVENTcover.jpeg')">Detaily</button>
         </div>
-        <!-- Add more products here -->
+    </div>
+
+    <!-- MODAL POPUP -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">x</span>
+            <img id="modalImg" src="" alt="">
+            <h3 id="modalTitle"></h3>
+            <p id="modalPrice"></p>
+            <p id="modalDesc"></p>
+            <button id="orderBtn" class="order-btn">Objednať</button>
+        </div>
     </div>
 
     <script>
-        function sendEmail(product, details){
-            const subject = `Order: ${product}`;
-            const body = `Hi!\nI want to buy: ${product}\nDetails: ${details}\n\nName:\nAddress:\nPayment:\n\nThanks!`;
-            location.href = `mailto:dychajslovo@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        function openModal(title, price, desc, img) {
+            const modal = document.getElementById('productModal');
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalPrice').textContent = price;
+            document.getElementById('modalDesc').textContent = desc;
+            document.getElementById('modalImg').src = img;
+
+            document.getElementById('orderBtn').onclick = function() {
+                const subject = `Order: ${title}`;
+                const body = `Hi!\nI want to buy: ${title}\nDetails: ${price}\n\nName:\nAddress:\nPayment:\n\nThanks!`;
+                location.href = `mailto:dychajslovo@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            };
+
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(e) {
+            const modal = document.getElementById('productModal');
+            if (e.target == modal) closeModal();
         }
     </script>
 </body>
