@@ -17,7 +17,7 @@
         .order-btn:hover{background:#45a049}
         .back{background:#aaa;color:#fff}
         .back:hover{background:#999}
-        .loading{display:none;color:#2c495e;margin-top:15px;font-weight:600}
+        .loading{display:none;color:#2c495e;margin-top:15px;font-weight:600;text-align:center}
     </style>
 </head>
 <body>
@@ -38,8 +38,8 @@
 </div>
 
 <script>
-    // REPLACE THESE WITH YOUR EMAILJS CREDENTIALS
-        const SERVICE_ID = 'service_6kg0otj';
+    // === YOUR EMAILJS IDs ===
+    const SERVICE_ID = 'service_6kg0otj';
     const TEMPLATE_ID = 'template_v4pzx2s';
     const USER_ID = 'user_N9nGtzWyuXyl8vF8L';
 
@@ -86,24 +86,29 @@
             note: note || 'Žiadna'
         };
 
+        // === SAVE ORDER FIRST (for confirmation page) ===
+        localStorage.setItem('lastOrder', JSON.stringify({
+            name, address: `${street}, ${city}, ${zip}`, email, shipping,
+            items: cart.map(i => `${i.title} – ${i.price}`),
+            total: total.toFixed(2)
+        }));
+
+        // === TRY TO SEND EMAIL ===
         emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
             .then(() => {
-                // Save order for confirmation
-                localStorage.setItem('lastOrder', JSON.stringify({
-                    name, address: `${street}, ${city}, ${zip}`, email, shipping,
-                    items: cart.map(i => `${i.title} – ${i.price}`),
-                    total: total.toFixed(2)
-                }));
-
-                localStorage.removeItem('cart');
-                localStorage.removeItem('shipping');
-
-                window.location.href = 'potvrdenie.html';
+                console.log('Email sent successfully!');
             })
             .catch((error) => {
-                console.error('EmailJS Error:', error);
-                alert('Chyba pri odosielaní. Skúste neskôr.');
-                loading.style.display = 'none';
+                console.error('EmailJS failed:', error);
+                alert('Email sa nepodarilo odoslať, ale objednávka je uložená.');
+            })
+            .finally(() => {
+                // === ALWAYS REDIRECT AFTER 1.5 SECONDS ===
+                setTimeout(() => {
+                    localStorage.removeItem('cart');
+                    localStorage.removeItem('shipping');
+                    window.location.href = 'potvrdenie.html';
+                }, 1500);
             });
     }
 </script>
