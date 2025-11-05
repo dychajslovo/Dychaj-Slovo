@@ -19,7 +19,7 @@
         .header {
             position: relative;
             max-width: 1200px;
-            margin: 0 auto 60px; /* Reduced from 100px */
+            margin: 0 auto 40px; /* Reduced */
             text-align: center;
         }
         .banner {
@@ -96,15 +96,17 @@
         .social-links .ig:hover {background: #E4405F;}
         .social-links .x:hover  {background: #000000;}
 
-        /* INTRO TEXT — REDUCED GAP */
+        /* INTRO TEXT — ALMOST NO GAP */
         .intro-container {
             max-width: 900px;
-            margin: 20px auto 20px; /* Reduced from 40px → 20px */
+            margin: 10px auto 20px; /* Reduced to 10px top */
             text-align: center;
             font-size: 16px;
             line-height: 1.6;
         }
-        .intro-container p {margin: 10px 0;}
+        .intro-container p {
+            margin: 8px 0; /* Tight line spacing */
+        }
         .intro-container b {font-weight: 600;}
         .intro-container i {font-style: italic;}
 
@@ -160,7 +162,7 @@
 
         /* RESPONSIVE */
         @media (max-width: 900px) {
-            .header {margin-bottom: 40px;}
+            .header {margin-bottom: 30px;}
             .profile-row {
                 flex-direction: column;
                 top: -40px;
@@ -175,17 +177,18 @@
                 margin: 0;
             }
             .social-links {gap: 12px;}
-            .intro-container {margin-top: 30px;} /* Tighter on tablet */
+            .intro-container {margin-top: 15px;}
         }
         @media (max-width: 600px) {
             .banner {max-height: 200px;}
-            .header {margin-bottom: 30px;}
+            .header {margin-bottom: 20px;}
             .profile-row {top: -30px;}
             .profile-overlap {width: 120px; height: 120px;}
             .profile-name {font-size: 28px;}
             .social-links {gap: 10px;}
             .social-links a {width: 40px; height: 40px; line-height: 40px; font-size: 19px;}
-            .intro-container {margin-top: 20px; padding: 0 15px;}
+            .intro-container {margin-top: 10px; padding: 0 15px;}
+            .intro-container p {margin: 6px 0;}
             .gallery {flex-direction: column; align-items: center;}
         }
     </style>
@@ -227,7 +230,7 @@
         </div>
     </div>
 
-    <!-- INTRO TEXT — TIGHTER GAP -->
+    <!-- INTRO TEXT — ALMOST NO GAP */
     <div class="intro-container">
         <p><b>Od oltára k rodinnému stolu, od otče k Tata!</b></p>
         <p>Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu, v hlase Ducha –<i> Rûach </i>– ktorý vanie kam chce.</p>
