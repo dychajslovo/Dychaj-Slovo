@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaše informácie – Dýchaj Slovo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body{font-family:'Open Sans',sans-serif;margin:40px;background:#f4f4f4;color:#333}
+        .c{max-width:800px;margin:auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+        h1{font-family:'Fredoka',sans-serif;color:#2c495e;text-align:center;margin-bottom:20px}
+        input,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:6px;font-size:16px}
+        .b{background:#4CAF50;color:#fff;padding:14px;border:none;border-radius:30px;cursor:pointer;width:100%;font-size:16px;margin-top:20px;font-weight:600}
+        .b:hover{background:#45a049}
+    </style>
+</head>
+<body>
+<div class="c">
+    <h1>Vaše informácie</h1>
+    <input type="text" id="name" placeholder="Meno a priezvisko" required>
+    <input type="text" id="street" placeholder="Ulica a číslo" required>
+    <input type="text" id="city" placeholder="Mesto" required>
+    <input type="text" id="zip" placeholder="PSČ" required>
+    <input type="email" id="email" placeholder="E-mail" required>
+    <textarea id="note" rows="3" placeholder="Poznámka (voliteľné)"></textarea>
+    <button class="b" onclick="sendOrder()">Objednať</button>
+</div>
+
+<script>
+    function sendOrder(){
+        const cart = JSON.parse(localStorage.getItem('cart'))||[];
+        const shipping = localStorage.getItem('shipping')||'Nie je vybrané';
+        const name = document.getElementById('name').value;
+        const street = document.getElementById('street').value;
+        const city = document.getElementById('city').value;
+        const zip = document.getElementById('zip').value;
+        const email = document.getElementById('email').value;
+        const note = document.getElementById('note').value;
+
+        let items = cart.map(i=>`${i.title} – ${i.price}`).join('\n');
+        let subtotal = cart.reduce((s,i)=>s+parseFloat(i.price.replace('€','')),0);
+        let shipPrice = shipping.includes('€') ? parseFloat(shipping.split('€')[1]) : 0;
+        let total = subtotal + shipPrice;
+
+        const body = `NOVÁ OBJEDNÁVKA\n\n`+
+            `Meno: ${name}\n`+
+            `Adresa: ${street}, ${city}, ${zip}\n`+
+            `E-mail: ${email}\n`+
+            `Doprava: ${shipping}\n`+
+            `Poznámka: ${note}\n\n`+
+            `Položky:\n${items}\n\n`+
+            `SPOLU: €${total.toFixed(2)}`;
+
+        location.href = `mailto:dychajslovo@gmail.com?subject=Objednávka&body=${encodeURIComponent(body)}`;
+
+        // clear cart after sending
+        localStorage.removeItem('cart');
+        localStorage.removeItem('shipping');
+        alert('Objednávka bola odoslaná! Ďakujeme.');
+        setTimeout(()=>location.href='index.html',2000);
+    }
+</script>
+</body>
+</html>
