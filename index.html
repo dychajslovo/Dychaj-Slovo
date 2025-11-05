@@ -28,14 +28,15 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             display: block;
         }
+        /* FIXED CART BUTTON */
         .cart-btn {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 20px;
             background: #2c495e;
             color: white;
             border: none;
-            padding: 12px 18px;
+            padding: 12px 20px;
             border-radius: 30px;
             font-weight: 600;
             cursor: pointer;
@@ -43,19 +44,21 @@
             align-items: center;
             gap: 8px;
             box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-            z-index: 100;
+            z-index: 1000;
+            font-size: 16px;
         }
         .cart-btn:hover { background: #3fcfd5; }
         .cart-count {
             background: #ff4444;
             color: white;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             font-size: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-weight: bold;
         }
         .profile-row {
             display: flex;
@@ -183,7 +186,6 @@
             color: #444;
             margin: 8px 0;
         }
-        /* BUTTONS */
         .detail-btn {
             background: #2c495e;
             color: white;
@@ -286,6 +288,75 @@
         .add-to-cart-btn:hover {
             background: #45a049;
         }
+        /* GALLERY MODAL */
+        .gallery-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            flex-direction: column;
+        }
+        .gallery-modal.active {
+            display: flex;
+        }
+        .gallery-img {
+            max-width: 90%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            user-select: none;
+            z-index: 10;
+        }
+        .gallery-nav:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        .gallery-prev { left: 20px; }
+        .gallery-next { right: 20px; }
+        .gallery-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 36px;
+            color: white;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .gallery-dots {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .gallery-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #555;
+            cursor: pointer;
+        }
+        .gallery-dot.active {
+            background: #fff;
+        }
         /* CONTACT */
         .contact-section {
             max-width: 900px;
@@ -333,20 +404,21 @@
             .contact-section h2 { font-size: 22px; }
             .contact-section p { font-size: 14px; }
             .modal-btns { flex-direction: column; }
+            .cart-btn { padding: 10px 16px; font-size: 15px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- FIXED CART BUTTON -->
+    <button class="cart-btn" onclick="window.location.href='kosik.html'">
+        Košík
+        <span class="cart-count" id="cartCount">0</span>
+    </button>
+
     <!-- HEADER -->
     <div class="header">
         <img src="banner.png" alt="Dýchaj Slovo Banner" class="banner">
-        <button class="cart-btn" onclick="window.location.href='kosik.html'">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-                <path d="M17 18c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7-3h-4.8c-.4 0-.8-.3-.9-.7l-1.3-4.3H7c-.6 0-1-.4-1-1V6c0-.6.4-1 1-1h12c.6 0 1 .4 1 1v2c0 .6-.4 1-1 1H9l.6 2h7.4c.4 0 .8.3.9.7l1.5 5c.1.4-.1.8-.5.9-.1 0-.2 0-.3 0H8c-.6 0-1-.4-1-1v-1h2v1c0 .6.4 1 1 1h8c.6 0 1-.4 1-1v-1h-2v1z"/>
-            </svg>
-            <span id="cartCount">0</span>
-        </button>
         <div class="profile-row">
             <div class="profile-left">
                 <img src="profile.jpg" alt="Mathias" class="profile-overlap">
@@ -388,7 +460,7 @@
                 '€10',
                 'Adventný zošit pre deti a rodiny s čítaním, modlitbami, maľovankami a tvorivými úlohami.',
                 'ADVENTcover.jpeg',
-                ['ADVENTcover.jpeg', 'ADVENT-UVAHYcover.jpeg']
+                ['ADVENTcover.jpeg', 'ADVENT-UVAHYcover.jpeg', 'preview1.jpg', 'preview2.jpg'] // Add more images here
             )">Detaily</button>
         </div>
     </div>
@@ -405,7 +477,7 @@
                 '€10',
                 'Každodenné zamyslenia na Advent, ktoré ťa pozývajú k hlbšiemu stíšeniu a načúvaniu Božiemu slovu.',
                 'ADVENT-UVAHYcover.jpeg',
-                ['ADVENT-UVAHYcover.jpeg', 'ADVENTcover.jpeg']
+                ['ADVENT-UVAHYcover.jpeg', 'ADVENTcover.jpeg', 'uvahy1.jpg', 'uvahy2.jpg']
             )">Detaily</button>
         </div>
     </div>
@@ -422,7 +494,7 @@
                 '€9',
                 'Duchovné cvičenie na hľadanie seba v Božej prítomnosti – jednoduché kroky k vnútornému pokoju.',
                 'ADAMcover.png',
-                ['ADAMcover.png', 'ADVENTcover.jpeg']
+                ['ADAMcover.png', 'ADVENTcover.jpeg', 'adam1.jpg', 'adam2.jpg']
             )">Detaily</button>
         </div>
     </div>
@@ -455,6 +527,15 @@
         </div>
     </div>
 
+    <!-- GALLERY MODAL -->
+    <div id="galleryModal" class="gallery-modal">
+        <button class="gallery-close" onclick="closeGallery()">x</button>
+        <button class="gallery-nav gallery-prev" onclick="changeImage(-1)">left arrow</button>
+        <img id="galleryImg" class="gallery-img" src="" alt="">
+        <button class="gallery-nav gallery-next" onclick="changeImage(1)">right arrow</button>
+        <div class="gallery-dots" id="galleryDots"></div>
+    </div>
+
     <!-- SCRIPTS -->
     <script>
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -464,8 +545,8 @@
             cart.push({ title, price, img });
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartCount();
-            alert(`${title} bol pridaný do košíka!`);
             closeDetail();
+            // No alert!
         }
 
         function updateCartCount() {
@@ -473,14 +554,20 @@
         }
 
         let currentProduct = {};
+        let galleryImages = [];
+        let currentIndex = 0;
+
         function openProductDetail(title, price, desc, img, previewList) {
-            currentProduct = { title, price, img, previewList };
+            currentProduct = { title, price, img };
+            galleryImages = previewList;
+            currentIndex = 0;
+
             document.getElementById('modalImg').src = img;
             document.getElementById('modalTitle').textContent = title;
             document.getElementById('modalPrice').textContent = price;
             document.getElementById('modalDesc').textContent = desc;
 
-            document.getElementById('previewBtn').onclick = () => openGallery(previewList);
+            document.getElementById('previewBtn').onclick = openGallery;
             document.getElementById('addToCartBtn').onclick = () => addToCart(title, price, img);
 
             document.getElementById('detailModal').classList.add('active');
@@ -490,39 +577,44 @@
             document.getElementById('detailModal').classList.remove('active');
         }
 
-        // Close on outside click
-        document.getElementById('detailModal').addEventListener('click', function(e) {
-            if (e.target === this) closeDetail();
-        });
-
-        // Gallery (reused from your original)
-        let galleryIndex = 0;
-        let galleryImages = [];
-        function openGallery(imgArray) {
-            galleryImages = imgArray;
-            galleryIndex = 0;
+        function openGallery() {
+            currentIndex = 0;
             showGalleryImage();
-            const modal = document.createElement('div');
-            modal.className = 'gallery-modal';
-            modal.innerHTML = `
-                <span class="close-g" onclick="closeGallery()">x</span>
-                <span class="nav prev" onclick="changeGallery(-1)">left arrow</span>
-                <img id="galleryImg" src="${galleryImages[0]}" alt="">
-                <span class="nav next" onclick="changeGallery(1)">right arrow</span>`;
-            document.body.appendChild(modal);
-            modal.style.display = 'flex';
+            document.getElementById('galleryModal').classList.add('active');
         }
 
         function closeGallery() {
-            document.querySelector('.gallery-modal')?.remove();
+            document.getElementById('galleryModal').classList.remove('active');
         }
 
-        function changeGallery(step) {
-            galleryIndex = (galleryIndex + step + galleryImages.length) % galleryImages.length;
-            document.getElementById('galleryImg').src = galleryImages[galleryIndex];
+        function showGalleryImage() {
+            document.getElementById('galleryImg').src = galleryImages[currentIndex];
+            updateDots();
         }
 
-        function showGalleryImage() {}
+        function changeImage(step) {
+            currentIndex = (currentIndex + step + galleryImages.length) % galleryImages.length;
+            showGalleryImage();
+        }
+
+        function updateDots() {
+            const dotsContainer = document.getElementById('galleryDots');
+            dotsContainer.innerHTML = '';
+            galleryImages.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.className = 'gallery-dot';
+                if (i === currentIndex) dot.classList.add('active');
+                dot.onclick = () => {
+                    currentIndex = i;
+                    showGalleryImage();
+                };
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        // Close modals on outside click
+        document.getElementById('detailModal').addEventListener('click', e => e.target === this && closeDetail());
+        document.getElementById('galleryModal').addEventListener('click', e => e.target === this && closeGallery());
     </script>
 </body>
 </html>
