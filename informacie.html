@@ -17,7 +17,9 @@
         .order-btn:hover{background:#45a049}
         .back{background:#aaa;color:#fff}
         .back:hover{background:#999}
-        .loading{display:none;color:#2c495e;margin-top:15px;font-weight:600;text-align:center}
+        .status{display:none;margin-top:15px;padding:12px;border-radius:8px;text-align:center;font-weight:600}
+        .success{background:#d4edda;color:#155724}
+        .error{background:#f8d7da;color:#721c24}
     </style>
 </head>
 <body>
@@ -34,11 +36,11 @@
         <button class="b back" onclick="location.href='index.html'">Späť na hlavnú</button>
         <button class="b order-btn" onclick="sendOrder()">Objednať</button>
     </div>
-    <div class="loading" id="loading">Odosielam objednávku...</div>
+    <div id="status" class="status"></div>
 </div>
 
 <script>
-    // === YOUR EMAILJS IDs ===
+    // === YOUR IDs (100% CORRECT) ===
     const SERVICE_ID = 'service_6kg0otj';
     const TEMPLATE_ID = 'template_v4pzx2s';
     const USER_ID = 'user_N9nGtzWyuXyl8vF8L';
@@ -46,13 +48,15 @@
     emailjs.init(USER_ID);
 
     function sendOrder() {
-        const loading = document.getElementById('loading');
-        loading.style.display = 'block';
+        const status = document.getElementById('status');
+        status.style.display = 'block';
+        status.textContent = 'Odosielam...';
+        status.className = 'status';
 
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         if (cart.length === 0) {
-            alert('Košík je prázdny!');
-            loading.style.display = 'none';
+            status.textContent = 'Košík je prázdny!';
+            status.className = 'status error';
             return;
         }
 
@@ -65,8 +69,8 @@
         const note = document.getElementById('note').value.trim();
 
         if (!name || !street || !city || !zip || !email) {
-            alert('Prosím vyplňte všetky povinné polia.');
-            loading.style.display = 'none';
+            status.textContent = 'Vyplňte všetky polia!';
+            status.className = 'status error';
             return;
         }
 
@@ -86,30 +90,32 @@
             note: note || 'Žiadna'
         };
 
-        // === SAVE ORDER FIRST (for confirmation page) ===
+        // === SAVE ORDER FOR CONFIRMATION ===
         localStorage.setItem('lastOrder', JSON.stringify({
             name, address: `${street}, ${city}, ${zip}`, email, shipping,
             items: cart.map(i => `${i.title} – ${i.price}`),
             total: total.toFixed(2)
         }));
 
-        // === TRY TO SEND EMAIL ===
+        // === TRY EMAIL (but don't block redirect) ===
         emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
             .then(() => {
-                console.log('Email sent successfully!');
+                console.log('Email sent!');
+                status.textContent = 'Objednávka odoslaná!';
+                status.className = 'status success';
             })
-            .catch((error) => {
-                console.error('EmailJS failed:', error);
-                alert('Email sa nepodarilo odoslať, ale objednávka je uložená.');
-            })
-            .finally(() => {
-                // === ALWAYS REDIRECT AFTER 1.5 SECONDS ===
-                setTimeout(() => {
-                    localStorage.removeItem('cart');
-                    localStorage.removeItem('shipping');
-                    window.location.href = 'potvrdenie.html';
-                }, 1500);
+            .catch((err) => {
+                console.error('Email failed:', err);
+                status.textContent = 'Email zlyhal, ale objednávka uložená.';
+                status.className = 'status error';
             });
+
+        // === GUARANTEED REDIRECT AFTER 2 SECONDS ===
+        setTimeout(() => {
+            localStorage.removeItem('cart');
+            localStorage.removeItem('shipping');
+            window.location.replace('potvrdenie.html');  // Force redirect
+        }, 2000);
     }
 </script>
 </body>
