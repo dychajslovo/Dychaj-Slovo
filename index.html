@@ -4,15 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dýchaj Slovo</title>
+    <!-- Elegant Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body {font-family: Arial, sans-serif; margin:0; padding:20px; background:#f4f4f4; color:#333;}
+        body {
+            font-family: 'Open Sans', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f4f4f4;
+            color: #333;
+        }
         h1 {text-align:center; color:#333;}
-        
-        /* HEADER: BANNER + OVERLAPPING PROFILE */
+
+        /* HEADER: BANNER + OVERLAPPING PROFILE + NAME */
         .header {
             position: relative;
             max-width: 1200px;
-            margin: 0 auto 60px;
+            margin: 0 auto 80px;
             text-align: center;
         }
         .banner {
@@ -36,17 +44,30 @@
             box-shadow: 0 6px 16px rgba(0,0,0,0.2);
             z-index: 10;
         }
+        .profile-name {
+            position: absolute;
+            bottom: -40px;
+            left: 22%;
+            transform: translateX(-50%);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 36px;
+            color: #222;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            white-space: nowrap;
+            z-index: 11;
+        }
 
         /* INTRO TEXT BELOW */
         .intro-container {
             max-width: 900px;
-            margin: 80px auto 20px;
+            margin: 100px auto 20px;
             text-align: center;
             font-size: 16px;
             line-height: 1.6;
         }
         .intro-container p {margin: 10px 0;}
-        .intro-container b {font-weight: bold;}
+        .intro-container b {font-weight: 600;}
         .intro-container i {font-style: italic;}
 
         /* SOCIAL MEDIA ICONS */
@@ -134,12 +155,21 @@
                 height: 140px;
                 bottom: -60px;
             }
-            .intro-container {margin-top: 70px;}
+            .profile-name {
+                left: 50%;
+                bottom: -35px;
+                font-size: 28px;
+            }
+            .intro-container {margin-top: 90px;}
         }
         @media (max-width: 600px) {
             .banner {max-height: 200px;}
             .profile-overlap {width: 120px; height: 120px; bottom: -50px;}
-            .intro-container {margin-top: 60px; padding: 0 15px;}
+            .profile-name {
+                font-size: 24px;
+                bottom: -30px;
+            }
+            .intro-container {margin-top: 80px; padding: 0 15px;}
             .gallery {flex-direction: column; align-items: center;}
             .social-links a {width: 40px; height: 40px; line-height: 40px; font-size: 19px; margin: 0 10px;}
         }
@@ -147,10 +177,11 @@
 </head>
 <body>
 
-    <!-- HEADER: BANNER + OVERLAPPING PROFILE -->
+    <!-- HEADER: BANNER + OVERLAPPING PROFILE + NAME -->
     <div class="header">
         <img src="banner.png" alt="Dýchaj Slovo Banner" class="banner">
         <img src="profile.jpg" alt="Mathias" class="profile-overlap">
+        <div class="profile-name">Dýchaj Slovo</div>
     </div>
 
     <!-- SOCIAL MEDIA ICONS -->
@@ -173,7 +204,6 @@
         </a>
     </div>
 
-    
     <!-- INTRO TEXT -->
     <div class="intro-container">
         <p><b>Od oltára k rodinnému stolu, od otče k Tata!</b></p>
@@ -186,7 +216,6 @@
         <p>Hovorím o viere, ktorá sa nebojí otázok, o láske, ktorá nesúdi, a o slobode, ktorá prichádza, keď dýchame Božím Duchom - keď dýchame jeho Slovo.</p>
         <p>* * *</p>
     </div>
-
 
     <!-- PRODUCT GALLERY -->
     <div class="gallery">
