@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Potvrdenie objednávky – Dýchaj Slovo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 40px;
+            background: #f4f4f4;
+            color: #333;
+            text-align: center;
+        }
+        .c {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-family: 'Fredoka', sans-serif;
+            color: #2c495e;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        .icon {
+            font-size: 60px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 17px;
+            line-height: 1.7;
+            margin: 12px 0;
+            color: #444;
+        }
+        .order-details {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            text-align: left;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .btn {
+            background: #2c495e;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background: #3fcfd5;
+        }
+        .back {
+            background: #aaa;
+            margin-left: 15px;
+        }
+        .back:hover {
+            background: #999;
+        }
+        @media (max-width: 600px) {
+            .c { padding: 25px; }
+            h1 { font-size: 28px; }
+            .btn { width: 100%; margin: 10px 0; display: block; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="c">
+    <div class="icon">Checkmark</div>
+    <h1>Ďakujeme za vašu objednávku!</h1>
+    <p>Vaša objednávka bola úspešne prijatá a odoslaná na <strong>dychajslovo@gmail.com</strong>.</p>
+    <p>Čoskoro vás budeme kontaktovať s detailmi o platbe a doručení.</p>
+
+    <div class="order-details" id="summary">
+        <!-- Filled by JavaScript -->
+    </div>
+
+    <div>
+        <a href="index.html" class="btn">Späť na hlavnú</a>
+        <a href="index.html" class="btn back">Zobraziť ponuku</a>
+    </div>
+</div>
+
+<script>
+    // Load order data from localStorage (saved before redirect)
+    const orderData = JSON.parse(localStorage.getItem('lastOrder')) || {};
+
+    if (Object.keys(orderData).length === 0) {
+        document.getElementById('summary').innerHTML = '<p>Žiadne detaily objednávky nie sú dostupné.</p>';
+    } else {
+        let items = orderData.items.map(i => `• ${i}`).join('<br>');
+        let total = orderData.total;
+
+        document.getElementById('summary').innerHTML = `
+            <strong>Objednávka:</strong><br><br>
+            ${items}<br><br>
+            <strong>Doprava:</strong> ${orderData.shipping}<br>
+            <strong>Celkovo:</strong> €${total}<br><br>
+            <strong>Doručenie na:</strong><br>
+            ${orderData.name}<br>
+            ${orderData.address}<br>
+            ${orderData.email}
+        `;
+    }
+
+    // Optional: Clear last order after showing
+    // localStorage.removeItem('lastOrder');
+</script>
+
+</body>
+</html>
