@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vaše informácie – Dýchaj Slovo</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         body{font-family:'Open Sans',sans-serif;margin:40px;background:#f4f4f4;color:#333}
         .c{max-width:800px;margin:auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
@@ -40,17 +39,13 @@
 </div>
 
 <script>
-    // === YOUR IDs ===
-    const SERVICE_ID = 'service_6kg0otj';
-    const TEMPLATE_ID = 'template_v4pzx2s';
-    const USER_ID = 'user_N9nGtzWyuXyl8vF8L';
-
-    emailjs.init(USER_ID);
+    // === YOUR FORMSPREE ENDPOINT (REPLACE WITH YOURS) ===
+    const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID_HERE';  // ← From Formspree dashboard
 
     function sendOrder() {
         const status = document.getElementById('status');
         status.style.display = 'block';
-        status.textContent = 'Odosielam...';
+        status.textContent = 'Odosielam objednávku...';
         status.className = 'status';
 
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -79,54 +74,53 @@
         let shipPrice = shipping.includes('€') ? parseFloat(shipping.split('€')[1]) : 0;
         let total = subtotal + shipPrice;
 
-        const body = `NOVÁ OBJEDNÁVKA\n\n` +
-            `Meno: ${name}\n` +
-            `Adresa: ${street}, ${city}, ${zip}\n` +
-            `E-mail: ${email}\n` +
-            `Doprava: ${shipping}\n` +
-            `Poznámka: ${note || 'Žiadna'}\n\n` +
-            `Položky:\n${items}\n\n` +
-            `SPOLU: €${total.toFixed(2)}`;
-
-        // === SAVE ORDER FOR CONFIRMATION ===
+        // === SAVE FOR CONFIRMATION ===
         localStorage.setItem('lastOrder', JSON.stringify({
             name, address: `${street}, ${city}, ${zip}`, email, shipping,
             items: cart.map(i => `${i.title} – ${i.price}`),
             total: total.toFixed(2)
         }));
 
-        // === TRY EMAILJS ===
-        emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-            from_name: name,
-            from_email: email,
-            address: `${street}, ${city}, ${zip}`,
-            shipping: shipping,
-            items: items,
-            total: `€${total.toFixed(2)}`,
-            note: note || 'Žiadna'
-        })
-        .then(() => {
-            status.textContent = 'Objednávka odoslaná!';
-            status.className = 'status success';
-            redirectNow();
-        })
-        .catch((err) => {
-            console.error('EmailJS failed:', err);
-            // === FALLBACK: Open mailto (user sends manually) ===
-            const mailto = `mailto:dychajslovo@gmail.com?subject=Objednávka&body=${encodeURIComponent(body)}`;
-            window.location.href = mailto;
-            status.textContent = 'Otvorí sa e-mail...';
-            status.className = 'status';
-            setTimeout(redirectNow, 2000);
-        });
+        // === FORM DATA ===
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('address', `${street}, ${city}, ${zip}`);
+        formData.append('shipping', shipping);
+        formData.append('items', items);
+        formData.append('total', `€${total.toFixed(2)}`);
+        formData.append('note', note || 'Žiadna');
 
-        function redirectNow() {
-            localStorage.removeItem('cart');
-            localStorage.removeItem('shipping');
+        // === SEND TO FORMSPREE ===
+        fetch(FORMSPREE_URL, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                status.textContent = 'Objednávka odoslaná!';
+                status.className = 'status success';
+            } else {
+                throw new Error('Formspree error');
+            }
+        })
+        .catch((error) => {
+            console.error('Send error:', error);
+            status.textContent = 'Chyba pri odosielaní. Skúste znova.';
+            status.className = 'status error';
+        })
+        .finally(() => {
+            // === ALWAYS REDIRECT ===
             setTimeout(() => {
+                localStorage.removeItem('cart');
+                localStorage.removeItem('shipping');
                 window.location.replace('potvrdenie.html');
-            }, 1500);
-        }
+            }, 2000);
+        });
     }
 </script>
 </body>
