@@ -39,8 +39,8 @@
 </div>
 
 <script>
-    // === YOUR FORMSPREE ENDPOINT (REPLACE WITH YOURS) ===
-    const FORMSPREE_URL = 'https://formspree.io/f/xrbonqvp';  // ← From Formspree dashboard
+    // === YOUR WEB3FORMS ACCESS KEY ===
+    const WEB3FORMS_KEY = 'efd76031-ddf0-442f-ba6f-552b04369b0e';  // ← PASTE YOUR KEY HERE
 
     function sendOrder() {
         const status = document.getElementById('status');
@@ -74,15 +74,9 @@
         let shipPrice = shipping.includes('€') ? parseFloat(shipping.split('€')[1]) : 0;
         let total = subtotal + shipPrice;
 
-        // === SAVE FOR CONFIRMATION ===
-        localStorage.setItem('lastOrder', JSON.stringify({
-            name, address: `${street}, ${city}, ${zip}`, email, shipping,
-            items: cart.map(i => `${i.title} – ${i.price}`),
-            total: total.toFixed(2)
-        }));
-
         // === FORM DATA ===
         const formData = new FormData();
+        formData.append('access_key', WEB3FORMS_KEY);  // Your key
         formData.append('name', name);
         formData.append('email', email);
         formData.append('address', `${street}, ${city}, ${zip}`);
@@ -91,25 +85,29 @@
         formData.append('total', `€${total.toFixed(2)}`);
         formData.append('note', note || 'Žiadna');
 
-        // === SEND TO FORMSPREE ===
-        fetch(FORMSPREE_URL, {
+        // === SAVE FOR CONFIRMATION ===
+        localStorage.setItem('lastOrder', JSON.stringify({
+            name, address: `${street}, ${city}, ${zip}`, email, shipping,
+            items: cart.map(i => `${i.title} – ${i.price}`),
+            total: total.toFixed(2)
+        }));
+
+        // === SEND TO WEB3FORMS ===
+        fetch('https://api.web3forms.com/submit', {
             method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
+            body: formData
         })
         .then(response => response.json())
         .then(data => {
-            if (data.ok) {
+            if (data.success) {
                 status.textContent = 'Objednávka odoslaná!';
                 status.className = 'status success';
             } else {
-                throw new Error('Formspree error');
+                throw new Error(data.message || 'Unknown error');
             }
         })
         .catch((error) => {
-            console.error('Send error:', error);
+            console.error('Web3Forms failed:', error);
             status.textContent = 'Chyba pri odosielaní. Skúste znova.';
             status.className = 'status error';
         })
