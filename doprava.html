@@ -11,8 +11,19 @@
         h1{font-family:'Fredoka',sans-serif;color:#2c495e;text-align:center;margin-bottom:20px}
         .o{padding:15px;border:2px solid #ddd;border-radius:8px;margin:10px 0;cursor:pointer}
         .o:hover{border-color:#2c495e}
-        .b{background:#2c495e;color:#fff;padding:12px 20px;border:none;border-radius:30px;cursor:pointer;margin-top:20px;font-weight:600}
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .b{
+            background:#2c495e;color:#fff;padding:12px 20px;border:none;border-radius:30px;
+            cursor:pointer;font-weight:600;flex:1;max-width:200px;
+        }
         .b:hover{background:#3fcfd5}
+        .back{background:#aaa}
+        .back:hover{background:#999}
     </style>
 </head>
 <body>
@@ -21,7 +32,11 @@
     <div class="o" onclick="pick('Slovenská pošta – €3')">Slovenská pošta – €3</div>
     <div class="o" onclick="pick('Kuriér – €5')">Kuriér – €5</div>
     <div class="o" onclick="pick('Osobný odber – €0')">Osobný odber – €0</div>
-    <button class="b" onclick="location.href='informacie.html'">Pokračovať</button>
+
+    <div class="btn-container">
+        <button class="b back" onclick="location.href='index.html'">Späť na hlavnú</button>
+        <button class="b" onclick="location.href='informacie.html'">Pokračovať</button>
+    </div>
 </div>
 
 <script>
