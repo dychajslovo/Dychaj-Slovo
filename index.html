@@ -34,7 +34,7 @@
         .profile-row {
             display: flex;
             align-items: flex-end;
-            justify-content: center; /* Centered now that social is moved */
+            justify-content: center;
             max-width: 1100px;
             margin: 0 auto;
             padding: 0 20px;
@@ -315,22 +315,26 @@
         </div>
     </div>
 
-    <!-- NAVIGATION BUTTONS — SMALLER GAP -->
+    <!-- INTRO TEXT: PART 1 — RIGHT AFTER TITLE -->
+    <div class="intro-top">
+        <p><b>Od oltára k rodinnému stolu, od otče k Tata!</b></p>
+        <p>Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu, v hlase Ducha – <i>Rûach</i> – ktorý vanie kam chce.</p>
+        <p>Nie som učiteľ. Som pútnik, ktorý sa učí načúvať Dychu.</p>
+        <p>* * *</p>
+        <p>Denne vnímam v tichu Boha, ako ma vyzýva:</p>
+        <p><b><i>"Dýchaj Slovo – dýchaj moje Slovo – dýchaj Život, ktorý som Ja sám, a poď za mnou – taký, aký si, s tými, ktorých som ti dal."</i></b></p>
+        <p>Preto zdieľam s vami duchovné slová, ktoré vyrástli z ticha, z bolesti, z hľadania:</p>
+    </div>
+
+    <!-- NAVIGATION BUTTONS — SAME WIDTH -->
     <div class="nav-buttons">
         <button class="nav-btn" onclick="document.getElementById('uvahy').scrollIntoView({behavior: 'smooth'})">Denné úvahy z Božieho Slova</button>
         <button class="nav-btn" onclick="document.getElementById('cvicenia').scrollIntoView({behavior: 'smooth'})">Duchovné Cvičenia</button>
         <button class="nav-btn" onclick="document.getElementById('deti').scrollIntoView({behavior: 'smooth'})">Všetko pre Deti</button>
     </div>
 
-    <!-- INTRO TEXT -->
-    <div class="intro-container">
-        <p><b>Od oltára k rodinnému stolu, od otče k Tata!</b></p>
-        <p>Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu, v hlase Ducha –<i> Rûach </i>– ktorý vanie kam chce.</p>
-        <p>Nie som učiteľ. Som pútnik, ktorý sa učí načúvať Dychu.</p>
-        <p>* * *</p>
-        <p>Denne vnímam Boha, ako ma vyzýva:</p>
-        <p><b><i>"Dýchaj Slovo – dýchaj moje Slovo – dýchaj Život, ktorý som Ja sám, a poď za mnou – taký, aký si, s tými, ktorých som ti dal."</i></b></p>
-        <p>Zdieľam s vami duchovné slová, ktoré vyrástli z ticha, z bolesti, z hľadania… </p>
+    <!-- INTRO TEXT: PART 2 — AFTER BUTTONS -->
+    <div class="intro-bottom">
         <p>Hovorím o viere, ktorá sa nebojí otázok, o láske, ktorá nesúdi, a o slobode, ktorá prichádza, keď dýchame Božím Duchom - keď dýchame jeho Slovo.</p>
         <p>* * *</p>
     </div>
@@ -340,10 +344,19 @@
         <h2>Denné úvahy z Božieho Slova</h2>
         <p>Tu nájdeš hlboké zamyslenia nad Božím Slovom, ktoré ťa pozývajú zastaviť sa, počúvať a nechať sa viesť Duchom.</p>
         <p>Každý text je ako dych – krátky, no plný života.</p>
+
+        <!-- Product 1 -->
         <div class="section-product">
-            <img src="zamyslenia_cover.jpg" alt="Zamyslenia Cover">
+            <img src="zamyslenia_cover.jpg" alt="Každý deň s Duchom">
             <h3>Každý deň s Duchom</h3>
             <button class="detail-btn" onclick="openModal('Každý deň s Duchom', '€12', '30 strán denného čítania a modlitby', 'zamyslenia_cover.jpg')">Detaily</button>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="section-product">
+            <img src="ADVENT-UVAHYcover.jpeg" alt="Advent Úvahy">
+            <h3>Advent, Denné úvahy z Božieho Slova</h3>
+            <button class="detail-btn" onclick="openModal('Advent, Denné úvahy z Božieho Slova', '€10', 'Adventný zošit s každodennými úvahami', 'ADVENT-UVAHYcover.jpeg')">Detaily</button>
         </div>
     </div>
 
@@ -352,10 +365,19 @@
         <h2>Duchovné Cvičenia</h2>
         <p>Ponúkame jednoduché duchovné cvičenia, ktoré ti pomôžu prežívať prítomnosť Boha v každodennom živote.</p>
         <p>Dýchanie, ticho, slovo – to všetko môže byť modlitbou.</p>
+
+        <!-- Product 1 -->
         <div class="section-product">
-            <img src="cvicenia_cover.jpg" alt="Cvičenia Cover">
+            <img src="cvicenia_cover.jpg" alt="Dýchaj a Modli sa">
             <h3>Dýchaj a Modli sa</h3>
             <button class="detail-btn" onclick="openModal('Dýchaj a Modli sa', '€8', '10 jednoduchých cvičení pre pokoj mysle', 'cvicenia_cover.jpg')">Detaily</button>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="section-product">
+            <img src="ADAMcover.png" alt="Adam, kde si?">
+            <h3>Adam, kde si?</h3>
+            <button class="detail-btn" onclick="openModal('Adam, kde si?', '€9', 'Duchovné cvičenie na hľadanie seba v Božej prítomnosti', 'ADAMcover.png')">Detaily</button>
         </div>
     </div>
 
@@ -366,7 +388,7 @@
         <p>Spoločne objavujeme, že Boh je Tata, ktorý sa raduje z detskej viery.</p>
         <div class="section-product">
             <img src="ADVENTcover.jpeg" alt="Advent Cover">
-            <h3>Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor</h3>
+            <h3>Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, TAU</h3>
             <button class="detail-btn" onclick="openModal('Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor', '€10', 'Adventný zošit pre deti a rodiny', 'ADVENTcover.jpeg')">Detaily</button>
         </div>
     </div>
