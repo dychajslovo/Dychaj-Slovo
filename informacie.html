@@ -5,32 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vaše informácie – Dýchaj Slovo</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         body{font-family:'Open Sans',sans-serif;margin:40px;background:#f4f4f4;color:#333}
         .c{max-width:800px;margin:auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
         h1{font-family:'Fredoka',sans-serif;color:#2c495e;text-align:center;margin-bottom:20px}
         input,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:6px;font-size:16px}
-        
-        .btn-container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        .b{
-            padding:14px;
-            border:none;
-            border-radius:30px;
-            cursor:pointer;
-            font-size:16px;
-            font-weight:600;
-            flex:1;
-            max-width:220px;
-        }
+        .btn-container{display:flex;gap:15px;justify-content:center;margin-top:30px}
+        .b{padding:14px;border:none;border-radius:30px;cursor:pointer;font-size:16px;font-weight:600;flex:1;max-width:220px}
         .order-btn{background:#4CAF50;color:#fff}
         .order-btn:hover{background:#45a049}
         .back{background:#aaa;color:#fff}
         .back:hover{background:#999}
+        .loading{display:none;color:#2c495e;margin-top:15px;font-weight:600}
     </style>
 </head>
 <body>
@@ -47,17 +34,29 @@
         <button class="b back" onclick="location.href='index.html'">Späť na hlavnú</button>
         <button class="b order-btn" onclick="sendOrder()">Objednať</button>
     </div>
+    <div class="loading" id="loading">Odosielam objednávku...</div>
 </div>
 
 <script>
-    function sendOrder(){
-        const cart = JSON.parse(localStorage.getItem('cart'))||[];
+    // REPLACE THESE WITH YOUR EMAILJS CREDENTIALS
+    const SERVICE_ID = 'YOUR_SERVICE_ID';
+    const TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+    const USER_ID = 'YOUR_USER_ID';
+
+    emailjs.init(USER_ID);
+
+    function sendOrder() {
+        const loading = document.getElementById('loading');
+        loading.style.display = 'block';
+
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
         if (cart.length === 0) {
             alert('Košík je prázdny!');
+            loading.style.display = 'none';
             return;
         }
 
-        const shipping = localStorage.getItem('shipping')||'Nie je vybrané';
+        const shipping = localStorage.getItem('shipping') || 'Nie je vybrané';
         const name = document.getElementById('name').value.trim();
         const street = document.getElementById('street').value.trim();
         const city = document.getElementById('city').value.trim();
@@ -67,44 +66,45 @@
 
         if (!name || !street || !city || !zip || !email) {
             alert('Prosím vyplňte všetky povinné polia.');
+            loading.style.display = 'none';
             return;
         }
 
-        let items = cart.map(i=>`${i.title} – ${i.price}`).join('\n');
-        let subtotal = cart.reduce((s,i)=>s+parseFloat(i.price.replace('€','')),0);
+        let items = cart.map(i => `${i.title} – ${i.price}`).join('\n');
+        let subtotal = cart.reduce((s, i) => s + parseFloat(i.price.replace('€', '')), 0);
         let shipPrice = shipping.includes('€') ? parseFloat(shipping.split('€')[1]) : 0;
         let total = subtotal + shipPrice;
 
-        const body = `NOVÁ OBJEDNÁVKA\n\n`+
-            `Meno: ${name}\n`+
-            `Adresa: ${street}, ${city}, ${zip}\n`+
-            `E-mail: ${email}\n`+
-            `Doprava: ${shipping}\n`+
-            `Poznámka: ${note}\n\n`+
-            `Položky:\n${items}\n\n`+
-            `SPOLU: €${total.toFixed(2)}`;
-
-        // Open email
-        location.href = `mailto:dychajslovo@gmail.com?subject=Objednávka&body=${encodeURIComponent(body)}`;
-
-        // Save order for confirmation page
-        localStorage.setItem('lastOrder', JSON.stringify({
-            name: name,
+        const templateParams = {
+            to_name: 'Dýchaj Slovo',
+            from_name: name,
+            from_email: email,
             address: `${street}, ${city}, ${zip}`,
-            email: email,
             shipping: shipping,
-            items: cart.map(i => `${i.title} – ${i.price}`),
-            total: total.toFixed(2)
-        }));
+            items: items,
+            total: `€${total.toFixed(2)}`,
+            note: note || 'Žiadna'
+        };
 
-        // Clear cart
-        localStorage.removeItem('cart');
-        localStorage.removeItem('shipping');
+        emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+            .then(() => {
+                // Save order for confirmation
+                localStorage.setItem('lastOrder', JSON.stringify({
+                    name, address: `${street}, ${city}, ${zip}`, email, shipping,
+                    items: cart.map(i => `${i.title} – ${i.price}`),
+                    total: total.toFixed(2)
+                }));
 
-        // Redirect to confirmation
-        setTimeout(() => {
-            window.location.href = 'potvrdenie.html';
-        }, 1000);
+                localStorage.removeItem('cart');
+                localStorage.removeItem('shipping');
+
+                window.location.href = 'potvrdenie.html';
+            })
+            .catch((error) => {
+                console.error('EmailJS Error:', error);
+                alert('Chyba pri odosielaní. Skúste neskôr.');
+                loading.style.display = 'none';
+            });
     }
 </script>
 </body>
