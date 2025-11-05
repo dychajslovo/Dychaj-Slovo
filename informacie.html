@@ -52,13 +52,23 @@
 <script>
     function sendOrder(){
         const cart = JSON.parse(localStorage.getItem('cart'))||[];
+        if (cart.length === 0) {
+            alert('Košík je prázdny!');
+            return;
+        }
+
         const shipping = localStorage.getItem('shipping')||'Nie je vybrané';
-        const name = document.getElementById('name').value;
-        const street = document.getElementById('street').value;
-        const city = document.getElementById('city').value;
-        const zip = document.getElementById('zip').value;
-        const email = document.getElementById('email').value;
-        const note = document.getElementById('note').value;
+        const name = document.getElementById('name').value.trim();
+        const street = document.getElementById('street').value.trim();
+        const city = document.getElementById('city').value.trim();
+        const zip = document.getElementById('zip').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const note = document.getElementById('note').value.trim();
+
+        if (!name || !street || !city || !zip || !email) {
+            alert('Prosím vyplňte všetky povinné polia.');
+            return;
+        }
 
         let items = cart.map(i=>`${i.title} – ${i.price}`).join('\n');
         let subtotal = cart.reduce((s,i)=>s+parseFloat(i.price.replace('€','')),0);
@@ -74,12 +84,27 @@
             `Položky:\n${items}\n\n`+
             `SPOLU: €${total.toFixed(2)}`;
 
+        // Open email
         location.href = `mailto:dychajslovo@gmail.com?subject=Objednávka&body=${encodeURIComponent(body)}`;
 
+        // Save order for confirmation page
+        localStorage.setItem('lastOrder', JSON.stringify({
+            name: name,
+            address: `${street}, ${city}, ${zip}`,
+            email: email,
+            shipping: shipping,
+            items: cart.map(i => `${i.title} – ${i.price}`),
+            total: total.toFixed(2)
+        }));
+
+        // Clear cart
         localStorage.removeItem('cart');
         localStorage.removeItem('shipping');
-        alert('Objednávka bola odoslaná! Ďakujeme.');
-        setTimeout(()=>location.href='index.html',2000);
+
+        // Redirect to confirmation
+        setTimeout(() => {
+            window.location.href = 'potvrdenie.html';
+        }, 1000);
     }
 </script>
 </body>
