@@ -209,37 +209,41 @@
         .detail-btn:hover {
             background: #3fcfd5;
         }
-        /* DETAIL MODAL - TWO COLUMN */
+
+        /* DETAIL MODAL - MOBILE OPTIMIZED */
         .detail-modal {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.8);
             z-index: 2000;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
+            overflow-y: auto;
         }
         .detail-modal.active {
             display: flex;
         }
         .detail-modal .box {
             background: #fff;
-            padding: 30px;
+            padding: 20px;
             border-radius: 12px;
-            max-width: 900px;
+            max-width: 95vw;
+            max-height: 90vh;
             width: 100%;
             position: relative;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
             display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
+            flex-direction: column;
+            gap: 18px;
+            overflow-y: auto;
         }
         .detail-modal .close {
             position: absolute;
-            top: 12px;
-            right: 15px;
+            top: 10px;
+            right: 12px;
             font-size: 28px;
             cursor: pointer;
             color: #aaa;
@@ -250,18 +254,14 @@
         .detail-modal .close:hover { color: #000; }
 
         .modal-left {
-            flex: 1;
-            min-width: 280px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            text-align: center;
         }
         .modal-left img {
-            max-height: 320px;
+            max-height: 260px;
             width: 100%;
             object-fit: contain;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .preview-btn {
             background: #2c495e;
@@ -273,61 +273,57 @@
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            max-width: 200px;
+            max-width: 220px;
         }
         .preview-btn:hover {
             background: #3fcfd5;
         }
 
         .modal-right {
-            flex: 1;
-            min-width: 280px;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            gap: 12px;
         }
         .modal-right h3 {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 600;
             color: #333;
-            margin: 0 0 18px;
-            text-align: left;
+            margin: 0;
+            text-align: center;
         }
         .modal-right .desc {
             font-size: 15px;
             line-height: 1.6;
             color: #555;
-            margin: 0 0 25px;
-            flex-grow: 1;
+            margin: 0;
         }
         .price-container {
             text-align: center;
-            margin-bottom: 12px;
+            margin: 10px 0;
         }
         .modal-right .price {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             color: #2c495e;
-            margin: 0;
         }
         .add-to-cart-btn {
             background: #2c495e;
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 14px 20px;
             border-radius: 30px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            max-width: 200px;
+            max-width: 220px;
             align-self: center;
         }
         .add-to-cart-btn:hover {
             background: #3fcfd5;
         }
 
-        /* GALLERY MODAL - NEW LAYOUT */
+        /* GALLERY MODAL - MOBILE READY */
         .gallery-modal {
             display: none;
             position: fixed;
@@ -343,58 +339,28 @@
         .gallery-modal.active {
             display: flex;
         }
-
         .gallery-content {
             position: relative;
-            width: 90%;
+            width: 95%;
             max-width: 900px;
             text-align: center;
         }
-
         .gallery-img {
             max-width: 100%;
-            max-height: 75vh;
+            max-height: 70vh;
             object-fit: contain;
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(255,255,255,0.3);
-            margin-bottom: 15px;
-        }
-
-        .gallery-nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
             margin-bottom: 10px;
         }
-
-        .gallery-nav {
-            background: rgba(0,0,0,0.5);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            user-select: none;
-            z-index: 10;
-        }
-        .gallery-nav:hover {
-            background: rgba(0,0,0,0.8);
-        }
-
         .gallery-close {
             position: absolute;
             top: -50px;
-            left: 10px; /* Moved far left */
+            right: 5px;
             font-size: 36px;
             color: white;
             cursor: pointer;
-            z-index: 10;
+            z-index: 20;
             font-weight: bold;
             background: rgba(0,0,0,0.4);
             width: 44px;
@@ -407,12 +373,34 @@
         .gallery-close:hover {
             background: rgba(0,0,0,0.7);
         }
-
+        .gallery-nav-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: -20px;
+            z-index: 10;
+        }
+        .gallery-nav {
+            background: rgba(0,0,0,0.5);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .gallery-nav:hover {
+            background: rgba(0,0,0,0.8);
+        }
         .gallery-dots {
             display: flex;
             gap: 8px;
             justify-content: center;
-            margin-top: 10px;
+            margin-top: 15px;
         }
         .gallery-dot {
             width: 10px;
@@ -451,18 +439,7 @@
             margin-top: 20px;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
-            .profile-row { top: -65px; flex-direction: column; gap: 15px; }
-            .profile-overlap { width: 160px; height: 160px; }
-            .profile-name { font-size: 36px; }
-            .intro-top { margin: -50px auto 15px; }
-            .nav-buttons { gap: 12px; }
-            .nav-btn { min-width: 180px; font-size: 15px; }
-            .section { margin: 40px auto; padding: 20px; }
-            .section h2 { font-size: 28px; }
-            .contact-section h2 { font-size: 24px; }
-        }
+        /* RESPONSIVE FIXES */
         @media (max-width: 600px) {
             .banner { max-height: 200px; }
             .profile-row { top: -55px; }
@@ -470,15 +447,19 @@
             .profile-name { font-size: 30px; }
             .nav-btn { min-width: 140px; font-size: 14px; }
             .section { padding: 15px; }
-            .contact-section h2 { font-size: 22px; }
-            .contact-section p { font-size: 14px; }
-            .detail-modal .box { flex-direction: column; padding: 20px; gap: 20px; }
-            .modal-left, .modal-right { min-width: 100%; }
-            .preview-btn, .add-to-cart-btn { max-width: 100%; }
-            .cart-btn { padding: 7px 12px; font-size: 13px; top: 10px; right: 10px; }
-            .cart-count { width: 16px; height: 16px; font-size: 10px; }
-            .gallery-close { top: -45px; left: 5px; }
-            .gallery-nav { width: 40px; height: 40px; font-size: 24px; }
+            .detail-modal .box {
+                padding: 18px;
+                gap: 15px;
+                max-height: 92vh;
+            }
+            .modal-left img { max-height: 220px; }
+            .modal-right h3 { font-size: 18px; }
+            .modal-right .desc { font-size: 14.5px; }
+            .modal-right .price { font-size: 22px; }
+            .preview-btn, .add-to-cart-btn { font-size: 15px; padding: 12px; }
+            .gallery-close { top: -45px; right: 5px; }
+            .gallery-nav { width: 44px; height: 44px; font-size: 24px; }
+            .gallery-nav-container { margin-top: -15px; }
         }
     </style>
 </head>
@@ -528,7 +509,8 @@
         <p>Spoločne objavujeme, že Boh je Tata, ktorý sa raduje z detskej viery.</p>
         <div class="section-product">
             <img src="ADVENTcover.jpeg" alt="Advent Cover">
-            <dfn class="product-price">€10</dfn>
+            <h3>Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor</h3>
+            <div class="product-price">€10</div>
             <button class="detail-btn" onclick="openProductDetail(
                 'Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor',
                 '€10',
@@ -613,9 +595,9 @@
             <button class="gallery-close" onclick="closeGallery()">x</button>
             <img id="galleryImg" class="gallery-img" src="" alt="">
             <div class="gallery-nav-container">
-                <button class="gallery-nav" onclick="changeImage(-1)">left arrow</button>
-                <div></div> <!-- spacer -->
-                <button class="gallery-nav" onclick="changeImage(1)">right arrow</button>
+                <button class="gallery-nav" onclick="changeImage(-1)">&lt;</button>
+                <div></div>
+                <button class="gallery-nav" onclick="changeImage(1)">&gt;</button>
             </div>
             <div class="gallery-dots" id="galleryDots"></div>
         </div>
