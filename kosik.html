@@ -112,7 +112,6 @@
             font-weight: 600;
         }
 
-        /* CELKOVÝ SÚČET – LEN DOLE */
         .t {
             font-weight: 600;
             font-size: 18px;
@@ -120,36 +119,28 @@
             margin: 25px 0;
         }
 
-        /* TLAČIDLÁ – MENŠIE, VŽDY V JEDNOM RIADKU */
+        /* TLAČIDLÁ – PRESNE AKO V DOPRAVA.HTML */
         .btn-container {
             display: flex;
+            gap: 15px;
             justify-content: center;
-            gap: 12px;
             margin-top: 30px;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            padding: 0 10px;
-            -webkit-overflow-scrolling: touch;
         }
         .b {
             background: #2c495e;
             color: #fff;
-            padding: 11px 16px;
+            padding: 12px 20px;
             border: none;
             border-radius: 30px;
             cursor: pointer;
             font-weight: 600;
-            flex: 0 1 auto;
-            min-width: 120px;
-            max-width: 180px;
+            flex: 1;
+            max-width: 200px;
             text-align: center;
-            white-space: nowrap;
-            font-size: 14.5px;
             transition: all 0.3s ease;
         }
         .b:hover {
             background: #3fcfd5;
-            transform: translateY(-1px);
         }
         .back {
             background: #aaa;
@@ -158,19 +149,26 @@
             background: #999;
         }
 
-        /* PRE NAJÚZŠIE MOBILY (iPhone SE, 320px) */
-        @media (max-width: 360px) {
+        /* PRE MOBILY – ŽIADNE ZALAMOVANIE */
+        @media (max-width: 480px) {
             .btn-container {
-                gap: 8px;
-                padding: 0 5px;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding: 0 10px;
+                -webkit-overflow-scrolling: touch;
             }
             .b {
-                min-width: 110px;
-                font-size: 14px;
-                padding: 10px 12px;
+                min-width: 140px;
+                font-size: 15px;
             }
-            .i {
-                gap: 10px;
+        }
+
+        @media (max-width: 360px) {
+            .b {
+                min-width: 120px;
+                font-size: 14px;
+                padding: 11px 16px;
             }
             .i img {
                 width: 70px;
@@ -179,14 +177,6 @@
             .qty button, .qty input {
                 width: 28px;
                 height: 28px;
-            }
-            .remove {
-                width: 24px;
-                height: 24px;
-                font-size: 12px;
-            }
-            .info strong {
-                font-size: 15px;
             }
         }
     </style>
@@ -197,7 +187,7 @@
     <div id="items"></div>
     <div class="t">Spolu: <span id="total">€0</span></div>
 
-    <!-- Tlačidlá v jednom riadku, menšie -->
+    <!-- Tlačidlá rovnaké ako v doprava.html -->
     <div class="btn-container">
         <button class="b back" onclick="location.href='index.html'">Späť</button>
         <button class="b" onclick="location.href='doprava.html'" id="continueBtn" style="display:none;">Pokračovať</button>
