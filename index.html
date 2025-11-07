@@ -486,28 +486,51 @@
         <p>Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu, v hlase Ducha – <i>Rûach</i> – ktorý vanie kam chce.</p>
         <p>Nie som učiteľ. Som pútnik, ktorý sa učí načúvať Dychu.</p>
         <p>* * *</p>
-        <p>Denne vnímam v pokoji a tichu Boha, ako ma vyzýva:</p>
+        <p>V pokoji a tichu denne vnímam Boha, ako ma vyzýva:</p>
         <p><b><i>"Dýchaj Slovo – dýchaj moje Slovo – dýchaj Život, ktorý som Ja sám, a poď za mnou – taký, aký si, s tými, ktorých som ti dal."</i></b></p>
-        <p>Preto zdieľam s vami duchovné slová, ktoré vyrástli z ticha, z bolesti, z hľadania:</p>
+        <p>Preto zdieľam s vami duchovné slová ale aj detské aktivity, ktoré vyrástli z ticha, z bolesti, z hľadania Boha:</p>
     </div>
+
+    <!-- NAVIGATION BUTTONS - PRIDANÉ TLAČIDLO "Pracovné Listy" -->
     <div class="nav-buttons">
-        <button class="nav-btn" onclick="document.getElementById('deti').scrollIntoView()">Všetko pre Deti</button>
+        <button class="nav-btn" onclick="document.getElementById('pracovne-listy').scrollIntoView()">Detské pracovné Listy</button>
+        <button class="nav-btn" onclick="document.getElementById('deti').scrollIntoView()">Pre Rodiny s deťmi</button>
         <button class="nav-btn" onclick="document.getElementById('uvahy').scrollIntoView()">Denné úvahy</button>
         <button class="nav-btn" onclick="document.getElementById('cvicenia').scrollIntoView()">Duchovné Cvičenia</button>
     </div>
+
     <div class="intro-bottom">
         <p>Hovorím o viere, ktorá sa nebojí otázok, o láske, ktorá nesúdi, a o slobode, ktorá prichádza, keď dýchame Božím Duchom - keď dýchame jeho Slovo.</p>
         <p>* * *</p>
     </div>
 
-    <!-- SECTIONS -->
+    <!-- NOVÁ SEKCIA: PRACOVNÉ LISTY -->
+    <div id="pracovne-listy" class="section">
+        <h2>Detské pracovné Listy</h2>
+        <p>Praktické a hravé pracovné listy pre deti. Obsahujú aktivity, úlohy a maľovanky.</p>
+        <p>Všetko vytlačené a pripravené na použitie doma.</p>
+        <div class="section-product">
+            <img src="placeholder-listy.jpg" alt="Pracovné listy">
+            <h3>Adventné Pracovné Listy pre Deti</h3>
+            <div class="product-price">€5</div>
+            <button class="detail-btn" onclick="openProductDetail(
+                'Adventné Pracovné Listy pre Deti',
+                '€5',
+                'Súbor 10 pracovných listov na Advent – maľovanky, úlohy, modlitby a aktivity pre deti 4-8 rokov.',
+                'placeholder-listy.jpg',
+                ['placeholder-listy.jpg', 'listy-preview1.jpg', 'listy-preview2.jpg']
+            )">Detaily</button>
+        </div>
+    </div>
+
+    <!-- PÔVODNÁ SEKCIA: Všetko pre Deti -->
     <div id="deti" class="section">
-        <h2>Všetko Pre Deti</h2>
+        <h2>Pre Rodiny s deťmi</h2>
         <p>Deti sú najbližšie k Božiemu kráľovstvu. Tu nájdeš príbehy, aktivity a modlitby, ktoré hovoria ich jazykom.</p>
-        <p>Spoločne objavujeme, že Boh je Tata, ktorý sa raduje z detskej viery.</p>
+        <p>Spoločne objavujeme v rodine, že Boh je Tata, ktorý sa raduje z detskej viery.</p>
         <div class="section-product">
             <img src="ADVENTcover.jpeg" alt="Advent Cover">
-            <h3>Rodnné Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor</h3>
+            <h3>Rodinné Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor</h3>
             <div class="product-price">€10</div>
             <button class="detail-btn" onclick="openProductDetail(
                 'Rodinné Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor',
@@ -519,6 +542,7 @@
         </div>
     </div>
 
+    <!-- ZOSTÁVAJÚCE SEKCIE -->
     <div id="uvahy" class="section">
         <h2>Denné úvahy z Božieho Slova</h2>
         <p>Tu nájdeš hlboké zamyslenia nad Božím Slovom, ktoré ťa pozývajú zastaviť sa, počúvať a nechať sa viesť Duchom.</p>
@@ -591,9 +615,9 @@
             <button class="gallery-close" onclick="closeGallery()">x</button>
             <img id="galleryImg" class="gallery-img" src="" alt="">
             <div class="gallery-controls">
-                <button class="gallery-nav" onclick="changeImage(-1)">left arrow</button>
+                <button class="gallery-nav" onclick="changeImage(-1)"><</button>
                 <div class="gallery-dots" id="galleryDots"></div>
-                <button class="gallery-nav" onclick="changeImage(1)">right arrow</button>
+                <button class="gallery-nav" onclick="changeImage(1)">></button>
             </div>
         </div>
     </div>
