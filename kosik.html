@@ -6,35 +6,138 @@
     <title>Váš košík – Dýchaj Slovo</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body{font-family:'Open Sans',sans-serif;margin:40px;background:#f4f4f4;color:#333}
-        .c{max-width:800px;margin:auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
-        h1{font-family:'Fredoka',sans-serif;color:#2c495e;text-align:center;margin-bottom:20px}
-        .i{
-            display:flex;gap:15px;padding:15px;border-bottom:1px solid #eee;align-items:center;
-            position:relative;
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 40px;
+            background: #f4f4f4;
+            color: #333;
         }
-        .i img{width:80px;height:80px;object-fit:contain;border-radius:6px}
-        .remove{
-            position:absolute;right:15px;top:50%;transform:translateY(-50%);
-            background:#ff4444;color:#fff;width:28px;height:28px;border-radius:50%;
-            border:none;font-weight:bold;cursor:pointer;font-size:14px;
+        .c {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,.1);
         }
-        .remove:hover{background:#cc0000}
-        .t{font-weight:600;font-size:18px;text-align:right;margin:20px 0}
-        .btn-container{
-            display:flex;gap:15px;justify-content:space-between;align-items:center;
-            margin-top:30px;
+        h1 {
+            font-family: 'Fredoka', sans-serif;
+            color: #2c495e;
+            text-align: center;
+            margin-bottom: 20px;
         }
-        .b{
-            background:#2c495e;color:#fff;padding:12px 20px;border:none;border-radius:30px;
-            cursor:pointer;font-weight:600;flex:1;max-width:200px;text-align:center;
+        .i {
+            display: flex;
+            gap: 15px;
+            padding: 18px 0;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+            position: relative;
         }
-        .b:hover{background:#3fcfd5}
-        .back{background:#aaa}
-        .back:hover{background:#999}
-        @media (max-width:600px){
-            .btn-container{flex-direction:column}
-            .b{max-width:none}
+        .i img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+        .info {
+            flex: 1;
+        }
+        .info strong {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        .price {
+            font-weight: 600;
+            color: #2c495e;
+        }
+
+        /* MNOŽSTVO */
+        .qty {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .qty button {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #ddd;
+            background: #f9f9f9;
+            color: #333;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qty button:hover {
+            background: #eee;
+        }
+        .qty input {
+            width: 40px;
+            height: 32px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .remove {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ff4444;
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .remove:hover { background: #cc0000; }
+
+        .t {
+            font-weight: 600;
+            font-size: 18px;
+            text-align: right;
+            margin: 25px 0;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .b {
+            background: #2c495e;
+            color: #fff;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            flex: 1;
+            max-width: 200px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .b:hover { background: #3fcfd5; transform: translateY(-1px); }
+        .back { background: #aaa; }
+        .back:hover { background: #999; }
+
+        @media (max-width: 600px) {
+            .btn-container { flex-direction: column; }
+            .b { max-width: none; }
+            .i { flex-wrap: wrap; }
+            .qty { margin-top: 10px; }
         }
     </style>
 </head>
@@ -45,7 +148,7 @@
     <div class="t">Spolu: <span id="total">€0</span></div>
 
     <div class="btn-container">
-        <button class="b back" onclick="location.href='index.html'">Späť na hlavnú</button>
+        <button class="b back" onclick="location.href='index.html'">Späť</button>
         <button class="b" onclick="location.href='doprava.html'" id="continueBtn" style="display:none;">Pokračovať</button>
     </div>
 </div>
@@ -60,7 +163,7 @@
         let total = 0;
 
         if (cart.length === 0) {
-            container.innerHTML = '<p>Košík je prázdny.</p>';
+            container.innerHTML = '<p style="text-align:center;color:#888;padding:40px 0;">Košík je prázdny.</p>';
             continueBtn.style.display = 'none';
             document.querySelector('.t').style.display = 'none';
         } else {
@@ -68,38 +171,55 @@
             continueBtn.style.display = 'block';
 
             cart.forEach((item, index) => {
-                const price = parseFloat(item.price.replace('€',''));
-                total += price;
+                const pricePerUnit = parseFloat(item.price.replace('€', '').trim());
+                const qty = item.qty || 1;
+                const itemTotal = pricePerUnit * qty;
+                total += itemTotal;
 
                 const div = document.createElement('div');
                 div.className = 'i';
                 div.innerHTML = `
                     <img src="${item.img}" alt="${item.title}">
-                    <div style="flex:1">
-                        <strong>${item.title}</strong><br>${item.price}
+                    <div class="info">
+                        <strong>${item.title}</strong>
+                        <div class="price">€${pricePerUnit.toFixed(2)} / ks</div>
+                        <div class="qty">
+                            <button onclick="changeQty(${index}, -1)">−</button>
+                            <input type="number" value="${qty}" min="1" readonly>
+                            <button onclick="changeQty(${index}, 1)">+</button>
+                        </div>
                     </div>
+                    <div style="font-weight:600;color:#2c495e;">€${itemTotal.toFixed(2)}</div>
                     <button class="remove" onclick="removeItem(${index})">X</button>
                 `;
                 container.appendChild(div);
             });
         }
         document.getElementById('total').textContent = `€${total.toFixed(2)}`;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+    }
+
+    function changeQty(index, change) {
+        const newQty = (cart[index].qty || 1) + change;
+        if (newQty >= 1) {
+            cart[index].qty = newQty;
+            renderCart();
+        }
     }
 
     function removeItem(index) {
         cart.splice(index, 1);
-        localStorage.setItem('cart', JSON.stringify(cart));
         renderCart();
-        updateCartCount();
     }
 
     function updateCartCount() {
-        const count = cart.length;
+        const count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
         const cartBtn = document.querySelector('#cartCount');
         if (cartBtn) cartBtn.textContent = count;
     }
 
-    // Initial render
+    // Spusti pri načítaní
     renderCart();
 </script>
 </body>
