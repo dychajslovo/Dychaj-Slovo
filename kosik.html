@@ -112,14 +112,7 @@
             font-weight: 600;
         }
 
-        /* CELKOVÁ CENA POLOŽKY */
-        .item-total {
-            font-weight: 600;
-            color: #2c495e;
-            white-space: nowrap;
-            padding-left: 10px;
-        }
-
+        /* CELKOVÝ SÚČET – LEN DOLE */
         .t {
             font-weight: 600;
             font-size: 18px;
@@ -127,31 +120,31 @@
             margin: 25px 0;
         }
 
-        /* TLAČIDLÁ – VŽDY V JEDNOM RIADKU */
+        /* TLAČIDLÁ – MENŠIE, VŽDY V JEDNOM RIADKU */
         .btn-container {
             display: flex;
             justify-content: center;
-            gap: 16px;
+            gap: 12px;
             margin-top: 30px;
             flex-wrap: nowrap;
             overflow-x: auto;
-            padding: 0 5px;
+            padding: 0 10px;
             -webkit-overflow-scrolling: touch;
         }
         .b {
             background: #2c495e;
             color: #fff;
-            padding: 14px 0;
+            padding: 11px 16px;
             border: none;
             border-radius: 30px;
             cursor: pointer;
             font-weight: 600;
-            flex: 1;
-            min-width: 140px;
-            max-width: 260px;
+            flex: 0 1 auto;
+            min-width: 120px;
+            max-width: 180px;
             text-align: center;
             white-space: nowrap;
-            font-size: 15px;
+            font-size: 14.5px;
             transition: all 0.3s ease;
         }
         .b:hover {
@@ -165,31 +158,35 @@
             background: #999;
         }
 
-        /* PRE NAJÚZŠIE MOBILY */
+        /* PRE NAJÚZŠIE MOBILY (iPhone SE, 320px) */
         @media (max-width: 360px) {
             .btn-container {
-                gap: 10px;
+                gap: 8px;
+                padding: 0 5px;
             }
             .b {
-                min-width: 130px;
+                min-width: 110px;
                 font-size: 14px;
-                padding: 12px 0;
+                padding: 10px 12px;
             }
             .i {
-                gap: 12px;
+                gap: 10px;
             }
             .i img {
                 width: 70px;
                 height: 70px;
             }
             .qty button, .qty input {
-                width: 30px;
-                height: 30px;
+                width: 28px;
+                height: 28px;
             }
             .remove {
                 width: 24px;
                 height: 24px;
                 font-size: 12px;
+            }
+            .info strong {
+                font-size: 15px;
             }
         }
     </style>
@@ -200,7 +197,7 @@
     <div id="items"></div>
     <div class="t">Spolu: <span id="total">€0</span></div>
 
-    <!-- Tlačidlá v jednom riadku -->
+    <!-- Tlačidlá v jednom riadku, menšie -->
     <div class="btn-container">
         <button class="b back" onclick="location.href='index.html'">Späť</button>
         <button class="b" onclick="location.href='doprava.html'" id="continueBtn" style="display:none;">Pokračovať</button>
@@ -246,7 +243,6 @@
                             <button onclick="changeQty(${index}, 1)">+</button>
                         </div>
                     </div>
-                    <div class="item-total">€${itemTotal.toFixed(2)}</div>
                 `;
                 container.appendChild(div);
             });
