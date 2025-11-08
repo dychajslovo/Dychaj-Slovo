@@ -41,6 +41,7 @@
 
 <script>
     const WEB3FORMS_KEY = 'efd76031-ddf0-442f-ba6f-552b04369b0e';
+    const LOGO_URL = 'profile.jpg'; // ← Nahraj profile.jpg do priečinka
 
     async function sendOrder() {
         const status = document.getElementById('status');
@@ -78,10 +79,21 @@
         let subtotal = cart.reduce((s, i) => s + parseFloat(i.price.replace('€', '').trim()), 0);
         let total = subtotal.toFixed(2);
 
-        // === GENEROVANIE PDF (OPRAVENÉ) ===
+        // === GENEROVANIE PDF S LOGOM ===
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF();
         let y = 20;
+
+        // === LOGO V PDF ===
+        try {
+            const logo = new Image();
+            logo.crossOrigin = "anonymous";
+            logo.src = LOGO_URL;
+            await new Promise(r => logo.onload = r);
+            pdf.addImage(logo, 'JPG', 15, 10, 40, 40);
+        } catch(e) {
+            console.warn("Logo sa nepodarilo pridať do PDF:", e);
+        }
 
         pdf.setFontSize(18);
         pdf.text("Potvrdenie objednávky", 105, y, { align: "center" });
@@ -104,13 +116,8 @@
                     await new Promise(r => img.onload = r);
                     pdf.addImage(img, 'JPEG', 30, y, 30, 30);
                     y += 35;
-                } catch(e) {
-                    console.warn("Obrázok sa nepodarilo pridať:", e);
-                    y += 8;
-                }
-            } else {
-                y += 8;
-            }
+                } catch(e) { y += 8; }
+            } else { y += 8; }
         }
 
         pdf.setFontSize(12);
@@ -127,14 +134,13 @@
         pdf.text("Platobné údaje vám zašleme čoskoro na email.", 20, y + 8);
         pdf.text("Po prijatí platby odošleme tovar poštou (2–5 dní).", 20, y + 16);
 
-        // === KONVERZIA NA DATA URL (OPRAVENÉ) ===
+        // === KONVERZIA NA DATA URL ===
         const pdfBlob = pdf.output('blob');
         const pdfDataUrl = await blobToDataURL(pdfBlob);
 
-        // === ULOŽENIE DO localStorage ===
+        // === ULOŽENIE ===
         localStorage.setItem('orderPDF', pdfDataUrl);
 
-        // === ULOŽENIE ÚDAJOV ===
         const orderData = {
             orderId,
             name,
@@ -178,7 +184,6 @@
             });
     }
 
-    // === POMOCNÁ FUNKCIA: BLOB → DATA URL ===
     function blobToDataURL(blob) {
         return new Promise((resolve) => {
             const reader = new FileReader();
