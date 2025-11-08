@@ -286,8 +286,8 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
-            color: white;
+            background: rgba(255, 255, 255, 0.9);
+            color: #000;
             width: 44px;
             height: 44px;
             border-radius: 50%;
@@ -299,9 +299,13 @@
             cursor: pointer;
             z-index: 5;
             user-select: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
         }
         .nav-arrow:hover {
-            background: rgba(0,0,0,0.8);
+            background: #fff;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .nav-arrow.prev { left: 10px; }
         .nav-arrow.next { right: 10px; }
@@ -472,7 +476,7 @@
         <h2>Detské Pracovné Listy</h2>
         <p>Praktické a hravé pracovné listy pre deti. Obsahujú aktivity, úlohy a maľovanky.</p>
         <p>Všetko pripravené na zábavné chvíle doma.</p>
-        <p>Texty sú vytlačené a prípadne zviazané a laminované - poslané poštou.</p>
+        <p>Texty sú vytlačené a prí...
         <div class="section-product">
             <img src="placeholder-listy.jpg" alt="Pracovné listy">
             <h3>Adventné Pracovné Listy pre Deti</h3>
@@ -563,9 +567,9 @@
             <button class="close" onclick="closeDetail()">x</button>
             <div class="modal-left">
                 <div class="image-container">
-                    <div class="nav-arrow prev" onclick="changeImage(-1)">Previous</div>
+                    <div class="nav-arrow prev" onclick="changeImage(-1)">&lt;</div>
                     <img id="modalImg" class="modal-img" src="" alt="" onclick="toggleZoom()">
-                    <div class="nav-arrow next" onclick="changeImage(1)">Next</div>
+                    <div class="nav-arrow next" onclick="changeImage(1)">&gt;</div>
                 </div>
                 <div class="thumbnails" id="thumbnails"></div>
             </div>
