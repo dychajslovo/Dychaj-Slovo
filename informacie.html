@@ -78,7 +78,7 @@
         let subtotal = cart.reduce((s, i) => s + parseFloat(i.price.replace('€', '').trim()), 0);
         let total = subtotal.toFixed(2);
 
-        // === GENEROVANIE PDF ===
+        // === GENEROVANIE PDF (OPRAVENÉ) ===
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF();
         let y = 20;
@@ -104,8 +104,13 @@
                     await new Promise(r => img.onload = r);
                     pdf.addImage(img, 'JPEG', 30, y, 30, 30);
                     y += 35;
-                } catch(e) { y += 8; }
-            } else { y += 8; }
+                } catch(e) {
+                    console.warn("Obrázok sa nepodarilo pridať:", e);
+                    y += 8;
+                }
+            } else {
+                y += 8;
+            }
         }
 
         pdf.setFontSize(12);
@@ -122,12 +127,14 @@
         pdf.text("Platobné údaje vám zašleme čoskoro na email.", 20, y + 8);
         pdf.text("Po prijatí platby odošleme tovar poštou (2–5 dní).", 20, y + 16);
 
-        const pdfBase64 = pdf.output('datauribase64');
+        // === KONVERZIA NA DATA URL (OPRAVENÉ) ===
+        const pdfBlob = pdf.output('blob');
+        const pdfDataUrl = await blobToDataURL(pdfBlob);
 
-        // === ULOŽENIE PDF DO localStorage ===
-        localStorage.setItem('orderPDF', pdfBase64);
+        // === ULOŽENIE DO localStorage ===
+        localStorage.setItem('orderPDF', pdfDataUrl);
 
-        // === ULOŽENIE ÚDAJOV PRE POTVRDENIE ===
+        // === ULOŽENIE ÚDAJOV ===
         const orderData = {
             orderId,
             name,
@@ -140,7 +147,7 @@
         };
         localStorage.setItem('lastOrder', JSON.stringify(orderData));
 
-        // === WEB3FORMS (pre teba) ===
+        // === WEB3FORMS ===
         const formData = new FormData();
         formData.append('access_key', WEB3FORMS_KEY);
         formData.append('name', name);
@@ -169,6 +176,15 @@
                 status.textContent = 'Chyba odoslania. Skúste znova.';
                 status.className = 'status error';
             });
+    }
+
+    // === POMOCNÁ FUNKCIA: BLOB → DATA URL ===
+    function blobToDataURL(blob) {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
+        });
     }
 </script>
 </body>
