@@ -40,11 +40,11 @@
 
 <script>
     const orderData = JSON.parse(localStorage.getItem('lastOrder')) || {};
-    const pdfBase64 = localStorage.getItem('orderPDF');
+    const pdfDataUrl = localStorage.getItem('orderPDF');
 
     const downloadBtn = document.getElementById('downloadBtn');
 
-    if (!orderData.orderId || !pdfBase64) {
+    if (!orderData.orderId || !pdfDataUrl) {
         document.getElementById('summary').innerHTML = '<p>Žiadne detaily objednávky nie sú dostupné.</p>';
     } else {
         let itemsHtml = '';
@@ -71,8 +71,8 @@
         downloadBtn.style.display = 'block';
         downloadBtn.onclick = () => {
             const link = document.createElement('a');
-            link.href = 'data:application/pdf;base64,' + pdfBase64;
-            link.download = `objednavka_${orderData.orderId}.pdf`;
+            link.href = pdfDataUrl;
+            link.download = `objednavka_${orderData.orderId.replace('#', '')}.pdf`;
             link.click();
         };
 
