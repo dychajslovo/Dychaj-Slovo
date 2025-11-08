@@ -13,9 +13,11 @@
         .order-details{background:#f9f9f9;padding:20px;border-radius:10px;margin:25px 0;text-align:left;font-size:15px;line-height:1.6}
         .item{display:flex;align-items:center;gap:12px;margin:8px 0}
         .item img{width:50px;height:50px;object-fit:contain;border-radius:6px}
-        .btn-container{display:flex;gap:15px;justify-content:center;margin-top:30px}
-        .btn{background:#2c495e;color:white;padding:12px 24px;border:none;border-radius:30px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;flex:1;max-width:200px}
+        .btn-container{display:flex;gap:15px;justify-content:center;margin-top:30px;flex-wrap:wrap}
+        .btn{background:#2c495e;color:white;padding:12px 24px;border:none;border-radius:30px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;flex:1;max-width:220px}
         .btn:hover{background:#3fcfd5}
+        .download-btn{background:#4CAF50}
+        .download-btn:hover{background:#45a049}
         @media (max-width:600px){.c{padding:25px}h1{font-size:28px}.btn-container{flex-direction:column}.btn{max-width:none}}
     </style>
 </head>
@@ -23,21 +25,26 @@
 <div class="c">
     <h1>Ďakujeme za vašu objednávku!</h1>
     <p>Vaša objednávka bola <strong>úspešne prijatá</strong>.</p>
-    <p><strong>PDF potvrdenie sme vám poslali na email.</strong></p>
-    <p>Platobné údaje vám <strong>zašleme čoskoro</strong>. Po prijatí platby odošleme tovar <strong>poštou (2–5 dní)</strong>.</p>
+    <p>Platobné údaje vám <strong>zašleme čoskoro na email</strong>.</p>
+    <p>Po prijatí platby odošleme tovar <strong>poštou (2–5 dní)</strong>.</p>
 
     <div class="order-details" id="summary">
         <p>Načítavam detaily objednávky...</p>
     </div>
 
     <div class="btn-container">
+        <button id="downloadBtn" class="btn download-btn" style="display:none">Stiahnuť PDF potvrdenie</button>
         <a href="index.html" class="btn">Späť na hlavnú stránku</a>
     </div>
 </div>
 
 <script>
     const orderData = JSON.parse(localStorage.getItem('lastOrder')) || {};
-    if (!orderData.orderId) {
+    const pdfBase64 = localStorage.getItem('orderPDF');
+
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    if (!orderData.orderId || !pdfBase64) {
         document.getElementById('summary').innerHTML = '<p>Žiadne detaily objednávky nie sú dostupné.</p>';
     } else {
         let itemsHtml = '';
@@ -60,7 +67,20 @@
             ${orderData.address}<br>
             ${orderData.email}
         `;
-        setTimeout(() => localStorage.removeItem('lastOrder'), 5000);
+
+        downloadBtn.style.display = 'block';
+        downloadBtn.onclick = () => {
+            const link = document.createElement('a');
+            link.href = 'data:application/pdf;base64,' + pdfBase64;
+            link.download = `objednavka_${orderData.orderId}.pdf`;
+            link.click();
+        };
+
+        // Auto-čistenie po 10 minútach
+        setTimeout(() => {
+            localStorage.removeItem('lastOrder');
+            localStorage.removeItem('orderPDF');
+        }, 10 * 60 * 1000);
     }
 </script>
 </body>
