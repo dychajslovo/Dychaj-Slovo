@@ -11,23 +11,20 @@
         h1{font-family:'Fredoka',sans-serif;color:#2c495e;font-size:32px;margin-bottom:15px}
         p{font-size:17px;line-height:1.7;margin:12px 0;color:#444}
         .order-details{background:#f9f9f9;padding:20px;border-radius:10px;margin:25px 0;text-align:left;font-size:15px;line-height:1.6}
+        .item{display:flex;align-items:center;gap:12px;margin:8px 0}
+        .item img{width:50px;height:50px;object-fit:contain;border-radius:6px}
         .btn-container{display:flex;gap:15px;justify-content:center;margin-top:30px}
         .btn{background:#2c495e;color:white;padding:12px 24px;border:none;border-radius:30px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;flex:1;max-width:200px}
         .btn:hover{background:#3fcfd5}
-        .back{background:#aaa}
-        .back:hover{background:#999}
-        @media (max-width:600px){
-            .c{padding:25px}h1{font-size:28px}
-            .btn-container{flex-direction:column}
-            .btn{max-width:none}
-        }
+        @media (max-width:600px){.c{padding:25px}h1{font-size:28px}.btn-container{flex-direction:column}.btn{max-width:none}}
     </style>
 </head>
 <body>
 <div class="c">
     <h1>Ďakujeme za vašu objednávku!</h1>
     <p>Vaša objednávka bola <strong>úspešne prijatá</strong>.</p>
-    <p>Čoskoro vás budeme kontaktovať z emailu <strong>dychajslovo@gmail.com</strong> s detailmi o platbe a doručení.</p>
+    <p><strong>PDF potvrdenie sme vám poslali na email.</strong></p>
+    <p>Platobné údaje vám <strong>zašleme čoskoro</strong>. Po prijatí platby odošleme tovar <strong>poštou (2–5 dní)</strong>.</p>
 
     <div class="order-details" id="summary">
         <p>Načítavam detaily objednávky...</p>
@@ -40,22 +37,29 @@
 
 <script>
     const orderData = JSON.parse(localStorage.getItem('lastOrder')) || {};
-
-    if (Object.keys(orderData).length === 0) {
+    if (!orderData.orderId) {
         document.getElementById('summary').innerHTML = '<p>Žiadne detaily objednávky nie sú dostupné.</p>';
     } else {
-        let items = orderData.items.map(i => `• ${i}`).join('<br>');
+        let itemsHtml = '';
+        orderData.items.forEach(item => {
+            itemsHtml += `
+                <div class="item">
+                    ${item.img ? `<img src="${item.img}" alt="Produkt">` : ''}
+                    <div>${item.title} – ${item.price}</div>
+                </div>
+            `;
+        });
+
         document.getElementById('summary').innerHTML = `
-            <strong>Objednávka:</strong><br><br>
-            ${items}<br><br>
+            <strong>Objednávka ${orderData.orderId}</strong><br><br>
+            ${itemsHtml}<br>
             <strong>Doprava:</strong> ${orderData.shipping}<br>
-            <strong>Celkovo:</strong> €${orderData.total}<br><br>
+            <strong>Celkovo:</strong> ${orderData.total}<br><br>
             <strong>Doručenie na:</strong><br>
             ${orderData.name}<br>
             ${orderData.address}<br>
             ${orderData.email}
         `;
-
         setTimeout(() => localStorage.removeItem('lastOrder'), 5000);
     }
 </script>
