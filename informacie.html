@@ -40,19 +40,12 @@
 </div>
 
 <script>
-    // === NASTAVENIA ===
     const WEB3FORMS_KEY = 'efd76031-ddf0-442f-ba6f-552b04369b0e';
-    const EMAILJS_USER_ID = 'N9nGtzWyuXyl8vF8L'; // ← ZMEŇ NA SVOJ
-    const EMAILJS_SERVICE_ID = 'service_6kg0otj';   // ← ZMEŇ
-    const EMAILJS_TEMPLATE_ID = 'template_n6yaikd'; // ← ZMEŇ
-
-    // Načítaj EmailJS
-    (function(){ emailjs.init(EMAILJS_USER_ID); })();
 
     async function sendOrder() {
         const status = document.getElementById('status');
         status.style.display = 'block';
-        status.textContent = 'Odosielam objednávku...';
+        status.textContent = 'Spracúvam objednávku...';
         status.className = 'status loading';
 
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -84,18 +77,6 @@
         // === CENA ===
         let subtotal = cart.reduce((s, i) => s + parseFloat(i.price.replace('€', '').trim()), 0);
         let total = subtotal.toFixed(2);
-
-        // === ULOŽENIE PRE POTVRDENIE ===
-        const orderData = {
-            orderId,
-            name,
-            address: `${street}, ${city}, ${zip}`,
-            email,
-            shipping: "Slovenská pošta – 2–5 pracovných dní",
-            items: cart.map(i => ({ title: i.title, price: i.price, img: i.img })),
-            total: `€${total}`
-        };
-        localStorage.setItem('lastOrder', JSON.stringify(orderData));
 
         // === GENEROVANIE PDF ===
         const { jsPDF } = window.jspdf;
@@ -141,23 +122,23 @@
         pdf.text("Platobné údaje vám zašleme čoskoro na email.", 20, y + 8);
         pdf.text("Po prijatí platby odošleme tovar poštou (2–5 dní).", 20, y + 16);
 
-        const pdfBlob = pdf.output('blob');
-        const pdfBase64 = await blobToBase64(pdfBlob);
+        const pdfBase64 = pdf.output('datauribase64');
 
-        // === ODOSLANIE EMAILU ===
-        try {
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-                to_name: name,
-                to_email: email,
-                order_number: orderId,
-                total: `€${total}`,
-                pdf_attachment: pdfBase64
-            });
-        } catch (err) {
-            console.error("EmailJS failed:", err);
-            status.textContent = 'Email sa nepodarilo odoslať, ale objednávka bola prijatá.';
-            status.className = 'status error';
-        }
+        // === ULOŽENIE PDF DO localStorage ===
+        localStorage.setItem('orderPDF', pdfBase64);
+
+        // === ULOŽENIE ÚDAJOV PRE POTVRDENIE ===
+        const orderData = {
+            orderId,
+            name,
+            address: `${street}, ${city}, ${zip}`,
+            email,
+            shipping: "Slovenská pošta – 2–5 pracovných dní",
+            items: cart.map(i => ({ title: i.title, price: i.price, img: i.img })),
+            total: `€${total}`,
+            note: note || 'Žiadna'
+        };
+        localStorage.setItem('lastOrder', JSON.stringify(orderData));
 
         // === WEB3FORMS (pre teba) ===
         const formData = new FormData();
@@ -189,16 +170,6 @@
                 status.className = 'status error';
             });
     }
-
-    function blobToBase64(blob) {
-        return new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result.split(',')[1]);
-            reader.readAsDataURL(blob);
-        });
-    }
 </script>
-<!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </body>
 </html>
