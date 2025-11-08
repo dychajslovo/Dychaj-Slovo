@@ -209,7 +209,7 @@
             background: #3fcfd5;
         }
 
-        /* DETAIL MODAL - ALLEGRO STYLE */
+        /* DETAIL MODAL */
         .detail-modal {
             display: none;
             position: fixed;
@@ -268,6 +268,11 @@
             object-fit: contain;
             border-radius: 8px;
             margin-bottom: 16px;
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+        .modal-left img:hover {
+            transform: scale(1.02);
         }
         .thumbnails {
             display: flex;
@@ -334,7 +339,7 @@
             background: #3fcfd5;
         }
 
-        /* GALLERY MODAL - ALLEGRO STYLE */
+        /* GALLERY MODAL - ZOOM */
         .gallery-modal {
             display: none;
             position: fixed;
@@ -346,6 +351,7 @@
             align-items: center;
             padding: 20px;
             flex-direction: column;
+            cursor: zoom-out;
         }
         .gallery-modal.active {
             display: flex;
@@ -358,11 +364,17 @@
         }
         .gallery-img {
             max-width: 100%;
-            max-height: 70vh;
+            max-height: 80vh;
             object-fit: contain;
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(255,255,255,0.3);
             margin-bottom: 8px;
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+        .gallery-img.zoomed {
+            transform: scale(1.8);
+            cursor: zoom-out;
         }
         .gallery-close {
             position: absolute;
@@ -614,7 +626,7 @@
         <div class="box">
             <button class="close" onclick="closeDetail()">x</button>
             <div class="modal-left">
-                <img id="modalImg" src="" alt="">
+                <img id="modalImg" src="" alt="" onclick="openGallery()">
                 <div class="thumbnails" id="thumbnails"></div>
             </div>
             <div class="modal-right">
@@ -628,15 +640,15 @@
         </div>
     </div>
 
-    <!-- GALLERY MODAL -->
-    <div id="galleryModal" class="gallery-modal">
+    <!-- GALLERY MODAL - ZOOM -->
+    <div id="galleryModal" class="gallery-modal" onclick="toggleZoom(event)">
         <div class="gallery-content">
             <button class="gallery-close" onclick="closeGallery()">x</button>
             <img id="galleryImg" class="gallery-img" src="" alt="">
             <div class="gallery-controls">
-                <button class="gallery-nav" onclick="changeImage(-1)"><</button>
+                <button class="gallery-nav" onclick="event.stopPropagation(); changeImage(-1)">Previous</button>
                 <div class="gallery-dots" id="galleryDots"></div>
-                <button class="gallery-nav" onclick="changeImage(1)">></button>
+                <button class="gallery-nav" onclick="event.stopPropagation(); changeImage(1)">Next</button>
             </div>
         </div>
     </div>
@@ -671,7 +683,7 @@
             document.getElementById('modalPrice').textContent = price;
             document.getElementById('modalDesc').textContent = desc;
 
-            // Generate thumbnails
+            // Náhľady
             const thumbs = document.getElementById('thumbnails');
             thumbs.innerHTML = '';
             previewList.forEach((src, i) => {
@@ -679,7 +691,8 @@
                 thumb.src = src;
                 thumb.className = 'thumb';
                 if (i === 0) thumb.classList.add('active');
-                thumb.onclick = () => {
+                thumb.onclick = (e) => {
+                    e.stopPropagation();
                     document.getElementById('modalImg').src = src;
                     document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
                     thumb.classList.add('active');
@@ -703,16 +716,20 @@
 
         function closeGallery() {
             document.getElementById('galleryModal').classList.remove('active');
+            document.querySelector('.gallery-img').classList.remove('zoomed');
         }
 
         function showGalleryImage() {
+            if (galleryImages.length === 0) return;
             document.getElementById('galleryImg').src = galleryImages[currentIndex];
             updateDots();
         }
 
         function changeImage(step) {
+            if (galleryImages.length === 0) return;
             currentIndex = (currentIndex + step + galleryImages.length) % galleryImages.length;
             showGalleryImage();
+            document.querySelector('.gallery-img').classList.remove('zoomed');
         }
 
         function updateDots() {
@@ -722,18 +739,37 @@
                 const dot = document.createElement('div');
                 dot.className = 'gallery-dot';
                 if (i === currentIndex) dot.classList.add('active');
-                dot.onclick = () => {
+                dot.onclick = (e) => {
+                    e.stopPropagation();
                     currentIndex = i;
                     showGalleryImage();
+                    document.querySelector('.gallery-img').classList.remove('zoomed');
                 };
                 dotsContainer.appendChild(dot);
             });
         }
 
+        function toggleZoom(e) {
+            if (e.target.tagName !== 'IMG') return;
+            e.target.classList.toggle('zoomed');
+        }
+
+        // Zatvorenie ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeDetail();
+                closeGallery();
+            }
+        });
+
+        // Zatvorenie klikom mimo
         ['detailModal', 'galleryModal'].forEach(id => {
             document.getElementById(id).addEventListener('click', function(e) {
                 if (e.target === this) {
                     this.classList.remove('active');
+                    if (id === 'galleryModal') {
+                        document.querySelector('.gallery-img').classList.remove('zoomed');
+                    }
                 }
             });
         });
