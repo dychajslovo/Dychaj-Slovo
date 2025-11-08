@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vaše informácie – Dýchaj Slovo</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body{font-family:'Open Sans',sans-serif;margin:40px;background:#f4f4f4;color:#333}
         .c{max-width:800px;margin:auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
@@ -19,6 +20,7 @@
         .status{display:none;margin-top:15px;padding:12px;border-radius:8px;text-align:center;font-weight:600}
         .success{background:#d4edda;color:#155724}
         .error{background:#f8d7da;color:#721c24}
+        .loading{background:#fff3cd;color:#856404}
     </style>
 </head>
 <body>
@@ -30,24 +32,28 @@
     <input type="text" id="zip" placeholder="PSČ" required>
     <input type="email" id="email" placeholder="E-mail" required>
     <textarea id="note" rows="3" placeholder="Poznámka (voliteľné)"></textarea>
-
     <div class="btn-container">
-        <button class="b back" onclick="location.href='index.html'">Späť na hlavnú</button>
-        <button class="b back" onclick="location.href='doprava.html'">Späť</button>
+        <button class="b back" onclick="location.href='kosik.html'">Späť do košíka</button>
         <button class="b order-btn" onclick="sendOrder()">Objednať</button>
     </div>
     <div id="status" class="status"></div>
 </div>
 
 <script>
-    // === YOUR WEB3FORMS ACCESS KEY ===
-    const WEB3FORMS_KEY = 'efd76031-ddf0-442f-ba6f-552b04369b0e';  // ← PASTE YOUR KEY HERE
+    // === NASTAVENIA ===
+    const WEB3FORMS_KEY = 'efd76031-ddf0-442f-ba6f-552b04369b0e';
+    const EMAILJS_USER_ID = 'N9nGtzWyuXyl8vF8L'; // ← ZMEŇ NA SVOJ
+    const EMAILJS_SERVICE_ID = 'service_6kg0otj';   // ← ZMEŇ
+    const EMAILJS_TEMPLATE_ID = 'template_n6yaikd'; // ← ZMEŇ
 
-    function sendOrder() {
+    // Načítaj EmailJS
+    (function(){ emailjs.init(EMAILJS_USER_ID); })();
+
+    async function sendOrder() {
         const status = document.getElementById('status');
         status.style.display = 'block';
         status.textContent = 'Odosielam objednávku...';
-        status.className = 'status';
+        status.className = 'status loading';
 
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         if (cart.length === 0) {
@@ -56,7 +62,6 @@
             return;
         }
 
-        const shipping = localStorage.getItem('shipping') || 'Nie je vybrané';
         const name = document.getElementById('name').value.trim();
         const street = document.getElementById('street').value.trim();
         const city = document.getElementById('city').value.trim();
@@ -65,62 +70,135 @@
         const note = document.getElementById('note').value.trim();
 
         if (!name || !street || !city || !zip || !email) {
-            status.textContent = 'Vyplňte všetky polia!';
+            status.textContent = 'Vyplňte všetky povinné polia!';
             status.className = 'status error';
             return;
         }
 
-        let items = cart.map(i => `${i.title} – ${i.price}`).join('\n');
-        let subtotal = cart.reduce((s, i) => s + parseFloat(i.price.replace('€', '')), 0);
-        let shipPrice = shipping.includes('€') ? parseFloat(shipping.split('€')[1]) : 0;
-        let total = subtotal + shipPrice;
+        // === ČÍSLO OBJEDNÁVKY ===
+        let orderNumber = localStorage.getItem('orderCounter') || 0;
+        orderNumber = parseInt(orderNumber) + 1;
+        localStorage.setItem('orderCounter', orderNumber);
+        const orderId = `#${String(orderNumber).padStart(3, '0')}`;
 
-        // === FORM DATA ===
+        // === CENA ===
+        let subtotal = cart.reduce((s, i) => s + parseFloat(i.price.replace('€', '').trim()), 0);
+        let total = subtotal.toFixed(2);
+
+        // === ULOŽENIE PRE POTVRDENIE ===
+        const orderData = {
+            orderId,
+            name,
+            address: `${street}, ${city}, ${zip}`,
+            email,
+            shipping: "Slovenská pošta – 2–5 pracovných dní",
+            items: cart.map(i => ({ title: i.title, price: i.price, img: i.img })),
+            total: `€${total}`
+        };
+        localStorage.setItem('lastOrder', JSON.stringify(orderData));
+
+        // === GENEROVANIE PDF ===
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+        let y = 20;
+
+        pdf.setFontSize(18);
+        pdf.text("Potvrdenie objednávky", 105, y, { align: "center" });
+        y += 12;
+        pdf.setFontSize(12);
+        pdf.text(`Číslo: ${orderId}`, 20, y); y += 8;
+        pdf.text(`Dátum: ${new Date().toLocaleDateString('sk-SK')}`, 20, y); y += 15;
+
+        pdf.setFontSize(14);
+        pdf.text("Produkty:", 20, y); y += 10;
+        pdf.setFontSize(11);
+
+        for (const item of cart) {
+            pdf.text(`• ${item.title} – ${item.price}`, 30, y); y += 8;
+            if (item.img) {
+                try {
+                    const img = new Image();
+                    img.crossOrigin = "anonymous";
+                    img.src = item.img;
+                    await new Promise(r => img.onload = r);
+                    pdf.addImage(img, 'JPEG', 30, y, 30, 30);
+                    y += 35;
+                } catch(e) { y += 8; }
+            } else { y += 8; }
+        }
+
+        pdf.setFontSize(12);
+        pdf.text(`Celková suma: €${total}`, 20, y); y += 15;
+        pdf.text("Doručenie na:", 20, y); y += 8;
+        pdf.text(name, 30, y); y += 8;
+        pdf.text(`${street}, ${city}, ${zip}`, 30, y); y += 8;
+        pdf.text(email, 30, y); y += 15;
+
+        pdf.setFontSize(11);
+        pdf.setFillColor(240, 248, 255);
+        pdf.rect(15, y, 180, 25, 'F');
+        pdf.setTextColor(0, 0, 139);
+        pdf.text("Platobné údaje vám zašleme čoskoro na email.", 20, y + 8);
+        pdf.text("Po prijatí platby odošleme tovar poštou (2–5 dní).", 20, y + 16);
+
+        const pdfBlob = pdf.output('blob');
+        const pdfBase64 = await blobToBase64(pdfBlob);
+
+        // === ODOSLANIE EMAILU ===
+        try {
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                to_name: name,
+                to_email: email,
+                order_number: orderId,
+                total: `€${total}`,
+                pdf_attachment: pdfBase64
+            });
+        } catch (err) {
+            console.error("EmailJS failed:", err);
+            status.textContent = 'Email sa nepodarilo odoslať, ale objednávka bola prijatá.';
+            status.className = 'status error';
+        }
+
+        // === WEB3FORMS (pre teba) ===
         const formData = new FormData();
-        formData.append('access_key', WEB3FORMS_KEY);  // Your key
+        formData.append('access_key', WEB3FORMS_KEY);
         formData.append('name', name);
         formData.append('email', email);
         formData.append('address', `${street}, ${city}, ${zip}`);
-        formData.append('shipping', shipping);
-        formData.append('items', items);
-        formData.append('total', `€${total.toFixed(2)}`);
+        formData.append('items', cart.map(i => `${i.title} – ${i.price}`).join('\n'));
+        formData.append('total', `€${total}`);
+        formData.append('order_id', orderId);
         formData.append('note', note || 'Žiadna');
 
-        // === SAVE FOR CONFIRMATION ===
-        localStorage.setItem('lastOrder', JSON.stringify({
-            name, address: `${street}, ${city}, ${zip}`, email, shipping,
-            items: cart.map(i => `${i.title} – ${i.price}`),
-            total: total.toFixed(2)
-        }));
+        fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    status.textContent = 'Objednávka odoslaná! Presmerúvam...';
+                    status.className = 'status success';
+                    setTimeout(() => {
+                        localStorage.removeItem('cart');
+                        window.location.replace('potvrdenie.html');
+                    }, 2000);
+                } else {
+                    throw new Error();
+                }
+            })
+            .catch(() => {
+                status.textContent = 'Chyba odoslania. Skúste znova.';
+                status.className = 'status error';
+            });
+    }
 
-        // === SEND TO WEB3FORMS ===
-        fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                status.textContent = 'Objednávka odoslaná!';
-                status.className = 'status success';
-            } else {
-                throw new Error(data.message || 'Unknown error');
-            }
-        })
-        .catch((error) => {
-            console.error('Web3Forms failed:', error);
-            status.textContent = 'Chyba pri odosielaní. Skúste znova.';
-            status.className = 'status error';
-        })
-        .finally(() => {
-            // === ALWAYS REDIRECT ===
-            setTimeout(() => {
-                localStorage.removeItem('cart');
-                localStorage.removeItem('shipping');
-                window.location.replace('potvrdenie.html');
-            }, 2000);
+    function blobToBase64(blob) {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result.split(',')[1]);
+            reader.readAsDataURL(blob);
         });
     }
 </script>
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </body>
 </html>
