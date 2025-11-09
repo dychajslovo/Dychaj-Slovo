@@ -164,6 +164,14 @@
             line-height: 1.7;
             margin: 12px 0;
         }
+        .section a {
+            color: #2c495e;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+        .section a:hover {
+            color: #3fcfd5;
+        }
         /* PRODUCT */
         .section-product {
             background: #f9f9f9;
@@ -464,6 +472,7 @@
         <button class="nav-btn" onclick="document.getElementById('deti').scrollIntoView()">Pre Rodiny a Deti</button>
         <button class="nav-btn" onclick="document.getElementById('uvahy').scrollIntoView()">Denné Úvahy z Božieho Slova</button>
         <button class="nav-btn" onclick="document.getElementById('cvicenia').scrollIntoView()">Duchovné Cvičenia</button>
+        <button class="nav-btn" onclick="document.getElementById('anglicke-texty').scrollIntoView()">Anglické Texty na Amazon</button>
     </div>
 
     <div class="intro-bottom">
@@ -530,6 +539,7 @@
         </div>
     </div>
 
+    <!-- SEKCIA: Duchovné Cvičenia -->
     <div id="cvicenia" class="section">
         <h2>Duchovné Cvičenia</h2>
         <p>Ponúkame jednoduché duchovné cvičenia, ktoré ti pomôžu prežívať prítomnosť Boha v každodennom živote.</p>
@@ -548,11 +558,11 @@
         </div>
     </div>
 
-    <!-- NEW SECTION: ANGLICKÉ TEXTY NA AMAZON -->
+    <!-- NOVÁ SEKCIA: Anglické Texty na Amazon -->
     <div id="anglicke-texty" class="section">
         <h2>Anglické Texty na Amazon</h2>
-        <p>Objavte anglické texty od Mathiasa Gocika na Amazon. </p>
-        <p>Prejsť na Amazon: <a href="https://www.amazon.com/stores/Mathias-Gocik/author/B0DZJ1WPP2?sr=8-34&isDramIntegrated=true&shoppingPortalEnabled=true" target="_blank">prejsť na Amazon</a></p>
+        <p>Objavte anglické duchovné texty od autora <strong>Mathias Gocik</strong> na Amazon.</p>
+        <p><a href="https://www.amazon.com/stores/Mathias-Gocik/author/B0DZJ1WPP2?sr=8-34&isDramIntegrated=true&shoppingPortalEnabled=true" target="_blank">prejsť na Amazon</a></p>
     </div>
 
     <!-- CONTACT -->
@@ -574,9 +584,9 @@
             <button class="close" onclick="closeDetail()">x</button>
             <div class="modal-left">
                 <div class="image-container">
-                    <div class="nav-arrow prev" onclick="changeImage(-1)">&lt;</div>
+                    <div class="nav-arrow prev" onclick="changeImage(-1)">Left Arrow</div>
                     <img id="modalImg" class="modal-img" src="" alt="" onclick="toggleZoom()">
-                    <div class="nav-arrow next" onclick="changeImage(1)">&gt;</div>
+                    <div class="nav-arrow next" onclick="changeImage(1)">Right Arrow</div>
                 </div>
                 <div class="thumbnails" id="thumbnails"></div>
             </div>
@@ -619,7 +629,6 @@
             document.getElementById('modalPrice').textContent = price;
             document.getElementById('modalDesc').textContent = desc;
 
-            // Náhľady
             const thumbs = document.getElementById('thumbnails');
             thumbs.innerHTML = '';
             galleryImages.forEach((src, i) => {
@@ -668,18 +677,12 @@
             document.getElementById('modalImg').classList.remove('zoomed');
         }
 
-        // Zatvorenie ESC
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeDetail();
-            }
+            if (e.key === 'Escape') closeDetail();
         });
 
-        // Zatvorenie klikom mimo
         document.getElementById('detailModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeDetail();
-            }
+            if (e.target === this) closeDetail();
         });
     </script>
 </body>
