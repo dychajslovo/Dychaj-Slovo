@@ -268,7 +268,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: #fafafa;
+            background: #fafaa;
             position: relative;
         }
         .image-container {
@@ -384,6 +384,16 @@
             background: #3fcfd5;
         }
 
+        /* AMAZON BUTTON */
+        .amazon-btn {
+            background: #ff9900;
+            color: white;
+            margin-top: 15px;
+        }
+        .amazon-btn:hover {
+            background: #e68a00;
+        }
+
         /* CONTACT */
         .contact-section {
             max-width: 900px;
@@ -417,13 +427,9 @@
                 max-height: 95vh;
                 overflow-y: auto;
             }
-            .modal-left {
-                padding: 16px;
-            }
+            .modal-left { padding: 16px; }
             .image-container { max-height: 300px; }
-            .modal-right {
-                padding: 20px;
-            }
+            .modal-right { padding: 20px; }
             .modal-right h3 { font-size: 20px; }
             .modal-right .price { font-size: 24px; }
             .add-to-cart-btn { align-self: stretch; }
@@ -472,7 +478,7 @@
         <button class="nav-btn" onclick="document.getElementById('deti').scrollIntoView()">Pre Rodiny a Deti</button>
         <button class="nav-btn" onclick="document.getElementById('uvahy').scrollIntoView()">Denné Úvahy z Božieho Slova</button>
         <button class="nav-btn" onclick="document.getElementById('cvicenia').scrollIntoView()">Duchovné Cvičenia</button>
-        <button class="nav-btn" onclick="document.getElementById('anglicke-texty').scrollIntoView()">Anglické Texty na Amazone</button>
+        <button class="nav-btn" onclick="document.getElementById('anglicke-texty').scrollIntoView()">Anglické Texty na Amazon</button>
     </div>
 
     <div class="intro-bottom">
@@ -558,11 +564,25 @@
         </div>
     </div>
 
-    <!-- NOVÁ SEKCIA: Anglické Texty na Amazon -->
+    <!-- NOVÁ SEKCIA: Anglické Texty na Amazon S GALÉRIOU -->
     <div id="anglicke-texty" class="section">
-        <h2>Anglické Texty na Amazone</h2>
-        <p>Objavte anglické duchovné texty od autora <strong>Mathias Gocik</strong> na Amazone.</p>
-        <p><a href="https://www.amazon.com/stores/Mathias-Gocik/author/B0DZJ1WPP2?sr=8-34&isDramIntegrated=true&shoppingPortalEnabled=true" target="_blank">Prejsť na Amazon.com</a></p>
+        <h2>Anglické Texty na Amazon</h2>
+        <p>Objavte anglické duchovné texty od autora <strong>Mathias Gocik</strong> na Amazon.</p>
+        <div class="section-product">
+            <img src="amazon-cover1.jpg" alt="Amazon Kniha 1">
+            <h3>English Spiritual Books</h3>
+            <div class="product-price">na Amazone</div>
+            <button class="detail-btn" onclick="openProductDetail(
+                'Anglické Texty na Amazon',
+                '',
+                'Prezrite si všetky anglické duchovné texty od Mathiasa Gocika na Amazon. Kliknite na tlačidlo nižšie.',
+                'amazon-cover1.jpg',
+                ['amazon-cover1.jpg', 'amazon-cover2.jpg', 'amazon-cover3.jpg']
+            )">Galéria</button>
+            <a href="https://www.amazon.com/stores/Mathias-Gocik/author/B0DZJ1WPP2?sr=8-34&isDramIntegrated=true&shoppingPortalEnabled=true" target="_blank">
+                <button class="detail-btn amazon-btn">Kúpiť na Amazon</button>
+            </a>
+        </div>
     </div>
 
     <!-- CONTACT -->
@@ -596,7 +616,10 @@
                 <div class="price-container">
                     <div class="price" id="modalPrice"></div>
                 </div>
-                <button class="add-to-cart-btn" id="addToCartBtn">Do košíka</button>
+                <button class="add-to-cart-btn" id="addToCartBtn" style="display:none">Do košíka</button>
+                <a id="amazonLink" href="https://www.amazon.com/stores/Mathias-Gocik/author/B0DZJ1WPP2" target="_blank" style="display:none">
+                    <button class="detail-btn amazon-btn" style="margin-top:10px;width:100%">Kúpiť na Amazon</button>
+                </a>
             </div>
         </div>
     </div>
@@ -629,6 +652,18 @@
             document.getElementById('modalPrice').textContent = price;
             document.getElementById('modalDesc').textContent = desc;
 
+            const addBtn = document.getElementById('addToCartBtn');
+            const amazonLink = document.getElementById('amazonLink');
+
+            if (title.includes('Amazon')) {
+                addBtn.style.display = 'none';
+                amazonLink.style.display = 'block';
+            } else {
+                addBtn.style.display = 'block';
+                amazonLink.style.display = 'none';
+                addBtn.onclick = () => addToCart(title, price, img);
+            }
+
             const thumbs = document.getElementById('thumbnails');
             thumbs.innerHTML = '';
             galleryImages.forEach((src, i) => {
@@ -646,7 +681,6 @@
                 thumbs.appendChild(thumb);
             });
 
-            document.getElementById('addToCartBtn').onclick = () => addToCart(title, price, img);
             document.getElementById('detailModal').classList.add('active');
         }
 
