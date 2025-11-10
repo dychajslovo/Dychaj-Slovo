@@ -62,7 +62,7 @@
         .profile-row {
             display: flex;
             align-items: flex-end;
-            justify-content: flex-start;    /* zarovnanie doľava */
+            justify-content: center;    /* zarovnanie center */
             max-width: 1100px;
             margin: 0 auto;
             padding: 0 20px;
@@ -90,10 +90,13 @@
             font-size: 50px;
             color: #222;
             text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin: 0 0 0 60px;   /* Názov "Dýchaj Slovo" je priamo vedľa profilového obrázka, len 30 px vpravo */
+            margin: 0;
             line-height: 1;
             padding-bottom: 8px;
             white-space: nowrap; /* aby sa názov nezlomil */
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
         }
         /* INTRO */
         .intro-top {
