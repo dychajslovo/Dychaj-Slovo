@@ -18,7 +18,7 @@
             position: relative;
             max-width: 1200px;
             margin: 0 auto 30px;
-            text-align: center;
+            text-align: left;
         }
         .banner {
             width: 100%;
@@ -62,7 +62,7 @@
         .profile-row {
             display: flex;
             align-items: flex-end;
-            justify-content: center;    /* zarovnanie center */
+            justify-content: flex-start;    /* zarovnanie center */
             gap: 18px; /* pár bodov medzi obrázkom a textom */
             max-width: 1100px;
             margin: 0 auto;
@@ -74,6 +74,7 @@
         .profile-left {
             display: flex;
             align-items: flex-end;
+            margin-left: 15px; /* ← obrázok len 15 px od ľavého okraja obrazovky */
         }
         .profile-overlap {
             width: 200px;
@@ -93,9 +94,11 @@
             line-height: 1;
             padding-bottom: 8px;
             white-space: nowrap; /* aby sa názov nezlomil */
-            position: relative;
+            /* ← vždy v strede obrazovky */
+            position: fixed;
             left: 50%;
             transform: translateX(-50%);
+            z-index: 15;   
         }
         /* INTRO */
         .intro-top {
