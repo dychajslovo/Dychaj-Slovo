@@ -447,11 +447,35 @@
             .add-to-cart-btn { font-size: 16px; padding: 14px; }
         }
         @media (max-width: 768px) {
+    /* Odstránime absolútnu pozíciu názvu – nebude prekrytý */
+    .profile-name {
+        position: static;
+        transform: none;
+        left: auto;
+        margin: 15px 0 0;
+        text-align: center;
+        font-size: 40px;
+        white-space: normal;
+    }
+
+    /* Skryjeme prekrytie – názov už nie je nad bannerom */
+    .profile-row {
+        position: static;
+        top: 0;
+        display: block;
+        padding: 0 20px;
+    }
+
+    .profile-left {
+        margin-left: 15px;
+        margin-bottom: 10px;
+    }
+
     .profile-overlap {
-        width: 100px;   /* 200px × 0.5 = 100px */
-        height: 100px;}
-        }
-    </style>
+        width: 100px;
+        height: 100px;
+    }
+}    </style>
 </head>
 <body>
     <!-- FIXED CART BUTTON -->
