@@ -64,7 +64,7 @@
             font-weight: bold;
         }
 
-        /* PROFILE ROW – DESKTOP ONLY */
+        /* PROFILE ROW – SAME ON ALL SCREENS */
         .profile-row {
             display: flex;
             align-items: flex-end;
@@ -423,61 +423,38 @@
             margin-top: 20px;
         }
 
-        /* ============================= */
-        /* MOBILE: TITLE BELOW BANNER */
-        /* ============================= */
+        /* RESPONSIVE: SAME LAYOUT ON MOBILE */
         @media (max-width: 768px) {
-            /* Hide desktop layout */
-            .profile-row, .profile-left, .profile-name {
-                display: none !important;
+            /* Keep desktop layout */
+            .profile-row {
+                top: -110px; /* Move title DOWN a bit */
+                padding: 0 15px;
             }
-
-            /* Banner stays as is */
-            .banner {
-                position: relative;
-                height: 200px;
-                object-fit: cover;
-                border-radius: 8px;
+            .profile-left {
+                margin-left: 10px;
             }
-
-            /* Profile pic INSIDE banner, bottom-left */
-            .profile-overlap-mobile {
-                position: absolute;
-                bottom: -50px;
-                left: 16px;
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                object-fit: cover;
-                border: 4px solid white;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-                z-index: 10;
+            .profile-overlap {
+                width: 140px;
+                height: 140px;
+                border-width: 5px;
             }
-
-            /* TITLE BELOW BANNER */
-            .profile-name-mobile {
-                display: block;
-                margin: 70px auto 16px;
-                text-align: center;
-                font-family: 'Fredoka', sans-serif;
-                font-weight: 600;
-                font-size: 32px;
-                color: #222;
-                white-space: nowrap;
+            .profile-name {
+                font-size: 38px;
+                white-space: nowrap; /* Force one line */
                 overflow: hidden;
                 text-overflow: ellipsis;
                 max-width: 90%;
-                padding: 0 16px;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 0 15px;
+                line-height: 1.1;
+                bottom: 20px; /* Push down from bottom of profile-row */
+                position: absolute;
             }
 
-            /* Push content down */
-            .header {
-                padding-bottom: 80px;
-            }
-
-            /* Intro spacing */
+            /* Push intro down to avoid overlap */
             .intro-top {
-                margin: 20px auto 15px;
+                margin: -70px auto 15px;
             }
 
             /* Modal fixes */
@@ -500,16 +477,17 @@
             .modal-right .price { font-size: 22px; }
             .add-to-cart-btn { font-size: 16px; padding: 14px; }
 
-            .profile-overlap-mobile {
-                width: 80px;
-                height: 80px;
-                bottom: -40px;
-                left: 12px;
+            .profile-row { top: -90px; }
+            .profile-overlap {
+                width: 110px;
+                height: 110px;
+                border-width: 4px;
             }
-            .profile-name-mobile {
-                font-size: 28px;
-                margin: 60px auto 12px;
+            .profile-name {
+                font-size: 32px;
+                bottom: 15px;
             }
+            .intro-top { margin: -55px auto 15px; }
         }
     </style>
 </head>
@@ -524,18 +502,12 @@
     <!-- HEADER -->
     <div class="header">
         <img src="banner.png" alt="Dýchaj Slovo Banner" class="banner">
-
-        <!-- DESKTOP: Overlapping profile + title -->
         <div class="profile-row">
             <div class="profile-left">
                 <img src="profile.jpg" alt="Mathias" class="profile-overlap">
             </div>
             <div class="profile-name">Dýchaj Slovo</div>
         </div>
-
-        <!-- MOBILE: Profile pic inside banner + title BELOW -->
-        <img src="profile.jpg" alt="Mathias" class="profile-overlap-mobile">
-        <h1 class="profile-name-mobile">Dýchaj Slovo</h1>
     </div>
 
     <!-- INTRO -->
