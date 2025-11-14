@@ -449,3 +449,332 @@
                 height: 100px;
                 border-radius: 50%;
                 object-fit: cover;
+                border: 4px solid white;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                z-index: 10;
+            }
+
+            /* TITLE BELOW BANNER */
+            .profile-name-mobile {
+                display: block;
+                margin: 70px auto 16px;
+                text-align: center;
+                font-family: 'Fredoka', sans-serif;
+                font-weight: 600;
+                font-size: 32px;
+                color: #222;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 90%;
+                padding: 0 16px;
+            }
+
+            /* Push content down */
+            .header {
+                padding-bottom: 80px;
+            }
+
+            /* Intro spacing */
+            .intro-top {
+                margin: 20px auto 15px;
+            }
+
+            /* Modal fixes */
+            .detail-modal .box {
+                flex-direction: column;
+                max-height: 95vh;
+                overflow-y: auto;
+            }
+            .modal-left { padding: 16px; }
+            .image-container { max-height: 300px; }
+            .modal-right { padding: 20px; }
+            .modal-right h3 { font-size: 20px; }
+            .modal-right .price { font-size: 24px; }
+            .add-to-cart-btn { align-self: stretch; }
+            .nav-arrow { width: 36px; height: 36px; font-size: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .thumb { width: 50px; height: 50px; }
+            .modal-right .price { font-size: 22px; }
+            .add-to-cart-btn { font-size: 16px; padding: 14px; }
+
+            .profile-overlap-mobile {
+                width: 80px;
+                height: 80px;
+                bottom: -40px;
+                left: 12px;
+            }
+            .profile-name-mobile {
+                font-size: 28px;
+                margin: 60px auto 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FIXED CART BUTTON -->
+    <button class="cart-btn" onclick="window.location.href='kosik.html'">
+        Košík
+        <span class="cart-count" id="cartCount">0</span>
+    </button>
+
+    <!-- HEADER -->
+    <div class="header">
+        <img src="banner.png" alt="Dýchaj Slovo Banner" class="banner">
+
+        <!-- DESKTOP: Overlapping profile + title -->
+        <div class="profile-row">
+            <div class="profile-left">
+                <img src="profile.jpg" alt="Mathias" class="profile-overlap">
+            </div>
+            <div class="profile-name">Dýchaj Slovo</div>
+        </div>
+
+        <!-- MOBILE: Profile pic inside banner + title BELOW -->
+        <img src="profile.jpg" alt="Mathias" class="profile-overlap-mobile">
+        <h1 class="profile-name-mobile">Dýchaj Slovo</h1>
+    </div>
+
+    <!-- INTRO -->
+    <div class="intro-top">
+        <p><b>Od oltára k rodinnému stolu, od otče k Tata!</b></p>
+        <p>Volám sa Mathias a učím sa vnímať Boha v nádychu aj výdychu, v hlase Ducha – <i>Rûach</i> – ktorý vanie kam chce.</p>
+        <p>Nie som učiteľ. Som pútnik, ktorý sa učí načúvať Dychu.</p>
+        <p>* * *</p>
+        <p>V pokoji a tichu denne vnímam Boha, ako ma vyzýva:</p>
+        <p><b><i>"Dýchaj Slovo – dýchaj moje Slovo – dýchaj Život, ktorý som Ja sám, a poď za mnou – taký, aký si, s tými, ktorých som ti dal."</i></b></p>
+        <p>Preto zdieľam s vami duchovné slová ale aj detské aktivity, ktoré vyrástli z ticha, z bolesti, z hľadania Boha:</p>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="document.getElementById('pracovne-listy').scrollIntoView()">Detské Pracovné Listy</button>
+        <button class="nav-btn" onclick="document.getElementById('deti').scrollIntoView()">Pre Rodiny a Deti</button>
+        <button class="nav-btn" onclick="document.getElementById('uvahy').scrollIntoView()">Denné Úvahy z Písma</button>
+        <button class="nav-btn" onclick="document.getElementById('cvicenia').scrollIntoView()">Duchovné Cvičenia</button>
+        <button class="nav-btn" onclick="document.getElementById('anglicke-texty').scrollIntoView()">Anglické Knihy na Amazone</button>
+    </div>
+
+    <div class="intro-bottom">
+        <p>Hovorím o viere, ktorá sa nebojí otázok, o láske, ktorá nesúdi, a o slobode, ktorá prichádza, keď dýchame Božím Duchom - keď dýchame jeho Slovo.</p>
+        <p>* * *</p>
+    </div>
+
+    <!-- SECTIONS -->
+    <div id="pracovne-listy" class="section">
+        <h2>Detské Pracovné Listy !!čoskoro!!</h2>
+        <p>Praktické a hravé pracovné listy pre deti. Obsahujú aktivity, úlohy a maľovanky.</p>
+        <p>Všetko pripravené na zábavné chvíle doma.</p>
+        <p>Texty sú vytlačené a prípadne zviazané a laminované - poslané poštou.</p>
+        <div class="section-product">
+            <img src="placeholder-listy.jpg" alt="Pracovné listy">
+            <h3>Zábavné Pracovné Listy pre Deti</h3>
+            <div class="product-price">čoskoro</div>
+            <button class="detail-btn" onclick="openProductDetail(
+                'Zábavné Pracovné Listy pre Deti',
+                'čoskoro',
+                'Súbor 10 pracovných listov – maľovanky, úlohy a aktivity pre deti 2-5 rokov.',
+                'placeholder-listy.jpg',
+                ['placeholder-listy.jpg', 'listy-preview1.jpg', 'listy-preview2.jpg']
+            )">Detaily</button>
+        </div>
+    </div>
+
+    <div id="deti" class="section">
+        <h2>Pre Rodiny a Deti</h2>
+        <p>Deti sú najbližšie k Božiemu kráľovstvu. Tu nájdeš príbehy, aktivity a modlitby, ktoré hovoria ich jazykom.</p>
+        <p>Spoločne objavujeme v rodine, že Boh je Tata, ktorý sa raduje z detskej viery.</p>
+        <p>Texty sú vytlačené a zviazané - poslané poštou.</p>
+        <div class="section-product">
+            <img src="ADVENTcover.jpeg" alt="Advent Cover">
+            <h3>Rodinné Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor - Deti 2+</h3>
+            <div class="product-price">5 €</div>
+            <button class="detail-btn" onclick="openProductDetail(
+                'Rodinné Zamyslenia na Advent - Čítaj, Modli sa, Vyfarbuj, Tvor - Deti 2+',
+                '5 €',
+                'Adventný zošit pre rodinu s deťmi. V kruhu rodiny objavujte krásu Adventného obdobia čítaním Božieho Slova, modlitbami, maľovankami a tvorivými úlohami od 30. novembra do 25. decembra 2025. Denné evanjelia sú podľa rímskokatolíckeho liturgického kalendára. Texty sú vytlačené a zviazané. Odporúčame vyfarbovať maľovanky s pastelkami alebo voskovkami. A5 formát, 62 strán.',
+                'ADVENTcover.jpeg',
+                ['ADVENTcover.jpeg', 'Adv_kids_p3.jpeg', 'Adv_kids_p7.jpeg', 'Adv_kids_p8.jpeg']
+            )">Detaily</button>
+        </div>
+    </div>
+
+    <div id="uvahy" class="section">
+        <h2>Denné Úvahy z Božieho Slova</h2>
+        <p>Tu nájdeš hlboké zamyslenia nad Božím Slovom, ktoré ťa pozývajú zastaviť sa, počúvať a nechať sa viesť Duchom.</p>
+        <p>Texty sú iba v PDF formáte - poslané e-mailom.</p>
+        <div class="section-product">
+            <img src="ADVENT-UVAHYcover.jpeg" alt="Advent Úvahy">
+            <h3>Advent, Denné úvahy z Božieho Slova</h3>
+            <div class="product-price">5 €</div>
+            <button class="detail-btn" onclick="openProductDetail(
+                'Advent, Denné úvahy z Božieho Slova',
+                '5 €',
+                'Každodenné zamyslenia z Božieho Slova na Advent, ktoré ťa pozývajú k hlbšiemu stíšeniu a načúvaniu Božiemu slovu. Zamyslenia nad denným evajeliom podľa rímskokatolíckeho liturgického kalendára od 30. novembra do 25. decembra 2025. PDF formát, 94 strán.',
+                'ADVENT-UVAHYcover.jpeg',
+                ['ADVENT-UVAHYcover.jpeg', 'advent1.jpg', 'advent2.jpg', 'advent3.jpg']
+            )">Detaily</button>
+        </div>
+    </div>
+
+    <div id="cvicenia" class="section">
+        <h2>Duchovné Cvičenia</h2>
+        <p>Ponúkame jednoduché duchovné cvičenia, ktoré ti pomôžu prežívať prítomnosť Boha v každodennom živote.</p>
+        <p>Texty sú iba v PDF formáte - poslané e-mailom.</p>
+        <div class="section-product">
+            <img src="ADAMcover.png" alt="Adam, kde si?">
+            <h3>Adam, kde si?</h3>
+            <div class="product-price">3 €</div>
+            <button class="detail-btn" onclick="openProductDetail(
+                'Adam, kde si?',
+                '3 €',
+                'Malé duchovné cvičenia na hľadanie seba v tichu a Božej prítomnosti – jednoduché kroky k vnútornému pokoju. PDF formát, 4 meditácie (1 meditáciu na deň - spolu 4. dňové malé duchovné cvičenia), 18 strán.',
+                'ADAMcover.png',
+                ['ADAMcover.png', 'adam1.png', 'adam2.png', 'adam3.png']
+            )">Detaily</button>
+        </div>
+    </div>
+
+    <div id="anglicke-texty" class="section">
+        <h2>Anglické Knihy na Amazone</h2>
+        <p>Objavte anglické knihy a Kindle Ebooky s duchovnou tematikou od autora <strong>Mathias Gocik</strong> na Amazone.</p>
+        <div class="section-product">
+            <img src="amazon.png" alt="Amazon1">
+            <h3>Anglické duchovné Knihy a Kindle Ebooky</h3>
+            <div class="product-price">5 € - 25 €</div>
+            <button class="detail-btn" onclick="openProductDetail(
+                'Anglické knihy na Amazone',
+                '',
+                'Prezrite si tieto ako aj iné diela s duchovnou tematikou od Mathiasa Gocika na Amazone.',
+                'amazon.png',
+                ['amazon1.jpg', 'amazon2.jpg', 'amazon3.jpg', 'amazon4.jpg']
+            )">Detaily</button>
+            <a href="https://www.amazon.com/stores/Mathias-Gocik/author/B0DZJ1WPP2?sr=8-34&isDramIntegrated=true&shoppingPortalEnabled=true" target="_blank">
+                <button class="detail-btn amazon-btn">Pozrieť na Amazone</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="contact-section">
+        <h2>Kontakt</h2>
+        <hr>
+        <p>dychajslovo@gmail.com</p>
+        <p>+421944338237</p>
+        <div class="social-links">
+            <a href="https://facebook.com/profile.php?id=61581374472536" target="_blank"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M22.676 0H1.324C.593 0 0 .593 0 1.324v21.352C0 23.407.593 24 1.324 24h11.494v-9.294H9.689v-3.622h3.129V8.412c0-3.1 1.893-4.788 4.657-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.324V1.324C24 .593 23.407 0 22.676 0z"/></svg></a>
+            <a href="https://instagram.com/dychajslovo" target="_blank"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.697.272 1.052 1.936 1.052 6.292c0 1.28-.014 1.688-.072 2.968C.88 13.616.272 15.26.272 19.616c0 4.357.608 5.997 2.34 5.997.73.058 1.138.072 3.332.072 3.259 0 3.667-.014 4.947.072 4.357-.2 5.997-.808 5.997-2.34 0-1.28.014-1.688.072-2.968.1-4.357.708-5.997 2.34-5.997.73-.058 1.138-.072 3.332-.072z"/><path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/></svg></a>
+            <a href="https://x.com/DychajSlovo" target="_blank"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        </div>
+    </div>
+
+    <!-- DETAIL MODAL -->
+    <div id="detailModal" class="detail-modal">
+        <div class="box">
+            <button class="close" onclick="closeDetail()">x</button>
+            <div class="modal-left">
+                <div class="image-container">
+                    <div class="nav-arrow prev" onclick="changeImage(-1)"><</div>
+                    <img id="modalImg" class="modal-img" src="" alt="" onclick="toggleZoom()">
+                    <div class="nav-arrow next" onclick="changeImage(1)">></div>
+                </div>
+                <div class="thumbnails" id="thumbnails"></div>
+            </div>
+            <div class="modal-right">
+                <h3 id="modalTitle"></h3>
+                <p class="desc" id="modalDesc"></p>
+                <div class="price-container">
+                    <div class="price" id="modalPrice"></div>
+                </div>
+                <button class="add-to-cart-btn" id="addToCartBtn" style="display:none">Do košíka</button>
+                <a id="amazonLink" href="https://www.amazon.com/stores/Mathias-Gocik/author/B0DZJ1WPP2" target="_blank" style="display:none">
+                    <button class="detail-btn amazon-btn" style="margin-top:10px;width:100%">Pozrieť na Amazone</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        updateCartCount();
+        function addToCart(title, price, img) {
+            cart.push({ title, price, img });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            closeDetail();
+        }
+        function updateCartCount() {
+            document.getElementById('cartCount').textContent = cart.length;
+        }
+        let galleryImages = [];
+        let currentIndex = 0;
+        function openProductDetail(title, price, desc, img, previewList) {
+            galleryImages = previewList;
+            currentIndex = previewList.indexOf(img) !== -1 ? previewList.indexOf(img) : 0;
+            document.getElementById('modalImg').src = galleryImages[currentIndex];
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalPrice').textContent = price;
+            document.getElementById('modalDesc').textContent = desc;
+            const addBtn = document.getElementById('addToCartBtn');
+            const amazonLink = document.getElementById('amazonLink');
+            if (title.includes('Amazon')) {
+                addBtn.style.display = 'none';
+                amazonLink.style.display = 'block';
+            } else {
+                addBtn.style.display = 'block';
+                amazonLink.style.display = 'none';
+                addBtn.onclick = () => addToCart(title, price, img);
+            }
+            const thumbs = document.getElementById('thumbnails');
+            thumbs.innerHTML = '';
+            galleryImages.forEach((src, i) => {
+                const thumb = document.createElement('img');
+                thumb.src = src;
+                thumb.className = 'thumb';
+                if (i === currentIndex) thumb.classList.add('active');
+                thumb.onclick = (e) => {
+                    e.stopPropagation();
+                    currentIndex = i;
+                    document.getElementById('modalImg').src = src;
+                    updateThumbnails();
+                    resetZoom();
+                };
+                thumbs.appendChild(thumb);
+            });
+            document.getElementById('detailModal').classList.add('active');
+        }
+        function closeDetail() {
+            document.getElementById('detailModal').classList.remove('active');
+            resetZoom();
+        }
+        function changeImage(step) {
+            currentIndex = (currentIndex + step + galleryImages.length) % galleryImages.length;
+            document.getElementById('modalImg').src = galleryImages[currentIndex];
+            updateThumbnails();
+            resetZoom();
+        }
+        function updateThumbnails() {
+            document.querySelectorAll('.thumb').forEach((t, i) => {
+                t.classList.toggle('active', i === currentIndex);
+            });
+        }
+        function toggleZoom() {
+            const img = document.getElementById('modalImg');
+            img.classList.toggle('zoomed');
+        }
+        function resetZoom() {
+            document.getElementById('modalImg').classList.remove('zoomed');
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeDetail();
+        });
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target === this) closeDetail();
+        });
+    </script>
+</body>
+</html>
