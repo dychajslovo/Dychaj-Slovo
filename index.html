@@ -64,7 +64,7 @@
             font-weight: bold;
         }
 
-        /* PROFILE ROW – DESKTOP */
+        /* PROFILE ROW – DESKTOP ONLY */
         .profile-row {
             display: flex;
             align-items: flex-end;
@@ -424,7 +424,7 @@
         }
 
         /* ============================= */
-        /* MOBILE: PROFILE OVERLAPS BANNER, TITLE BELOW */
+        /* MOBILE: TITLE BELOW BANNER */
         /* ============================= */
         @media (max-width: 768px) {
             /* Hide desktop layout */
@@ -432,7 +432,7 @@
                 display: none !important;
             }
 
-            /* Banner stays full */
+            /* Banner stays as is */
             .banner {
                 position: relative;
                 height: 200px;
@@ -440,16 +440,16 @@
                 border-radius: 8px;
             }
 
-            /* PROFILE PIC OVERLAPS BANNER (bottom-left) */
+            /* Profile pic INSIDE banner, bottom-left */
             .profile-overlap-mobile {
                 position: absolute;
-                bottom: -60px;  /* Overlap */
+                bottom: -50px;
                 left: 16px;
-                width: 110px;
-                height: 110px;
+                width: 100px;
+                height: 100px;
                 border-radius: 50%;
                 object-fit: cover;
-                border: 5px solid white;
+                border: 4px solid white;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.2);
                 z-index: 10;
             }
@@ -457,11 +457,11 @@
             /* TITLE BELOW BANNER */
             .profile-name-mobile {
                 display: block;
-                margin: 80px auto 16px;
+                margin: 70px auto 16px;
                 text-align: center;
                 font-family: 'Fredoka', sans-serif;
                 font-weight: 600;
-                font-size: 34px;
+                font-size: 32px;
                 color: #222;
                 white-space: nowrap;
                 overflow: hidden;
@@ -472,7 +472,7 @@
 
             /* Push content down */
             .header {
-                padding-bottom: 90px;
+                padding-bottom: 80px;
             }
 
             /* Intro spacing */
@@ -501,18 +501,14 @@
             .add-to-cart-btn { font-size: 16px; padding: 14px; }
 
             .profile-overlap-mobile {
-                width: 90px;
-                height: 90px;
-                bottom: -50px;
+                width: 80px;
+                height: 80px;
+                bottom: -40px;
                 left: 12px;
-                border-width: 4px;
             }
             .profile-name-mobile {
-                font-size: 30px;
-                margin: 70px auto 12px;
-            }
-            .header {
-                padding-bottom: 80px;
+                font-size: 28px;
+                margin: 60px auto 12px;
             }
         }
     </style>
@@ -537,7 +533,7 @@
             <div class="profile-name">Dýchaj Slovo</div>
         </div>
 
-        <!-- MOBILE: Profile overlaps banner + title BELOW -->
+        <!-- MOBILE: Profile pic inside banner + title BELOW -->
         <img src="profile.jpg" alt="Mathias" class="profile-overlap-mobile">
         <h1 class="profile-name-mobile">Dýchaj Slovo</h1>
     </div>
