@@ -26,22 +26,36 @@
             text-align: center;
             margin-bottom: 20px;
         }
+        .option-group {
+            margin: 25px 0;
+        }
+        .option-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: #2c495e;
+        }
         .o {
             padding: 15px;
             border: 2px solid #ddd;
             border-radius: 8px;
             margin: 10px 0;
             cursor: pointer;
+            transition: all 0.2s;
         }
         .o:hover {
             border-color: #2c495e;
+        }
+        .o.selected {
+            border-color: #2c495e;
+            background-color: #f0f8fa;
         }
 
         .btn-container {
             display: flex;
             gap: 15px;
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 40px;
         }
         .b {
             background: #2c495e;
@@ -81,21 +95,71 @@
 <body>
 <div class="c">
     <h1>Doprava</h1>
-    <div class="o" onclick="pick('Slovenská pošta – €3')">Slovenská pošta: doporučený list a podacie číslo – 3,5 €</div>
-    <div class="o" onclick="pick('Osobný odber – €0')">PDF e-mail – 0 €</div>
+
+    <!-- Fyzický + prípadne digitálny produkt -->
+    <div class="option-group">
+        <div class="option-label">
+            Ak máte v košíku vytlačený a zviazaný produkt a prípadne aj digitálny produkt, zvoľte možnosť:
+        </div>
+        <div class="o" data-value="Slovenská pošta – €3">
+            Slovenská pošta: doporučený list a podacie číslo – 3,5 € 
+        </div>
+    </div>
+
+    <!-- Len digitálny produkt -->
+    <div class="option-group">
+        <div class="option-label">
+            Ak máte v košíku IBA digitálny produkt, zvoľte možnosť:
+        </div>
+        <div class="o" data-value="PDF email – €0">
+            PDF e-mail – 0 €
+        </div>
+    </div>
 
     <div class="btn-container">
         <button class="b back" onclick="location.href='kosik.html'">Späť</button>
-        <button class="b" onclick="location.href='informacie.html'">Pokračovať</button>
+        <button class="b" id="continueBtn">Pokračovať</button>
     </div>
 </div>
 
 <script>
-    function pick(txt) {
-        localStorage.setItem('shipping', txt);
-        document.querySelectorAll('.o').forEach(e => e.style.borderColor = '#ddd');
-        event.target.style.borderColor = '#2c495e';
-    }
+    const options = document.querySelectorAll('.o');
+    let selectedValue = null;
+
+    // Kliknutie na možnosť
+    options.forEach(opt => {
+        opt.addEventListener('click', function() {
+            // Označíme vizuálne
+            options.forEach(o => o.classList.remove('selected'));
+            this.classList.add('selected');
+            
+            // Uložíme hodnotu
+            selectedValue = this.getAttribute('data-value');
+            localStorage.setItem('shipping', selectedValue);
+        });
+    });
+
+    // Tlačidlo Pokračovať
+    document.getElementById('continueBtn').addEventListener('click', function(e) {
+        if (!selectedValue) {
+            e.preventDefault();
+            alert('Prosím vyberte jednu z možností dopravy.');
+            return;
+        }
+        location.href = 'informacie.html';
+    });
+
+    // Načítanie uloženej voľby (ak sa užívateľ vráti späť)
+    window.addEventListener('load', function() {
+        const saved = localStorage.getItem('shipping');
+        if (saved) {
+            const el = document.querySelector(`.o[data-value="${saved}"]`);
+            if (el) {
+                el.classList.add('selected');
+                selectedValue = saved;
+            }
+        }
+    });
 </script>
 </body>
 </html>
