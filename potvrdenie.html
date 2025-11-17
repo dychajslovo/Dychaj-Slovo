@@ -9,31 +9,24 @@
         body {
             font-family: 'Open Sans', sans-serif;
             margin: 0;
-            background: linear-gradient(135deg, #e0f7fa, #fff);
+            background: #f8f9fa;
             color: #333;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            opacity: 0;
-            animation: fadeIn 1s forwards 0.3s;
         }
-        @keyframes fadeIn { to { opacity: 1; } }
         .c {
-            max-width: 720px;
+            max-width: 700px;
             width: 100%;
-            margin: 0 auto;
             background: #fff;
             padding: 50px 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
             position: relative;
-            overflow: hidden;
-            transform: translateY(30px);
-            animation: slideUp 0.8s ease-out forwards;
+            text-align: center;
         }
-        @keyframes slideUp { to { transform: translateY(0); } }
         .logo {
             position: absolute;
             top: 25px;
@@ -48,105 +41,73 @@
             font-family: 'Fredoka', sans-serif;
             color: #2c495e;
             font-size: 36px;
-            margin: 0 0 15px 90px;
-            text-align: left;
+            margin: 0 0 15px 0;
+            padding-top: 20px;
         }
-        .success-text {
+        .success {
             font-size: 22px;
             color: #2e7d32;
-            margin: 20px 0 10px 90px;
             font-weight: 600;
+            margin: 15px 0;
         }
         p {
             font-size: 17px;
             line-height: 1.7;
-            margin: 12px 0 12px 90px;
             color: #444;
-        }
-        .highlight {
-            background: #e8f5e8;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-weight: 600;
-            color: #2e7d32;
+            margin: 12px 0;
         }
         .order-details {
-            background: #f8fbff;
+            background: #f9f9f9;
             padding: 25px;
-            border-radius: 14px;
-            margin: 30px 0 30px 90px;
+            border-radius: 12px;
+            margin: 30px 0;
+            text-align: left;
+            font-size: 16px;
+            line-height: 1.8;
             border-left: 5px solid #3fcfd5;
-            opacity: 0;
-            animation: fadeIn 1s forwards 0.8s;
         }
         .item {
             display: flex;
             align-items: center;
             gap: 15px;
             margin: 12px 0;
-            font-size: 16px;
         }
         .item img {
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
         }
-        .total-price {
-            font-size: 22px;
+        .total {
+            font-size: 20px;
             font-weight: 700;
             color: #2c495e;
             margin-top: 20px;
             padding-top: 15px;
-            border-top: 2px dashed #ddd;
-        }
-        .btn-container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 40px;
-            flex-wrap: wrap;
+            border-top: 2px dashed #ccc;
         }
         .btn {
+            display: inline-block;
             background: #2c495e;
             color: white;
-            padding: 14px 28px;
+            padding: 14px 32px;
             border: none;
             border-radius: 30px;
             font-size: 17px;
             font-weight: 600;
-            cursor: pointer;
             text-decoration: none;
-            flex: 1;
-            max-width: 300px;
-            text-align: center;
-            transition: all 0.3s ease;
+            margin-top: 30px;
+            transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(44,73,94,0.3);
         }
         .btn:hover {
             background: #3fcfd5;
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(63,207,213,0.4);
-        }
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #ff9800;
-            border-radius: 50%;
-            animation: confetti 4s ease-in-out infinite;
-            opacity: 0;
-        }
-        @keyframes confetti {
-            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
         @media (max-width: 600px) {
             .c { padding: 40px 20px; }
-            h1, .success-text, p, .order-details { margin-left: 0 !important; text-align: center; }
-            .logo { position: static; display: block; margin: 0 auto 20px; width: 90px; height: 90px; }
-            .order-details { margin: 30px 0; }
+            .logo { position: static; margin: 0 auto 20px; display: block; width: 90px; height: 90px; }
+            h1 { font-size: 30px; }
         }
     </style>
 </head>
@@ -155,80 +116,68 @@
 <div class="c">
     <img src="profile.jpg" alt="Dýchaj Slovo Logo" class="logo">
 
-    <h1>Ďakujeme za vašu objednávku!</h1>
-    <div class="success-text">Objednávka bola úspešne prijatá!</div>
+    <h1>Ďakujeme za objednávku!</h1>
+    <div class="success">Vaša objednávka bola úspešne prijatá</div>
 
-    <p>Čoskoro vám pošleme e-mail s platobnými údajmi a potvrdením.</p>
-    <p>Ak ste si vybrali poštou – balík doručíme <span class="highlight">do 2–5 pracovných dní</span>.</p>
+    <p>Čoskoro vám pošleme e-mail s platobnými údajmi.</p>
+    <p>Ak ste vybrali poštou – balík doručíme <strong>do 2–5 pracovných dní</strong>.</p>
 
     <div class="order-details" id="orderDetails">
-        <p>Načítavam detaily objednávky...</p>
+        Načítavam objednávku...
     </div>
 
-    <div class="btn-container">
-        <a href="index.html" class="btn">Späť na hlavnú stránku</a>
-    </div>
+    <a href="index.html" class="btn">Späť na hlavnú stránku</a>
 </div>
 
 <script>
-    // Načítanie dát
+    // Rýchle načítanie – žiadne čakanie
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     const shipping = localStorage.getItem('shipping') || 'Nie je vybrané';
     const billingInfo = JSON.parse(localStorage.getItem('billingInfo') || '{}');
     const finalTotal = localStorage.getItem('finalTotal') || '0.00';
 
-    const detailsDiv = document.getElementById('orderDetails');
+    const details = document.getElementById('orderDetails');
 
-    // Konfety
-    function createConfetti() {
-        for (let i = 0; i < 80; i++) {
-            const c = document.createElement('div');
-            c.className = 'confetti';
-            c.style.left = Math.random() * 100 + 'vw';
-            c.style.background = ['#ff9800','#4CAF50','#2196F3','#e91e63','#9c27b0'][Math.floor(Math.random()*5)];
-            c.style.animationDelay = Math.random() * 3 + 's';
-            document.body.appendChild(c);
-            setTimeout(() => c.remove(), 5000);
-        }
-    }
-    setTimeout(createConfetti, 600);
-
-    // Zobrazenie objednávky
     if (cart.length === 0) {
-        detailsDiv.innerHTML = '<p style="color:#e91e63">Žiadne položky v košíku.</p>';
-        return;
+        details.innerHTML = '<p style="color:#e91e63; text-align:center;">Žiadne položky v košíku.</p>';
+    } else {
+        let itemsHtml = '<strong>Objednané položky:</strong><br><br>';
+        cart.forEach(item => {
+            itemsHtml += `
+                <div class="item">
+                    ${item.img ? `<img src="${item.img}" alt="${item.name || 'Produkt'}">` : ''}
+                    <div>
+                        <strong>${item.name || 'Neznámy produkt'}</strong><br>
+                        ${item.price} €
+                    </div>
+                </div>
+            `;
+        });
+
+        itemsHtml += `<br><strong>Doprava:</strong> ${shipping}<br>`;
+        itemsHtml += `<strong>Celkovo na úhradu:</strong> <span class="total">${finalTotal} €</span>`;
+
+        details.innerHTML = itemsHtml;
     }
 
-    let itemsHtml = '';
-    cart.forEach(item => {
-        itemsHtml += `
-            <div class="item">
-                ${item.img ? `<img src="${item.img}" alt="${item.name}">` : ''}
-                <div>
-                    <strong>${item.name}</strong><br>
-                    <span style="color:#666">${item.price} €</span>
-                </div>
-            </div>
-        `;
-    });
-
-    const subtotal = cart.reduce((sum, item) => sum + parseFloat(item.price || 0), 0);
-    const shippingPrice = shipping.includes('€3') ? 3.5 : 0;
-
-    detailsDiv.innerHTML = `
-        <strong>Číslo objednávky:</strong> #${Date.now().toString().slice(-6)}<br><br>
-        ${itemsHtml}
-        <div style="margin-top:15px;padding-top:15px;border-top:1px dashed #ccc">
-            <strong>Doprava:</strong> ${shipping}<br>
-            <strong>Doručenie na:</strong><br>
-            ${billingInfo.name || '—'}<br>
-            ${billingInfo.street || ''} ${billingInfo.city ? '• ' + billingInfo.city : ''}<br>
-            ${billingInfo.email} • ${billingInfo.phone}
-        </div>
-        <div class="total-price">
-            Celková suma na úhradu: <strong>${finalTotal} €</strong>
-        </div>
-    `;
+    // Konfety (stále pekné, ale nenarušujú rýchlosť)
+    setTimeout(() => {
+        for (let i = 0; i < 60; i++) {
+            const c = document.createElement('div');
+            c.style.position = 'fixed';
+            c.style.width = '10px';
+            c.style.height = '10px';
+            c.style.borderRadius = '50%';
+            c.style.background = ['#ff9800','#4CAF50','#2196F3','#e91e63'][Math.floor(Math.random()*4)];
+            c.style.left = Math.random() * 100 + 'vw';
+            c.style.top = '-10px';
+            c.style.zIndex = '9999';
+            c.style.pointerEvents = 'none';
+            c.style.animation = 'fall 4s linear forwards';
+            document.body.appendChild(c);
+            setTimeout(() => c.remove(), 4000);
+        }
+    }, 300);
 
     // Vymazanie dát po 15 minútach
     setTimeout(() => {
@@ -238,5 +187,12 @@
         localStorage.removeItem('finalTotal');
     }, 15 * 60 * 1000);
 </script>
+
+<style>
+    @keyframes fall {
+        to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+</style>
+
 </body>
 </html>
