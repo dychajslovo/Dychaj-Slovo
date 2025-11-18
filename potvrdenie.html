@@ -21,7 +21,7 @@
             max-width: 700px;
             width: 100%;
             background: #fff;
-            padding: 50px 40px;
+            padding: 60px 40px;
             border-radius: 16px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
             position: relative;
@@ -41,63 +41,32 @@
             font-family: 'Fredoka', sans-serif;
             color: #2c495e;
             font-size: 36px;
-            margin: 0 0 15px 0;
+            margin: 0 0 20px 0;
             padding-top: 20px;
         }
         .success {
-            font-size: 22px;
+            font-size: 24px;
             color: #2e7d32;
             font-weight: 600;
-            margin: 15px 0;
+            margin: 20px 0;
         }
         p {
-            font-size: 17px;
+            font-size: 18px;
             line-height: 1.7;
             color: #444;
-            margin: 12px 0;
-        }
-        .order-details {
-            background: #f9f9f9;
-            padding: 25px;
-            border-radius: 12px;
-            margin: 30px 0;
-            text-align: left;
-            font-size: 16px;
-            line-height: 1.8;
-            border-left: 5px solid #3fcfd5;
-        }
-        .item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin: 12px 0;
-        }
-        .item img {
-            width: 55px;
-            height: 55px;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .total {
-            font-size: 20px;
-            font-weight: 700;
-            color: #2c495e;
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 2px dashed #ccc;
+            margin: 15px 0;
         }
         .btn {
             display: inline-block;
             background: #2c495e;
             color: white;
-            padding: 14px 32px;
+            padding: 14px 36px;
             border: none;
             border-radius: 30px;
             font-size: 17px;
             font-weight: 600;
             text-decoration: none;
-            margin-top: 30px;
+            margin-top: 40px;
             transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(44,73,94,0.3);
         }
@@ -106,9 +75,16 @@
             transform: translateY(-3px);
         }
         @media (max-width: 600px) {
-            .c { padding: 40px 20px; }
-            .logo { position: static; margin: 0 auto 20px; display: block; width: 90px; height: 90px; }
+            .c { padding: 50px 20px; }
+            .logo { 
+                position: static; 
+                margin: 0 auto 25px; 
+                display: block; 
+                width: 90px; 
+                height: 90px; 
+            }
             h1 { font-size: 30px; }
+            .success { font-size: 22px; }
         }
     </style>
 </head>
@@ -121,51 +97,22 @@
     <div class="success">Vaša objednávka bola úspešne prijatá</div>
 
     <p>Čoskoro vám pošleme e-mail s platobnými údajmi.</p>
-    <p>Ak ste vybrali poštou – balík doručíme <strong>do 2–5 pracovných dní</strong>.</p>
-
-    <div class="order-details" id="orderDetails">
-        Načítavam objednávku...
-    </div>
+    <p>Ak ste zvolili dopravu poštou – po prijatí platby vám pošleme váš balík a zároveň e-mail s podacím číslom na sledovanie zásielky.</p>
+    <p>Ďakujeme, že ste nás podporili!</p>
+<p>Nech je to všetko na väčšiu slávu Božiu.</p>
 
     <a href="index.html" class="btn">Späť na hlavnú stránku</a>
 </div>
 
 <script>
-    // Načítanie uloženého zhrnutia objednávky (uložené v zhrnutie.html pred vymazaním)
-    const savedOrder = JSON.parse(localStorage.getItem('lastOrderSummary') || '{}');
-    const details = document.getElementById('orderDetails');
-
-    if (!savedOrder || !savedOrder.items || savedOrder.items.length === 0) {
-        details.innerHTML = '<p style="color:#e91e63; text-align:center;">Detaily objednávky nie sú dostupné.</p>';
-    } else {
-        let itemsHtml = '<strong>Objednané položky:</strong><br><br>';
-
-        savedOrder.items.forEach(item => {
-            itemsHtml += `
-                <div class="item">
-                    ${item.img ? `<img src="${item.img}" alt="${item.name || 'Produkt'}">` : ''}
-                    <div>
-                        <strong>${item.name || 'Neznámy produkt'}</strong><br>
-                        <span style="color:#666">${item.price || '0 €'}</span>
-                    </div>
-                </div>
-            `;
-        });
-
-        itemsHtml += `<br><strong>Doprava:</strong> ${savedOrder.shipping || 'Nie je uvedená'}<br>`;
-        itemsHtml += `<strong>Doručenie na:</strong><br>`;
-        itemsHtml += `${savedOrder.name || ''}<br>`;
-        itemsHtml += `${savedOrder.address || ''}<br>`;
-        itemsHtml += `${savedOrder.email || ''}<br><br>`;
-        itemsHtml += `<div class="total">Celková suma na úhradu: <strong>${savedOrder.total || '0.00'} €</strong></div>`;
-
-        details.innerHTML = itemsHtml;
-    }
-
-    // Automatické vymazanie uložených dát po 15 minútach (pre bezpečnosť)
+    // Len vymažeme prípadné staré dáta (pre istotu)
     setTimeout(() => {
         localStorage.removeItem('lastOrderSummary');
-    }, 15 * 60 * 1000);
+        localStorage.removeItem('cart');
+        localStorage.removeItem('shipping');
+        localStorage.removeItem('billingInfo');
+        localStorage.removeItem('finalTotal');
+    }, 1000);
 </script>
 
 </body>
