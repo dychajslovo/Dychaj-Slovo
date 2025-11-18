@@ -77,6 +77,7 @@
             height: 55px;
             object-fit: cover;
             border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .total {
             font-size: 20px;
@@ -130,69 +131,42 @@
 </div>
 
 <script>
-    // Rýchle načítanie – žiadne čakanie
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const shipping = localStorage.getItem('shipping') || 'Nie je vybrané';
-    const billingInfo = JSON.parse(localStorage.getItem('billingInfo') || '{}');
-    const finalTotal = localStorage.getItem('finalTotal') || '0.00';
-
+    // Načítanie uloženého zhrnutia objednávky (uložené v zhrnutie.html pred vymazaním)
+    const savedOrder = JSON.parse(localStorage.getItem('lastOrderSummary') || '{}');
     const details = document.getElementById('orderDetails');
 
-    if (cart.length === 0) {
-        details.innerHTML = '<p style="color:#e91e63; text-align:center;">Žiadne položky v košíku.</p>';
+    if (!savedOrder || !savedOrder.items || savedOrder.items.length === 0) {
+        details.innerHTML = '<p style="color:#e91e63; text-align:center;">Detaily objednávky nie sú dostupné.</p>';
     } else {
         let itemsHtml = '<strong>Objednané položky:</strong><br><br>';
-        cart.forEach(item => {
+
+        savedOrder.items.forEach(item => {
             itemsHtml += `
                 <div class="item">
                     ${item.img ? `<img src="${item.img}" alt="${item.name || 'Produkt'}">` : ''}
                     <div>
                         <strong>${item.name || 'Neznámy produkt'}</strong><br>
-                        ${item.price} €
+                        <span style="color:#666">${item.price || '0 €'}</span>
                     </div>
                 </div>
             `;
         });
 
-        itemsHtml += `<br><strong>Doprava:</strong> ${shipping}<br>`;
-        itemsHtml += `<strong>Celkovo na úhradu:</strong> <span class="total">${finalTotal} €</span>`;
+        itemsHtml += `<br><strong>Doprava:</strong> ${savedOrder.shipping || 'Nie je uvedená'}<br>`;
+        itemsHtml += `<strong>Doručenie na:</strong><br>`;
+        itemsHtml += `${savedOrder.name || ''}<br>`;
+        itemsHtml += `${savedOrder.address || ''}<br>`;
+        itemsHtml += `${savedOrder.email || ''}<br><br>`;
+        itemsHtml += `<div class="total">Celková suma na úhradu: <strong>${savedOrder.total || '0.00'} €</strong></div>`;
 
         details.innerHTML = itemsHtml;
     }
 
-    // Konfety (stále pekné, ale nenarušujú rýchlosť)
+    // Automatické vymazanie uložených dát po 15 minútach (pre bezpečnosť)
     setTimeout(() => {
-        for (let i = 0; i < 60; i++) {
-            const c = document.createElement('div');
-            c.style.position = 'fixed';
-            c.style.width = '10px';
-            c.style.height = '10px';
-            c.style.borderRadius = '50%';
-            c.style.background = ['#ff9800','#4CAF50','#2196F3','#e91e63'][Math.floor(Math.random()*4)];
-            c.style.left = Math.random() * 100 + 'vw';
-            c.style.top = '-10px';
-            c.style.zIndex = '9999';
-            c.style.pointerEvents = 'none';
-            c.style.animation = 'fall 4s linear forwards';
-            document.body.appendChild(c);
-            setTimeout(() => c.remove(), 4000);
-        }
-    }, 300);
-
-    // Vymazanie dát po 15 minútach
-    setTimeout(() => {
-        localStorage.removeItem('cart');
-        localStorage.removeItem('shipping');
-        localStorage.removeItem('billingInfo');
-        localStorage.removeItem('finalTotal');
+        localStorage.removeItem('lastOrderSummary');
     }, 15 * 60 * 1000);
 </script>
-
-<style>
-    @keyframes fall {
-        to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-    }
-</style>
 
 </body>
 </html>
