@@ -22,17 +22,31 @@
         .status{display:none;margin-top:20px;padding:15px;border-radius:8px;text-align:center;font-weight:600}
         .success{background:#d4edda;color:#155724}
         .loading{background:#fff3cd;color:#856404}
-        .error{background:#f8d7da;color:#721c24}
+        @media(max-width:480px){.btn-container{flex-wrap:nowrap;overflow-x:auto;padding:0 10px}.b{min-width:140px}}
     </style>
 </head>
 <body>
 <div class="c">
     <h1>Zhrnutie objednávky</h1>
-    <div class="warning">Skontrolujte si objednávku a ak je správna, potvrďte tlačidlom „Objednať“.</div>
 
-    <div class="info"><strong>Produkty v košíku:</strong><br><div id="cartItems">-</div></div>
-    <div class="info"><strong>Doprava:</strong><br><span id="shippingMethod">-</span></div>
-    <div class="info"><strong>Doručovacie údaje:</strong><br><div id="billingDetails">-</div></div>
+    <div class="warning">
+        Skontrolujte si objednávku a ak je správna, potvrďte tlačidlom „Objednať“.
+    </div>
+
+    <div class="info">
+        <strong>Produkty v košíku:</strong><br>
+        <div id="cartItems">Načítavam košík...</div>
+    </div>
+
+    <div class="info">
+        <strong>Doprava:</strong><br>
+        <span id="shippingMethod">-</span>
+    </div>
+
+    <div class="info">
+        <strong>Fakturačné a doručovacie údaje:</strong><br>
+        <div id="billingDetails">-</div>
+    </div>
 
     <div style="margin-top:30px">
         <div class="price-line"><span>Cena produktov:</span> <strong id="subtotal">0,00 €</strong></div>
@@ -45,25 +59,131 @@
         <button class="b" onclick="sendOrder()">Objednať</button>
     </div>
 
-    <div id="status" class="status"></div>
+    <div id="status" class="status">Odosielam objednávku...</div>
 </div>
 
 <script>
     const WEB3FORMS_KEY = 'efd76031-ddf0-442f-ba6f-552b04369b0e';
 
+    // Načítanie dát z localStorage
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     const shippingRaw = localStorage.getItem('shipping') || '';
     const billingInfo = JSON.parse(localStorage.getItem('billingInfo') || '{}');
 
-    // Doprava
-    let shippingText = 'Nie je vybraná', shippingPrice = 0;
-    if (shippingRaw.includes('3')) shippingPrice = 3.5, shippingText = 'Slovenská pošta – 3,50 €';
-    else if (shippingRaw.toLowerCase().includes('pdf') || shippingRaw.includes('email')) shippingPrice = 0, shippingText = 'PDF na e-mail – 0 €';
+    // Oprava: správne spracovanie dopravy
+    let shippingText = 'Nie je vybraná';
+    let shippingPrice = 0;
 
-    // Bezpečné načítanie ceny
-    const getNum = p => parseFloat((p || '').toString().replace(/[^\d,.-]/g, '').replace(',', '.')) || 0;
-    const subtotal = cart.reduce((s, i) => s + getNum(i.price), 0);
+    if (shippingRaw.includes('€3') || shippingRaw.includes('3,5')) {
+        shippingText = 'Slovenská pošta: doporučený list a podacie číslo – 3,5 €';
+        shippingPrice = 3.5;
+    } else if (shippingRaw.includes('PDF') || shippingRaw.includes('email')) {
+        shippingText = 'PDF e-mail – 0 €';
+        shippingPrice = 0;
+    } else if (shippingRaw) {
+        shippingText = shippingRaw;
+        shippingPrice = shippingRaw.includes('€0') ? 0 : 3.5;
+    }
+
+    // Výpočet cien
+    const subtotal = cart.reduce((sum, item) => {
+        const price = parseFloat(String(item.price).replace(/[^0-9.,]/g, '').replace(',', '.')) || 0;
+        return sum + price;
+    }, 0);
+
     const total = subtotal + shippingPrice;
 
-    // Zobrazenie
-    document.getElementById
+    // Zobrazenie produktov (opravené – už nebude "undefined")
+    const cartItemsDiv = document.getElementById('cartItems');
+    if (cart.length === 0) {
+        cartItemsDiv.innerHTML = '<em>Košík je prázdny</em>';
+    } else {
+        const list = cart.map(item => {
+            const name = item.name || item.title || 'Neznámy produkt';
+            const price = item.price || '0 €';
+            return `• ${name} – ${price}`;
+        }).join('<br>');
+        cartItemsDiv.innerHTML = list;
+    }
+
+    // Zobrazenie dopravy a cien
+    document.getElementById('shippingMethod').textContent = shippingText;
+    document.getElementById('subtotal').textContent = subtotal.toFixed(2) + ' €';
+    document.getElementById('shippingPrice').textContent = shippingPrice.toFixed(2) + ' €';
+    document.getElementById('totalPrice').textContent = total.toFixed(2) + ' €';
+
+    // Fakturačné údaje
+    const billingDiv = document.getElementById('billingDetails');
+    if (billingInfo && billingInfo.name) {
+        billingDiv.innerHTML = `
+            ${billingInfo.name || ''}<br>
+            ${billingInfo.street || ''}<br>
+            ${billingInfo.zip || ''} ${billingInfo.city || ''}<br>
+            ${billingInfo.phone || ''}<br>
+            ${billingInfo.email || ''}
+        `.trim();
+    } else {
+        billingDiv.innerHTML = '<em>Nie sú vyplnené</em>';
+    }
+
+    // Uloženie celkovej sumy
+    localStorage.setItem('finalTotal', total.toFixed(2));
+
+    // Odoslanie objednávky (funguje ako predtým)
+    async function sendOrder() {
+        const status = document.getElementById('status');
+        status.style.display = 'block';
+        status.className = 'status loading';
+        status.textContent = 'Odosielam objednávku...';
+
+        // Číslo objednávky
+        let counter = parseInt(localStorage.getItem('orderCounter') || '0') + 1;
+        localStorage.setItem('orderCounter', counter);
+        const orderId = `#${String(counter).padStart(3, '0')}`;
+
+        const itemsText = cart.map(i => {
+            const name = i.name || i.title || 'Produkt';
+            const price = i.price || '0 €';
+            return `${name} – ${price}`;
+        }).join('\n');
+
+        const formData = new FormData();
+        formData.append('access_key', WEB3FORMS_KEY);
+        formData.append('name', billingInfo.name || '');
+        formData.append('email', billingInfo.email || '');
+        formData.append('phone', billingInfo.phone || '');
+        formData.append('address', `${billingInfo.street || ''}, ${billingInfo.city || ''}, ${billingInfo.zip || ''}`);
+        formData.append('items', itemsText);
+        formData.append('shipping', shippingText);
+        formData.append('total', total.toFixed(2) + ' €');
+        formData.append('order_id', orderId);
+
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                status.textContent = 'Objednávka úspešne odoslaná!';
+                status.className = 'status success';
+
+                localStorage.removeItem('cart');
+                localStorage.removeItem('shipping');
+                localStorage.removeItem('billingInfo');
+
+                setTimeout(() => {
+                    window.location.href = 'potvrdenie.html';
+                }, 2000);
+            } else {
+                throw new Error();
+            }
+        } catch (err) {
+            status.textContent = 'Chyba pri odosielaní. Skúste znova.';
+            status.className = 'status error';
+        }
+    }
+</script>
+</body>
+</html>
