@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fakturačné údaje – Dýchaj Slovo</title>
+    <title>Vaše údaje – Dýchaj Slovo</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body{font-family:'Open Sans',sans-serif;margin:40px;background:#f4f4f4;color:#333}
         .c{max-width:800px;margin:auto;background:#fff;padding:30px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
         h1{font-family:'Fredoka',sans-serif;color:#2c495e;text-align:center;margin-bottom:30px}
-        label{display:block;margin:15pz 0 5px;font-weight:600;color:#2c495e}
+        label{display:block;margin:15px 0 5px;font-weight:600;color:#2c495e}
         input, select{width:100%;padding:12px;border:2px solid #ddd;border-radius:8px;margin-bottom:20px;font-size:16px}
         input:focus, select:focus{border-color:#2c495e;outline:none}
         .btn-container{display:flex;gap:15px;justify-content:center;margin-top:40px}
@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="c">
-    <h1>Fakturačné údaje</h1>
+    <h1>Vaše údaje</h1>
     <form id="infoForm">
         <label>Meno a priezvisko *</label>
         <input type="text" id="name" required>
@@ -30,8 +30,7 @@
         <label>E-mail *</label>
         <input type="email" id="email" required>
 
-        <label>Telefón *</label>
-        <input type="tel" id="phone" required>
+        <!-- TELEFÓN BOL ODSTRÁNENÝ -->
 
         <label>Ulica a číslo domu *</label>
         <input type="text" id="street" required>
@@ -53,11 +52,10 @@
     document.getElementById('infoForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Uloženie fakturačných údajov
+        // Ukladáme iba potrebné údaje – už bez telefónu
         const data = {
             name: document.getElementById('name').value.trim(),
             email: document.getElementById('email').value.trim(),
-            phone: document.getElementById('phone').value.trim(),
             street: document.getElementById('street').value.trim(),
             city: document.getElementById('city').value.trim(),
             zip: document.getElementById('zip').value.trim()
