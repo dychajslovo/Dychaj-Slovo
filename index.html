@@ -683,8 +683,10 @@
             closeDetail();
         }
         function updateCartCount() {
-            document.getElementById('cartCount').textContent = cart.length;
-        }
+        const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        const cartBtn = document.getElementById('cartCount');
+        if (cartBtn) cartBtn.textContent = totalItems;
+    }
         let galleryImages = [];
         let currentIndex = 0;
         function openProductDetail(title, price, desc, img, previewList) {
